@@ -24,8 +24,6 @@
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-package.json
-.angular-cli.json
 
 # misc
 /.sass-cache
