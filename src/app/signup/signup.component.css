@@ -1,0 +1,11 @@
+.signup{
+  width: 100%;
+  border: black 1px solid;
+}
+.signup-form{
+  padding: 17px 25px;
+}
+
+input.ng-touched.ng-invalid {
+  border: 5px solid #a94442;
+}
