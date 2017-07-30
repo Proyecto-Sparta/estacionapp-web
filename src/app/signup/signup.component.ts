@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
+import {mapListener} from "../interfaces/mapListener"
 import {Garage} from "../garage";
 import {NgForm} from "@angular/forms";
 import {GarageService} from "../garage.service";
+import {Marker} from "../map/map.component";
 import {SignUpModelValidator} from "./signupModelValidator";
 
 @Component({
@@ -10,23 +12,22 @@ import {SignUpModelValidator} from "./signupModelValidator";
   styleUrls: ['./signup.component.css'],
   providers: [GarageService]
 })
-export class SignUpComponent {
-  title = 'Signup';
-
+export class SignUpComponent implements mapListener{
   submitted = false;
   errors = [];
 
   model = {
-    'username': '',
-    'email': '',
-    'password': '',
-    'confirmPassword': '',
-    'location': ''
+    username: null,
+    email: null,
+    password: null,
+    confirmPassword: null,
+    location: null
   }
 
   validator = new SignUpModelValidator();
 
-  constructor(private garageService: GarageService) {
+  onMarkerLocationChanged(marker: Marker){
+    this.model.location = marker;
   }
 
   onSubmit() {

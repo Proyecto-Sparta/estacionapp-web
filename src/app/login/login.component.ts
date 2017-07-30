@@ -10,8 +10,6 @@ import {GarageService} from "../garage.service";
   providers: [GarageService]
 })
 export class LoginComponent {
-  title = 'Login';
-
   submitted = false;
   model = new Garage('Garage', 'password');
 
