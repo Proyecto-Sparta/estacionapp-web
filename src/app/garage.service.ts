@@ -1,6 +1,6 @@
-import {Injectable} from "@angular/core";
-import {Garage} from "./garage";
-import {Headers, Http, RequestOptions} from "@angular/http";
+import {Injectable} from '@angular/core';
+import {Garage} from './garage';
+import {Headers, Http, RequestOptions} from '@angular/http';
 
 @Injectable()
 export class GarageService {
@@ -10,11 +10,11 @@ export class GarageService {
   }
 
   login(garage: Garage) {
-    let encodedGarage = btoa(`${garage.username}:${garage.password}`);
-    let headers = new Headers({'Content-Type': 'application/json; charset=utf-8'});
+    const encodedGarage = btoa(`${garage.username}:${garage.password}`);
+    const headers = new Headers({'Content-Type': 'application/json; charset=utf-8'});
     headers.append('Authorization', `Basic ${encodedGarage}`);
-    let options = new RequestOptions({headers: headers});
-    let url = `${this.garageUrl}/login`;
+    const options = new RequestOptions({headers: headers});
+    const url = `${this.garageUrl}/login`;
     return this.http.get(url, options).subscribe();
   }
 }

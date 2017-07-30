@@ -1,7 +1,7 @@
-import {Component} from "@angular/core";
-import {Garage} from "../garage";
-import {NgForm} from "@angular/forms";
-import {GarageService} from "../garage.service";
+import {Component} from '@angular/core';
+import {Garage} from '../garage';
+import {NgForm} from '@angular/forms';
+import {GarageService} from '../garage.service';
 
 @Component({
   selector: 'login',
