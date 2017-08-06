@@ -4,7 +4,7 @@
   ],
   "rules": {
     "callable-types": true,
-    "class-name": true,
+    "class-name": false,
     "comment-format": [
       true,
       "check-space"
@@ -110,7 +110,7 @@
       "camelCase"
     ],
     "component-selector": [
-      true,
+      false,
       "element",
       "app",
       "kebab-case"

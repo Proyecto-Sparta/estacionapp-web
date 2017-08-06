@@ -1,0 +1,12 @@
+ul{
+  background-color: #f8f8f8;
+  border-radius: 4px;
+  border: 1px solid #e7e7e7;
+}
+li{
+  margin-top: 0 !important;
+  border-bottom: 1px solid #e7e7e7;
+}
+a{
+  text-align: center;
+}

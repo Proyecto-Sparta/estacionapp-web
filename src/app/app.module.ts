@@ -7,6 +7,7 @@ import {AppComponent} from './app.component';
 import {LoginComponent} from './login/login.component';
 import {SignUpComponent} from './signup/signup.component';
 import {MapComponent} from './map/map.component';
+import {MenuComponent} from './menu/menu.component';
 import {AppRoutingModule} from './app-routing.module';
 import {GarageService} from './garage.service';
 import {AgmCoreModule} from '@agm/core';
@@ -16,7 +17,8 @@ import {AgmCoreModule} from '@agm/core';
     AppComponent,
     LoginComponent,
     SignUpComponent,
-    MapComponent
+    MapComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
