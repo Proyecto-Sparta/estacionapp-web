@@ -4,14 +4,18 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
-import {LoginComponent} from "./login.component";
+import {LoginComponent} from "./login/login.component";
 import {AppRoutingModule} from "./app-routing.module";
-import {GarageService} from "./garage.service";
+import {GarageService} from "./garage/garage.service";
+import {LoginService} from "./login/login.service";
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {AuthGuard} from "./guards/auth-guard.service";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +23,7 @@ import {GarageService} from "./garage.service";
     HttpModule,
     AppRoutingModule
   ],
-  providers: [GarageService],
+  providers: [GarageService, LoginService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {
