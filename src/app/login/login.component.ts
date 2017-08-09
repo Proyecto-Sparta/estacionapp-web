@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
-import {Garage} from "./garage";
+import {Garage} from "../garage/garage";
 import {NgForm} from "@angular/forms";
-import {GarageService} from "./garage.service";
+import {GarageService} from "../garage/garage.service";
 import {LoginService} from "./login.service";
 
 @Component({
