@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {Garage} from "./garage";
 import {NgForm} from "@angular/forms";
 import {GarageService} from "./garage.service";
+import {LoginService} from "./login.service";
 
 @Component({
   selector: 'login',
@@ -10,16 +11,14 @@ import {GarageService} from "./garage.service";
   providers: [GarageService]
 })
 export class LoginComponent {
-  title = 'Login';
 
-  submitted = false;
   model = new Garage('Garage', 'password');
 
-  constructor(private garageService: GarageService) {
+  constructor(private loginService: LoginService) {
   }
 
   onSubmit(loginForm: NgForm) {
-    this.garageService.login(new Garage(
+    this.loginService.login(new Garage(
       loginForm.value.username,
       loginForm.value.password));
   }
