@@ -43,7 +43,7 @@ export class LoginService {
           }));
         return this.router.navigate(['/dashboard']);
       })
-      .catch(error => this.handleLoginError(login))
+      .catch(error => this.handleLoginError(login));
   };
 
   isLogged() {
