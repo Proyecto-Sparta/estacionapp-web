@@ -1,9 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Garage} from '../garage/garage';
 import {NgForm} from '@angular/forms';
 import {GarageService} from '../garage/garage.service';
 import {LoginService} from './login.service';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'login',
@@ -11,7 +11,12 @@ import {Router} from "@angular/router";
   styleUrls: ['./login.component.css'],
   providers: [GarageService]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+
+  ngOnInit(): void {
+    if(this.loginService.isLoggedIn())
+      this.router.navigate(['/home']);
+  }
 
   model = new Garage('Garage', 'password');
   validUser = true;

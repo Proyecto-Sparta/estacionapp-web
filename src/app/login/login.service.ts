@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Garage} from '../garage/garage';
 import {Headers, Http, RequestOptions} from '@angular/http';
-import {Router} from '@angular/router';
 import {LoginComponent} from './login.component';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -21,10 +20,6 @@ export class LoginService {
     headers.append('Authorization', `Basic ${encodedGarage}`);
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
     return headers;
-  }
-
-  handleLoginError(login: LoginComponent) {
-    login.makeInvalid();
   }
 
   login(garage: Garage, login: LoginComponent) {
