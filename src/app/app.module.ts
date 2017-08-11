@@ -14,15 +14,19 @@ import {LoginService} from './login/login.service';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {AuthGuard} from './guards/auth-guard.service';
 import {AgmCoreModule} from '@agm/core';
+import { HomeComponent } from './home/home.component';
+import {LogoutComponent} from './logout/logout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    LogoutComponent,
     SignUpComponent,
     MapComponent,
     MenuComponent,
-    DashboardComponent
+    DashboardComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
