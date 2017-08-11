@@ -1,19 +1,17 @@
 import {Injectable} from '@angular/core';
 import {Garage} from '../garage/garage';
-import {Headers, Http, JsonpModule, RequestOptions} from '@angular/http';
+import {Headers, Http, RequestOptions} from '@angular/http';
 import {Router} from '@angular/router';
-import {isNull} from 'util';
 import {LoginComponent} from './login.component';
-import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class LoginService {
   private garageUrl = 'http://localhost:4000/api/garage';
 
-  constructor(private http: Http,
-              private router: Router) {
+  constructor(private http: Http) {
 
   }
 
@@ -34,19 +32,21 @@ export class LoginService {
     const url = `${this.garageUrl}/login`;
     return this.http
       .get(url, options)
-      .toPromise()
-      .then( response => {
-        localStorage.setItem('currentUser',
-          JSON.stringify({
-            username: garage.username,
-            token: response.headers.get('authorization')
-          }));
-        return this.router.navigate(['/dashboard']);
-      })
-      .catch(error => this.handleLoginError(login));
-  };
-
-  isLogged() {
-    return ! isNull(JSON.parse(localStorage.getItem('currentUser')));
+      .map(response => {
+        console.log('bla');
+        localStorage.setItem('currentUser', garage.username);
+        localStorage.setItem('token', response.headers.get('authorization'));
+      });
   }
+
+  logout(){
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
+    return Observable.of(true);
+  }
+
+  isLoggedIn() {
+    return !! localStorage.getItem('token');
+  }
+
 }
