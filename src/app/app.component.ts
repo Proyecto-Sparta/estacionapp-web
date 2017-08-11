@@ -9,9 +9,5 @@ import {LoginService} from './login/login.service';
 })
 export class AppComponent {
 
-  isUserLogged: Boolean;
 
-  constructor(private loginService: LoginService) {
-    this.isUserLogged = this.loginService.isLogged();
-  }
 }
