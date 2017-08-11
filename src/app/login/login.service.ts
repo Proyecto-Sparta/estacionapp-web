@@ -3,6 +3,10 @@ import {Garage} from "../garage/garage";
 import {Headers, Http, JsonpModule, RequestOptions} from "@angular/http";
 import {Router} from "@angular/router";
 import {isNull} from "util";
+import {LoginComponent} from "./login.component";
+import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class LoginService {
@@ -21,23 +25,25 @@ export class LoginService {
     return headers;
   }
 
-  handleLoginError() {
-    return this.router.navigate(['/login']);
+  handleLoginError(login : LoginComponent) {
+    login.makeInvalid();
   }
 
-  login(garage: Garage) {
+  login(garage: Garage, login : LoginComponent) {
     const options = new RequestOptions({headers: this.generateHeaders(garage)});
     const url = `${this.garageUrl}/login`;
-    return this.http.get(url, options).subscribe(
-      response => {
+    return this.http
+      .get(url, options)
+      .toPromise()
+      .then( response => {
         localStorage.setItem('currentUser',
           JSON.stringify({
             username: garage.username,
             token: response.headers.get('authorization')
           }));
         return this.router.navigate(['/dashboard']);
-      },
-      error => this.handleLoginError())
+      })
+      .catch(error => this.handleLoginError(login))
   };
 
   isLogged() {

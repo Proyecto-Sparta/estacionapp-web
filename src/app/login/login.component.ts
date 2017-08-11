@@ -13,6 +13,7 @@ import {LoginService} from "./login.service";
 export class LoginComponent {
 
   model = new Garage('Garage', 'password');
+  validUser = true;
 
   constructor(private loginService: LoginService) {
   }
@@ -20,7 +21,15 @@ export class LoginComponent {
   onSubmit(loginForm: NgForm) {
     this.loginService.login(new Garage(
       loginForm.value.username,
-      loginForm.value.password));
+      loginForm.value.password), this);
+  }
+
+  makeInvalid(){
+    this.validUser = false;
+  }
+
+  makeValid(){
+    this.validUser = true;
   }
 
 }
