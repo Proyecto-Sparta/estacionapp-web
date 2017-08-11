@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {Garage} from '../garage';
+import {Garage} from '../garage/garage';
 import {NgForm} from '@angular/forms';
-import {GarageService} from '../garage.service';
+import {GarageService} from '../garage/garage.service';
+import {LoginService} from './login.service';
 
 @Component({
   selector: 'login',
@@ -10,16 +11,24 @@ import {GarageService} from '../garage.service';
   providers: [GarageService]
 })
 export class LoginComponent {
-  submitted = false;
-  model = new Garage('Garage', 'password');
 
-  constructor(private garageService: GarageService) {
+  model = new Garage('Garage', 'password');
+  validUser = true;
+
+  constructor(private loginService: LoginService) {
   }
 
   onSubmit(loginForm: NgForm) {
-    this.garageService.login(new Garage(
+    this.loginService.login(new Garage(
       loginForm.value.username,
-      loginForm.value.password));
+      loginForm.value.password), this);
   }
 
+  makeInvalid() {
+    this.validUser = false;
+  }
+
+  makeValid() {
+    this.validUser = true;
+  }
 }

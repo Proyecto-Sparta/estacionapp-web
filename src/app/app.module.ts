@@ -9,7 +9,10 @@ import {SignUpComponent} from './signup/signup.component';
 import {MapComponent} from './map/map.component';
 import {MenuComponent} from './menu/menu.component';
 import {AppRoutingModule} from './app-routing.module';
-import {GarageService} from './garage.service';
+import {GarageService} from './garage/garage.service';
+import {LoginService} from './login/login.service';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {AuthGuard} from './guards/auth-guard.service';
 import {AgmCoreModule} from '@agm/core';
 
 @NgModule({
@@ -18,7 +21,8 @@ import {AgmCoreModule} from '@agm/core';
     LoginComponent,
     SignUpComponent,
     MapComponent,
-    MenuComponent
+    MenuComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +33,7 @@ import {AgmCoreModule} from '@agm/core';
       apiKey: 'AIzaSyAAsIKJcL_6F6V0FzZif5pRSwu17vY_UAU'
     })
   ],
-  providers: [GarageService],
+  providers: [GarageService, LoginService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

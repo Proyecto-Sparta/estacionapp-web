@@ -1,11 +1,11 @@
-import { browser, element, by } from 'protractor';
+import {browser, by, element} from 'protractor';
 
 export class EstacionappWebPage {
   navigateTo() {
     return browser.get('/');
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getNavbarText() {
+    return element(by.className('navbar-brand')).getText();
   }
 }
