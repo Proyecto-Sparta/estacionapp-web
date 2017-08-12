@@ -26,7 +26,9 @@
     "core-js": "^2.4.1",
     "phantomjs": "^2.1.7",
     "rxjs": "^5.1.0",
-    "zone.js": "^0.8.4"
+    "zone.js": "^0.8.4",
+    "ng2-dragula": "^1.5.0"
+
   },
   "devDependencies": {
     "@angular/cli": "1.0.1",
