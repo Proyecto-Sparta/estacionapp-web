@@ -16,6 +16,7 @@ import {AuthGuard} from './guards/auth-guard.service';
 import {AgmCoreModule} from '@agm/core';
 import { HomeComponent } from './home/home.component';
 import {LogoutComponent} from './logout/logout.component';
+import { LayoutComponent } from './layout/layout.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {LogoutComponent} from './logout/logout.component';
     MapComponent,
     MenuComponent,
     DashboardComponent,
-    HomeComponent
+    HomeComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule,
