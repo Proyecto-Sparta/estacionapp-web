@@ -1,0 +1,10 @@
+.square {
+  width: 50px;
+  border: solid 1px black;
+}
+
+.square:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
