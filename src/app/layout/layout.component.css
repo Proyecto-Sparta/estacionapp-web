@@ -1,9 +1,18 @@
 .layout {
   height: 600px;
-  margin-left: 2%;
 }
 
 
 .parking-space-size {
   height: 50px;
+}
+
+
+.garage-elements-layout, .garage-map-layout {
+  height: inherit;
+  margin-left: 2%;
+}
+
+.panel-body.dropzone {
+  height: inherit;
 }
