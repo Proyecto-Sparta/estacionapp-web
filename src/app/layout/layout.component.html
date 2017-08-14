@@ -1,8 +1,12 @@
-<div>
-  <div class="col-lg-9 layout panel panel-default panel-body">
+<div id="garage-map" class="layout">
+  <div class="col-lg-9 garage-map-layout panel panel-default">
+    <div class="panel-body dropzone">
 
+    </div>
   </div>
-  <div class="col-lg-2 layout panel panel-default panel-body">
-
+  <div class="col-lg-2 garage-elements-layout panel panel-default">
+    <div class="panel-body dropzone">
+    <parking-space *ngFor="let parkingSpace of parkingSpaces"></parking-space>
+    </div>
   </div>
 </div>
