@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  constructor() { }
+  private rows;
+
+  constructor() {
+    this.rows = Array(5);
+  }
 
   ngOnInit() {
   }

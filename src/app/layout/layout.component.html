@@ -1,7 +1,10 @@
 <div class="wrapper layout-wrapper">
-  <div class="container col-lg-9 layout panel panel-default panel-body" [dragula]='"first-bag"'></div>
+  <div class="col-lg-9 layout panel panel-default panel-body">
+        <div *ngFor="let row of rows" class="container row parking-space-size">
+          <div *ngFor="let row of rows" class="container col-lg-1" [dragula]='"first-bag"'></div>
+        </div>
+  </div>
   <div class="container col-lg-2 layout panel panel-default panel-body" [dragula]='"first-bag"'>
-    <parking-space></parking-space>
-    <parking-space></parking-space>
+      <parking-space *ngFor="let row of rows"></parking-space>
   </div>
 </div>
