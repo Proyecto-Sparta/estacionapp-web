@@ -1,5 +1,6 @@
 import {AfterViewInit, Component} from '@angular/core';
 import * as interact from 'interactjs';
+import {$} from "protractor";
 
 @Component({
   selector: 'layout',
@@ -22,19 +23,15 @@ export class LayoutComponent implements AfterViewInit {
   private setupDropzone(){
     interact('.dropzone').dropzone({
       accept: '.parking-space',
-      overlap: 0.01,
-      // add / remove dropzone feedback
+      overlap: 'pointer',
+
       ondropactivate: function (event) {
         event.target.classList.add('drop-active');
       },
-      ondropdeactivate: function (event) {
-        event.target.classList.remove('drop-active');
-      },
-
-      // add / remove dropzone feedback
       ondragenter: function (event) {
         let draggableElement = event.relatedTarget,
           dropzoneElement = event.target;
+
         dropzoneElement.classList.add('drop-target');
         draggableElement.classList.add('can-drop');
       },
@@ -42,10 +39,9 @@ export class LayoutComponent implements AfterViewInit {
         event.target.classList.remove('drop-target');
         event.relatedTarget.classList.remove('can-drop');
       },
-
-      // drop successful
-      ondrop: function (event) {
-        console.log(event);
+      ondropdeactivate: function (event) {
+        event.target.classList.remove('drop-active');
+        event.target.classList.remove('drop-target');
       }
     });
 

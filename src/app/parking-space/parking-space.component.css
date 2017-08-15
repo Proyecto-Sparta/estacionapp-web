@@ -1,9 +1,9 @@
 .square {
   position: relative;
-  width: 50%;
+  width: 3em;
   background-color: gray;
   border-radius: 0.95em;
-  margin: 1%;
+  margin: 2%;
 }
 
 .square:after {
