@@ -1,6 +1,6 @@
 .square {
   position: relative;
-  width: 3em;
+  width: inherit;
   background-color: gray;
   border-radius: 0.95em;
   margin: 2%;
@@ -11,3 +11,4 @@
   display: block;
   padding-bottom: 100%;
 }
+
