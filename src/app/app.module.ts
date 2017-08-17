@@ -19,6 +19,7 @@ import {LogoutComponent} from './logout/logout.component';
 import { LayoutComponent } from './layout/layout.component';
 import {DragulaModule} from "ng2-dragula";
 import { ParkingSpaceComponent } from './parking-space/parking-space.component';
+import { ParkingItemComponent } from './parking-item/parking-item.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ParkingSpaceComponent } from './parking-space/parking-space.component';
     DashboardComponent,
     HomeComponent,
     LayoutComponent,
-    ParkingSpaceComponent
+    ParkingSpaceComponent,
+    ParkingItemComponent
   ],
   imports: [
     BrowserModule,
