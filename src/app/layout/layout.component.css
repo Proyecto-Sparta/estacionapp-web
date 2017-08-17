@@ -16,3 +16,17 @@
 .panel-body.dropzone {
   height: inherit;
 }
+
+
+parking-item.xsmall,
+parking-space.xsmall{
+  width: 3em;
+}
+
+parking-item.small {
+  width: 5em;
+}
+
+parking-item.medium {
+  width: 7em;
+}
