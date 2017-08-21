@@ -20,6 +20,7 @@ import { LayoutComponent } from './layout/layout.component';
 import {DragulaModule} from "ng2-dragula";
 import { ParkingSpaceComponent } from './parking-space/parking-space.component';
 import { ParkingItemComponent } from './parking-item/parking-item.component';
+import {ParkingSpace} from "./parking-space/parking-space";
 
 @NgModule({
   declarations: [
