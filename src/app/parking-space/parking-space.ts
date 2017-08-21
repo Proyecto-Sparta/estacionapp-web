@@ -1,11 +1,13 @@
 export class ParkingSpace {
 
 
-  constructor(public x: number,
+  constructor(public shape : string,
+              public x: number,
               public y: number,
               public width: number,
               public height: number,
               public angle: number) {
+    this.shape = shape;
     this.x = x;
     this.y = y;
     this.width = width;
