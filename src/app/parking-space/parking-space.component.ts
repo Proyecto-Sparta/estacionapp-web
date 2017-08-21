@@ -12,19 +12,17 @@ export class ParkingSpaceComponent implements AfterViewInit {
 
   private elementHTML : HTMLElement;
   model : ParkingSpace;
-  private self : ParkingSpaceComponent;
   constructor(private elemRef: ElementRef) {
-    this.self = this;
   }
 
   ngAfterViewInit(): void {
     this.elementHTML = this.elemRef.nativeElement;
-    this.setupDraggable(this.self);
+    this.setupDraggable();
     this.initialize();
   }
 
   private initialize(){
-    this.model = new ParkingSpace(this.relativeX(), this.relativeY(),
+    this.model = new ParkingSpace("square", this.relativeX(), this.relativeY(),
                     this.getHeight(), this.getWidth(), 0);
   }
 
@@ -45,7 +43,7 @@ export class ParkingSpaceComponent implements AfterViewInit {
   }
 
 
-  private setupDraggable(component) {
+  private setupDraggable() {
     interact('.parking-space').draggable({
       inertia: true,
       endOnly: false,
@@ -67,18 +65,15 @@ export class ParkingSpaceComponent implements AfterViewInit {
 
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
-
-        component.model.updatePosition(x, y);
-
       }
     })
   }
 
-  public updatePosition(){
-    let x = parseFloat(this.elemRef.nativeElement.getAttribute('data-x')) || 0;
-    let y = parseFloat(this.elemRef.nativeElement.getAttribute('data-y')) || 0;
+  updatePosition(component){
+    let x = parseFloat(component.elemRef.nativeElement.children[0].getAttribute('data-x')) || 0;
+    let y = parseFloat(component.elemRef.nativeElement.children[0].getAttribute('data-y')) || 0;
 
-    this.model.updatePosition(x, y);
+    component.model.updatePosition(x, y);
   }
 
 }
