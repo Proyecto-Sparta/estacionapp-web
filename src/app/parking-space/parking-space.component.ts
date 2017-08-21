@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, ElementRef} from '@angular/core';
 import * as interact from 'interactjs';
+import {ParkingSpace} from "./parking-space";
 
 @Component({
   selector: 'parking-space',
@@ -8,21 +9,39 @@ import * as interact from 'interactjs';
 })
 export class ParkingSpaceComponent implements AfterViewInit {
 
-  private angle = 0;
-  private x = 0;
-  private y = 0;
-  private width;
-  private height;
-  private elementHTML : HTMLElement;
 
+  private elementHTML : HTMLElement;
+  model : ParkingSpace;
+  private self : ParkingSpaceComponent;
   constructor(private elemRef: ElementRef) {
+    this.self = this;
   }
 
   ngAfterViewInit(): void {
-    this.setupDraggable(this);
     this.elementHTML = this.elemRef.nativeElement;
-    this.height = this.elementHTML.getBoundingClientRect().height;
-    this.width = this.elementHTML.getBoundingClientRect().width;
+    this.setupDraggable(this.self);
+    this.initialize();
+  }
+
+  private initialize(){
+    this.model = new ParkingSpace(this.relativeX(), this.relativeY(),
+                    this.getHeight(), this.getWidth(), 0);
+  }
+
+  private getHeight(){
+    return this.elementHTML.getBoundingClientRect().height;
+  }
+
+  private getWidth(){
+    return this.elementHTML.getBoundingClientRect().width;
+  }
+
+  private relativeY(){
+    return this.elementHTML.offsetTop - this.elementHTML.parentElement.offsetTop;
+  }
+
+  private relativeX(){
+    return this.elementHTML.offsetLeft - this.elementHTML.parentElement.offsetLeft;
   }
 
 
@@ -49,13 +68,17 @@ export class ParkingSpaceComponent implements AfterViewInit {
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
 
-        component.x = -x;
-        component.y = -y;
-        component.width = component.elementHTML.getBoundingClientRect().width;
-        component.height = component.elementHTML.getBoundingClientRect().height;
+        component.model.updatePosition(x, y);
 
       }
     })
+  }
+
+  public updatePosition(){
+    let x = parseFloat(this.elemRef.nativeElement.getAttribute('data-x')) || 0;
+    let y = parseFloat(this.elemRef.nativeElement.getAttribute('data-y')) || 0;
+
+    this.model.updatePosition(x, y);
   }
 
 }
