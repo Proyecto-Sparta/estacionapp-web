@@ -1,14 +1,20 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, ContentChildren, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import * as interact from 'interactjs';
-import {$} from "protractor";
+import {ParkingSpaceComponent} from "../parking-space/parking-space.component";
 
 @Component({
   selector: 'layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css']
 })
+
+
 export class LayoutComponent implements AfterViewInit {
   private parkingSpaces;
+
+
+  @ViewChildren(ParkingSpaceComponent) viewChildren;
+  @ContentChildren(ParkingSpaceComponent) contentChildren;
 
 
   constructor() {
@@ -17,8 +23,9 @@ export class LayoutComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.setupDropzone();
-  }
-
+    this.viewChildren.changes.subscribe(changes => console.log(changes));
+    this.contentChildren.changes.subscribe(changes => console.log(changes));
+    }
 
   private setupDropzone(){
     interact('.dropzone').dropzone({
@@ -44,6 +51,10 @@ export class LayoutComponent implements AfterViewInit {
       }
     });
 
+  }
+
+  saveLayout(){
+    this.viewChildren.forEach(child => child.updatePosition(child));
   }
 
 }
