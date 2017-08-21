@@ -22,7 +22,6 @@ export class LayoutComponent implements AfterViewInit {
 
   private setupDropzone(){
     interact('.dropzone').dropzone({
-      accept: '.parking-space',
       overlap: 'pointer',
 
       ondropactivate: function (event) {
@@ -46,6 +45,5 @@ export class LayoutComponent implements AfterViewInit {
     });
 
   }
-
 
 }
