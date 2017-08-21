@@ -2,6 +2,10 @@
   height: 600px;
 }
 
+footer {
+  display: flex;
+  justify-content: flex-end;
+}
 
 .parking-space-size {
   height: 50px;
