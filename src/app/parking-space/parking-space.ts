@@ -1,7 +1,6 @@
 export class ParkingSpace {
 
-
-  constructor(public shape : string,
+  constructor(public shape: string,
               public x: number,
               public y: number,
               public width: number,

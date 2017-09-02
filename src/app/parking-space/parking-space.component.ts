@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, ElementRef} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input} from '@angular/core';
 import * as interact from 'interactjs';
-import {ParkingSpace} from "./parking-space";
+import {ParkingSpace} from './parking-space';
 
 @Component({
   selector: 'parking-space',
@@ -9,39 +9,26 @@ import {ParkingSpace} from "./parking-space";
 })
 export class ParkingSpaceComponent implements AfterViewInit {
 
+  private elementHTML: HTMLElement;
 
-  private elementHTML : HTMLElement;
-  model : ParkingSpace;
+  @Input() model: ParkingSpace;
   constructor(private elemRef: ElementRef) {
   }
 
   ngAfterViewInit(): void {
-    this.elementHTML = this.elemRef.nativeElement;
+    this.elementHTML = this.elemRef.nativeElement.children[0];
     this.setupDraggable();
     this.initialize();
   }
 
-  private initialize(){
-    this.model = new ParkingSpace("square", this.relativeX(), this.relativeY(),
-                    this.getHeight(), this.getWidth(), 0);
-  }
+  private initialize() {
+    const x = this.model.x.toString(),
+      y = this.model.y.toString();
 
-  private getHeight(){
-    return this.elementHTML.getBoundingClientRect().height;
+    this.elementHTML.setAttribute('data-x', x);
+    this.elementHTML.setAttribute('data-y', y);
+    this.elementHTML.style.transform = `translate(${x}px, ${y}px)`;
   }
-
-  private getWidth(){
-    return this.elementHTML.getBoundingClientRect().width;
-  }
-
-  private relativeY(){
-    return this.elementHTML.offsetTop - this.elementHTML.parentElement.offsetTop;
-  }
-
-  private relativeX(){
-    return this.elementHTML.offsetLeft - this.elementHTML.parentElement.offsetLeft;
-  }
-
 
   private setupDraggable() {
     interact('.parking-space').draggable({
@@ -54,8 +41,7 @@ export class ParkingSpaceComponent implements AfterViewInit {
 
       autoScroll: true,
       onmove: function(event){
-        let target = event.target,
-
+        const target = event.target,
           x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
           y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
 
@@ -66,12 +52,12 @@ export class ParkingSpaceComponent implements AfterViewInit {
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
       }
-    })
+    });
   }
 
-  updatePosition(component){
-    let x = parseFloat(component.elemRef.nativeElement.children[0].getAttribute('data-x')) || 0;
-    let y = parseFloat(component.elemRef.nativeElement.children[0].getAttribute('data-y')) || 0;
+  updatePosition(component) {
+    const x = parseFloat(component.elemRef.nativeElement.children[0].getAttribute('data-x')) || 0;
+    const y = parseFloat(component.elemRef.nativeElement.children[0].getAttribute('data-y')) || 0;
 
     component.model.updatePosition(x, y);
   }

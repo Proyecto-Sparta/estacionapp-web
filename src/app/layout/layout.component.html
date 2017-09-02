@@ -1,7 +1,8 @@
 <div class="layout">
   <div class="col-lg-9 col-sm-9 garage-map-layout panel panel-default">
     <div id="garage" class="panel-body parking-elem-container dropzone">
-      <parking-space class="xsmall" *ngFor='let parkingSpace of parkingSpaces; let i = index' id="parking-space-{{i+1}}"></parking-space>
+      <parking-space class="xsmall" *ngFor='let parkingSpace of parkingSpaces; let i = index'
+        id="parking-space-{{i+1}}" [model]='parkingSpace'></parking-space>
     </div>
   </div>
   <div class="col-lg-2 col-sm-2 garage-elements-layout panel panel-default">
@@ -20,4 +21,3 @@
     </div>
   </div>
 </div>
-

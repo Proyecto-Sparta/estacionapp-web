@@ -1,24 +1,27 @@
 import {AfterViewInit, Component, ContentChildren, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import * as interact from 'interactjs';
-import {ParkingSpaceComponent} from "../parking-space/parking-space.component";
+import {ParkingSpace} from '../parking-space/parking-space';
+import {ParkingSpaceComponent} from '../parking-space/parking-space.component';
+import {ParkingSpaceService} from '../parking-space/parking-space.service';
 
 @Component({
   selector: 'layout',
   templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.css']
+  styleUrls: ['./layout.component.css'],
+  providers: [ParkingSpaceService]
 })
 
 
 export class LayoutComponent implements AfterViewInit {
   private parkingSpaces;
 
-
   @ViewChildren(ParkingSpaceComponent) viewChildren;
   @ContentChildren(ParkingSpaceComponent) contentChildren;
 
-
-  constructor() {
-    this.parkingSpaces = Array(5);
+  constructor(private parkingSpaceService: ParkingSpaceService) {
+    parkingSpaceService
+      .getParkingSpacesForGarage(666)
+      .then((storedParkingSpaces) => this.parkingSpaces = storedParkingSpaces);
   }
 
   ngAfterViewInit(): void {
@@ -27,7 +30,7 @@ export class LayoutComponent implements AfterViewInit {
     this.contentChildren.changes.subscribe(changes => console.log(changes));
     }
 
-  private setupDropzone(){
+  private setupDropzone() {
     interact('.dropzone').dropzone({
       overlap: 'pointer',
 
@@ -35,7 +38,7 @@ export class LayoutComponent implements AfterViewInit {
         event.target.classList.add('drop-active');
       },
       ondragenter: function (event) {
-        let draggableElement = event.relatedTarget,
+        const draggableElement = event.relatedTarget,
           dropzoneElement = event.target;
 
         dropzoneElement.classList.add('drop-target');
@@ -53,8 +56,7 @@ export class LayoutComponent implements AfterViewInit {
 
   }
 
-  saveLayout(){
+  saveLayout() {
     this.viewChildren.forEach(child => child.updatePosition(child));
   }
-
 }
