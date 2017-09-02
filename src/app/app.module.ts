@@ -14,13 +14,12 @@ import {LoginService} from './login/login.service';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {AuthGuard} from './guards/auth-guard.service';
 import {AgmCoreModule} from '@agm/core';
-import { HomeComponent } from './home/home.component';
+import {HomeComponent} from './home/home.component';
+import {MyAccountComponent} from './myAccount/myAccount.component';
 import {LogoutComponent} from './logout/logout.component';
-import { LayoutComponent } from './layout/layout.component';
-import {DragulaModule} from "ng2-dragula";
-import { ParkingSpaceComponent } from './parking-space/parking-space.component';
-import { ParkingItemComponent } from './parking-item/parking-item.component';
-import {ParkingSpace} from "./parking-space/parking-space";
+import {LayoutComponent} from './layout/layout.component';
+import {ParkingSpaceComponent} from './parking-space/parking-space.component';
+import {ParkingItemComponent} from './parking-item/parking-item.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +31,7 @@ import {ParkingSpace} from "./parking-space/parking-space";
     MenuComponent,
     DashboardComponent,
     HomeComponent,
+    MyAccountComponent,
     LayoutComponent,
     ParkingSpaceComponent,
     ParkingItemComponent
@@ -40,7 +40,6 @@ import {ParkingSpace} from "./parking-space/parking-space";
     BrowserModule,
     FormsModule,
     HttpModule,
-    DragulaModule,
     AppRoutingModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAAsIKJcL_6F6V0FzZif5pRSwu17vY_UAU'

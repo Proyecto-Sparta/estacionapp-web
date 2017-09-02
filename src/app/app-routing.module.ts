@@ -5,25 +5,22 @@ import {SignUpComponent} from './signup/signup.component';
 import {AuthGuard} from './guards/auth-guard.service';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {HomeComponent} from './home/home.component';
+import {MyAccountComponent} from './myAccount/myAccount.component';
 import {LogoutComponent} from './logout/logout.component';
-import {LayoutComponent} from "./layout/layout.component";
+import {LayoutComponent} from './layout/layout.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/myAccount',
     pathMatch: 'full'
-  },
-  {
-    path: 'login',
-    component: LoginComponent
   },
   { path: 'logout',
     component: LogoutComponent
   },
   {
-    path: 'home',
-    component: HomeComponent,
+    path: 'myAccount',
+    component: MyAccountComponent,
     canActivate: [AuthGuard],
     children: [
       {
@@ -33,18 +30,12 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'signup',
-    component: SignUpComponent
+    path: 'home',
+    component: HomeComponent
   },
   {
-    path: '',
-    canActivateChild: [AuthGuard],
-    children: [
-      {
-        path: 'dashboard',
-        component: DashboardComponent
-      }
-    ]
+    path: 'signup',
+    component: SignUpComponent
   }
 ];
 

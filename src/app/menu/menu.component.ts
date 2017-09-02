@@ -9,11 +9,11 @@ export class MenuComponent {
   links = [
     {
       name: 'View Occupancy',
-      path: '/home/occupancy'
+      path: '/myAccount/occupancy'
     },
     {
       name: 'Edit Garage\'s Map',
-      path: '/home/layout'
+      path: '/myAccount/layout'
     },
     {
       name: 'Logout',
