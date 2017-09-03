@@ -7,9 +7,9 @@
   </div>
   <div class="col-lg-2 col-sm-2 garage-elements-layout panel panel-default">
     <div class="panel-body parking-elem-container">
-    <parking-item class="xsmall"></parking-item>
-    <parking-item class="small"></parking-item>
-    <parking-item class="medium"></parking-item>
+    <parking-item class="xsmall" (click)="renderSmallParkingSpace()"></parking-item>
+    <parking-item class="small" (click)="renderMediumParkingSpace()"></parking-item>
+    <parking-item class="medium" (click)="renderLargeParkingSpace()"></parking-item>
     </div>
   </div>
   <div class="row">

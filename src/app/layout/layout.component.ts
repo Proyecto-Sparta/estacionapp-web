@@ -10,8 +10,6 @@ import {ParkingSpaceService} from '../parking-space/parking-space.service';
   styleUrls: ['./layout.component.css'],
   providers: [ParkingSpaceService]
 })
-
-
 export class LayoutComponent implements AfterViewInit {
   private parkingSpaces;
 
@@ -54,6 +52,19 @@ export class LayoutComponent implements AfterViewInit {
       }
     });
 
+  }
+
+  private renderSmallParkingSpace() {
+    const smallParkingSpace = new ParkingSpace('square', 10, 10, 10, 10, 0);
+    this.parkingSpaces.push(smallParkingSpace);
+  }
+  private renderMediumParkingSpace() {
+    const mediumParkingSpace = new ParkingSpace('square', 10, 10, 20, 20, 0);
+    this.parkingSpaces.push(mediumParkingSpace);
+  }
+  private renderLargeParkingSpace() {
+    const largeParkingSpace = new ParkingSpace('square', 10, 10, 30, 30, 0);
+    this.parkingSpaces.push(largeParkingSpace);
   }
 
   saveLayout() {
