@@ -19,16 +19,16 @@ export class ParkingSpaceService {
           shape: 'square',
           x: 200,
           y: 120,
-          width: 10,
-          height: 10,
+          width: 60,
+          height: 60,
           angle: 0
         },
         {
           shape: 'square',
           x: 560,
           y: 40,
-          width: 20,
-          height: 20,
+          width: 40,
+          height: 40,
           angle: 0
         }
       ])

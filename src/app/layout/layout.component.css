@@ -11,7 +11,6 @@ footer {
   height: 50px;
 }
 
-
 .garage-elements-layout, .garage-map-layout {
   height: inherit;
   margin-left: 1%;
@@ -21,16 +20,23 @@ footer {
   height: inherit;
 }
 
+parking-space{
+  display: flow-root;
+  height: 0;
+  width: 0;
+}
 
-parking-item.xsmall,
-parking-space.xsmall{
-  width: 3em;
+parking-item.xsmall{
+  width: 40px;
+  height: 40px;
 }
 
 parking-item.small {
-  width: 5em;
+  width: 60px;
+  height: 60px;
 }
 
 parking-item.medium {
-  width: 7em;
+  width: 100px;
+  height: 100px;
 }

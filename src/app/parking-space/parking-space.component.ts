@@ -18,16 +18,18 @@ export class ParkingSpaceComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.elementHTML = this.elemRef.nativeElement.children[0];
     this.setupDraggable();
-    this.initialize();
+    this.render();
   }
 
-  private initialize() {
+  private render() {
     const x = this.model.x.toString(),
       y = this.model.y.toString();
 
     this.elementHTML.setAttribute('data-x', x);
     this.elementHTML.setAttribute('data-y', y);
     this.elementHTML.style.transform = `translate(${x}px, ${y}px)`;
+    this.elementHTML.style.width = `${this.model.width}px`;
+    this.elementHTML.style.height = `${this.model.height}px`;
   }
 
   private setupDraggable() {
