@@ -9,7 +9,6 @@ export class ParkingSpaceService {
 
   constructor(private http: Http,
               private router: Router) {
-
   }
 
   public getParkingSpacesForGarage(garageId: Number) {
@@ -37,7 +36,12 @@ export class ParkingSpaceService {
     );
   }
 
-  public mapStoredObjectToParkingSpace(object: Object) {
+  public storeParkingSpacesForGarage(garageId: Number, parkingSpaces: Array<ParkingSpace>) {
+    const storableObjects = parkingSpaces.map(this.mapParkingSpaceToStorableObject);
+    console.log(storableObjects);
+  }
+
+  private mapStoredObjectToParkingSpace(object: Object) {
     const shape = object['shape'],
       x = object['x'],
       y = object['y'],
@@ -46,5 +50,16 @@ export class ParkingSpaceService {
       angle = object['angle'];
 
     return new ParkingSpace(shape, x, y, width, height, angle);
+  }
+
+  private mapParkingSpaceToStorableObject(parkingSpace: ParkingSpace) {
+    return {
+      shape: parkingSpace.shape,
+      x: parkingSpace.x,
+      y: parkingSpace.y,
+      width: parkingSpace.width,
+      height: parkingSpace.height,
+      angle: parkingSpace.angle
+    };
   }
 }

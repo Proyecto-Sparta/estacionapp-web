@@ -51,7 +51,6 @@ export class LayoutComponent implements AfterViewInit {
         event.target.classList.remove('drop-target');
       }
     });
-
   }
 
   private renderSmallParkingSpace() {
@@ -69,5 +68,6 @@ export class LayoutComponent implements AfterViewInit {
 
   saveLayout() {
     this.viewChildren.forEach(child => child.updatePosition(child));
+    this.parkingSpaceService.storeParkingSpacesForGarage(666, this.parkingSpaces);
   }
 }
