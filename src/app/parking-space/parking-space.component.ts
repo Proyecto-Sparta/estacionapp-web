@@ -37,5 +37,4 @@ export class ParkingSpaceComponent implements AfterViewInit {
 
     component.model.updatePosition(x, y);
   }
-
 }

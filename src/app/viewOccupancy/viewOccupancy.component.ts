@@ -23,4 +23,8 @@ export class ViewOccupancyComponent {
       .then((storedParkingSpaces) => this.parkingSpaces = storedParkingSpaces);
   }
 
+  toggleOccupancy(parkingSpaceIndex: number) {
+    this.parkingSpaces[parkingSpaceIndex].toggleOccupancy();
+    // Update on DB
+  }
 }

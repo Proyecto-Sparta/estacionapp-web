@@ -21,7 +21,7 @@ export class ParkingSpace {
     this.y += y;
   }
 
-  toggleOccupied() {
+  toggleOccupancy() {
     this.occupied = !this.occupied;
   }
 }
