@@ -23,10 +23,11 @@ export class LayoutComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.setupDropzone();
     this.viewChildren.changes.subscribe(changes => console.log(changes));
     this.contentChildren.changes.subscribe(changes => console.log(changes));
-    }
+    this.setupDropzone();
+    this.setupDraggables();
+  }
 
   private setupDropzone() {
     interact('.dropzone').dropzone({
@@ -49,6 +50,31 @@ export class LayoutComponent implements AfterViewInit {
       ondropdeactivate: function (event) {
         event.target.classList.remove('drop-active');
         event.target.classList.remove('drop-target');
+      }
+    });
+  }
+
+  private setupDraggables() {
+    interact('.parking-space').draggable({
+      inertia: true,
+      endOnly: false,
+      restrict: {
+        restriction: '.dropzone',
+        elementRect: {top: 0, left: 0, bottom: 1, right: 1}
+      },
+
+      autoScroll: true,
+      onmove: function(event){
+        const target = event.target,
+          x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+          y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+        target.style.webkitTransform =
+          target.style.transform =
+            'translate(' + x + 'px, ' + y + 'px)';
+
+        target.setAttribute('data-x', x);
+        target.setAttribute('data-y', y);
       }
     });
   }
