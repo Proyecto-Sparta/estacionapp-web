@@ -1,0 +1,16 @@
+.viewOccupancy {
+  height: 600px;
+}
+
+.garage-map-layout {
+  height: inherit;
+  margin-left: 1%;
+}
+
+>>> .parking-space, .square{
+  background-color: green !important;
+}
+
+>>> .parking-space.occupied{
+  background-color: red !important;
+}

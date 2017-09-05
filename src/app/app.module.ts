@@ -20,6 +20,7 @@ import {LogoutComponent} from './logout/logout.component';
 import {LayoutComponent} from './layout/layout.component';
 import {ParkingSpaceComponent} from './parking-space/parking-space.component';
 import {ParkingItemComponent} from './parking-item/parking-item.component';
+import {ViewOccupancyComponent} from './viewOccupancy/viewOccupancy.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {ParkingItemComponent} from './parking-item/parking-item.component';
     MyAccountComponent,
     LayoutComponent,
     ParkingSpaceComponent,
-    ParkingItemComponent
+    ParkingItemComponent,
+    ViewOccupancyComponent
   ],
   imports: [
     BrowserModule,

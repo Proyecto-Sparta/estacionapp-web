@@ -20,7 +20,8 @@ export class ParkingSpaceService {
           y: 120,
           width: 60,
           height: 60,
-          angle: 0
+          angle: 0,
+          occupied: true
         },
         {
           shape: 'square',
@@ -28,7 +29,8 @@ export class ParkingSpaceService {
           y: 40,
           width: 40,
           height: 40,
-          angle: 0
+          angle: 0,
+          occupied: false
         }
       ])
     ).then((persistedObjects: Array<Object>) =>
@@ -47,9 +49,10 @@ export class ParkingSpaceService {
       y = object['y'],
       width = object['width'],
       height = object['height'],
-      angle = object['angle'];
+      angle = object['angle'],
+      occupied = object['occupied'];
 
-    return new ParkingSpace(shape, x, y, width, height, angle);
+    return new ParkingSpace(shape, x, y, width, height, angle, occupied);
   }
 
   private mapParkingSpaceToStorableObject(parkingSpace: ParkingSpace) {
@@ -59,7 +62,8 @@ export class ParkingSpaceService {
       y: parkingSpace.y,
       width: parkingSpace.width,
       height: parkingSpace.height,
-      angle: parkingSpace.angle
+      angle: parkingSpace.angle,
+      occupied: parkingSpace.occupied
     };
   }
 }

@@ -8,6 +8,7 @@ import {HomeComponent} from './home/home.component';
 import {MyAccountComponent} from './myAccount/myAccount.component';
 import {LogoutComponent} from './logout/logout.component';
 import {LayoutComponent} from './layout/layout.component';
+import {ViewOccupancyComponent} from './viewOccupancy/viewOccupancy.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'layout',
         component: LayoutComponent
+      },
+      {
+        path: 'occupancy',
+        component: ViewOccupancyComponent
       }
     ]
   },
