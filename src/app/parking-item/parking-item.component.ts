@@ -12,4 +12,6 @@ export class ParkingItemComponent implements OnInit {
   ngOnInit() {
   }
 
+
+
 }
