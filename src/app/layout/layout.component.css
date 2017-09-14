@@ -1,10 +1,14 @@
-.layout {
-  height: 600px;
+.layout-container {
+  height: 500px;
 }
 
-footer {
-  display: flex;
-  justify-content: flex-end;
+.buttons-container {
+  text-align: right;
+
+}
+
+.cancel-button {
+  margin-right: 5px;
 }
 
 .parking-space-size {

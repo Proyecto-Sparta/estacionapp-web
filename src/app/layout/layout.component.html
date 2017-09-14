@@ -1,23 +1,35 @@
 <div class="layout">
-  <div class="col-lg-9 col-sm-9 garage-map-layout panel panel-default">
-    <div id="garage" class="panel-body parking-elem-container dropzone">
+  <div class="row">
+    <div class="col-sm-12 col-lg-9">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Layout</h3>
+    </div>
+    <div id="garage" class="panel-body dropzone layout-container">
       <parking-space *ngFor='let parkingSpace of parkingSpaces; let i = index'
         id="parking-space-{{i+1}}" [model]='parkingSpace'></parking-space>
     </div>
   </div>
-  <div class="col-lg-2 col-sm-2 garage-elements-layout panel panel-default">
-    <div class="panel-body parking-elem-container">
+    </div>
+  <div class="col-lg-3 col-sm-12">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Choose a parking space</h3>
+    </div>
+    <div class="panel-body layout-container">
     <parking-item class="xsmall" (click)="renderSmallParkingSpace()"></parking-item>
     <parking-item class="small" (click)="renderMediumParkingSpace()"></parking-item>
     <parking-item class="medium" (click)="renderLargeParkingSpace()"></parking-item>
     </div>
   </div>
+  </div>
+  </div>
   <div class="row">
-    <div class="col-lg-9">
-      <footer>
-      <button class="btn btn-default">Cancel</button>
+    <div class="col-sm-12 col-lg-9">
+    <div class="buttons-container">
+      <button class="btn btn-danger cancel-button">Cancel</button>
       <button (click)="saveLayout()" class="btn btn-success">Save</button>
-      </footer>
+    </div>
     </div>
   </div>
 </div>
