@@ -11,6 +11,7 @@ import {MenuComponent} from './menu/menu.component';
 import {AppRoutingModule} from './app-routing.module';
 import {GarageService} from './garage/garage.service';
 import {LoginService} from './login/login.service';
+import {NotificationsService} from './notifications/notifications.service';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {AuthGuard} from './guards/auth-guard.service';
 import {AgmCoreModule} from '@agm/core';
@@ -47,7 +48,7 @@ import {ViewOccupancyComponent} from './viewOccupancy/viewOccupancy.component';
       apiKey: 'AIzaSyAAsIKJcL_6F6V0FzZif5pRSwu17vY_UAU'
     })
   ],
-  providers: [GarageService, LoginService, AuthGuard],
+  providers: [GarageService, LoginService, NotificationsService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {
