@@ -8,26 +8,11 @@
   </div>
 
   <div class="notifications col-sm-4">
-<div>
-    <div class="notification row">
-      hola hola hola
-    </div>
-    <br>
-  </div><div>
+    <div *ngFor='let notification of notifications;'>
       <div class="notification row">
-        hola hola hola
+        {{notification}}
       </div>
       <br>
-    </div><div>
-        <div class="notification row">
-          hola hola hola
-        </div>
-        <br>
-      </div><div>
-          <div class="notification row">
-            hola hola hola
-          </div>
-          <br>
-        </div>
+    </div>
   </div>
 </div>
