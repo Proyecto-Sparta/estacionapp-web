@@ -19,13 +19,16 @@ export class LayoutComponent implements AfterViewInit {
   @ContentChildren(ParkingSpaceComponent) contentChildren;
 
   constructor(private parkingSpaceService: ParkingSpaceService) {
-    parkingSpaceService
-      .getParkingSpacesForGarage(666)
-      .then((storedParkingSpaces) => this.parkingSpaces = storedParkingSpaces);
+    this.parkingSpaceService = parkingSpaceService;
   }
 
   ngAfterViewInit(): void {
     this.layoutScale = this.garage.nativeElement.offsetWidth / 1080;
+
+    this.parkingSpaceService
+        .getParkingSpacesForGarage(666)
+        .then((parkingSpaces) => this.applyScale(parkingSpaces, this.layoutScale))
+        .then((storedParkingSpaces) => this.parkingSpaces = storedParkingSpaces);
 
     this.viewChildren.changes.subscribe(changes => console.log(changes));
     this.contentChildren.changes.subscribe(changes => console.log(changes));
@@ -56,6 +59,10 @@ export class LayoutComponent implements AfterViewInit {
         event.target.classList.remove('drop-target');
       }
     });
+  }
+
+  private applyScale(parkingSpaces, scale) {
+    return parkingSpaces.map( parkingSpace => parkingSpace.applyScale(scale));
   }
 
   private setupDraggables() {

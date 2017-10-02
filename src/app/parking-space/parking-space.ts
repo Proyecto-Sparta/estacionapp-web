@@ -24,4 +24,13 @@ export class ParkingSpace {
   toggleOccupancy() {
     this.occupied = !this.occupied;
   }
+
+  applyScale(scale) {
+    this.x = this.x * scale;
+    this.y = this.y * scale;
+    this.height = this.height * scale;
+    this.width = this.width * scale;
+    
+    return this;
+  }
 }
