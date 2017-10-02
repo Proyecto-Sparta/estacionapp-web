@@ -8,7 +8,7 @@ import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class LoginService {
-  private garageUrl = 'http://localhost:4000/api/garage';
+  private garageUrl = 'http://localhost:4000/api/garages';
 
   constructor(private http: Http) {
 
@@ -28,7 +28,6 @@ export class LoginService {
     return this.http
       .get(url, options)
       .map(response => {
-        console.log('bla');
         localStorage.setItem('currentUser', garage.username);
         localStorage.setItem('token', response.headers.get('authorization'));
       });
