@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.loginService.isLoggedIn())
-      this.router.navigate(['/home']);
+      this.router.navigate(['/myAccount']);
   }
 
   model = new Garage('Garage', 'password');
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       loginForm.value.username,
       loginForm.value.password), this)
       .subscribe(
-        (token: any) => this.router.navigate(['/home']),
+        (token: any) => this.router.navigate(['/myAccount']),
         () => { this.makeInvalid(); }
       );
   }
