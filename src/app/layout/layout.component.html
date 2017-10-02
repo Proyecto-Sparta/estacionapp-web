@@ -5,7 +5,8 @@
     <div class="panel-heading">
       <h3 class="panel-title">Layout</h3>
     </div>
-    <div id="garage" class="panel-body dropzone layout-container">
+    <div id="garage" #garage class="panel-body dropzone layout-container"
+      [ngStyle]="{'height.px': (garage.offsetWidth/1080)*720 }">
       <parking-space *ngFor='let parkingSpace of parkingSpaces; let i = index'
         id="parking-space-{{i+1}}" [model]='parkingSpace'></parking-space>
     </div>

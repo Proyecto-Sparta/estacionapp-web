@@ -12,7 +12,9 @@ import {ParkingSpaceService} from '../parking-space/parking-space.service';
 })
 export class LayoutComponent implements AfterViewInit {
   private parkingSpaces;
+  private layoutScale;
 
+  @ViewChild('garage') garage: ElementRef;
   @ViewChildren(ParkingSpaceComponent) viewChildren;
   @ContentChildren(ParkingSpaceComponent) contentChildren;
 
@@ -23,6 +25,8 @@ export class LayoutComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.layoutScale = this.garage.nativeElement.offsetWidth / 1080;
+
     this.viewChildren.changes.subscribe(changes => console.log(changes));
     this.contentChildren.changes.subscribe(changes => console.log(changes));
     this.setupDropzone();
