@@ -105,6 +105,9 @@ export class LayoutComponent implements AfterViewInit {
 
   saveLayout() {
     this.viewChildren.forEach(child => child.updatePosition(child));
-    this.parkingSpaceService.storeParkingSpacesForGarage(666, this.parkingSpaces);
+    this.parkingSpaceService.storeParkingSpacesForGarage(
+      666,
+      this.parkingSpaces.map((parkingSpace) => parkingSpace.applyScale(1 / this.layoutScale))
+    );
   }
 }
