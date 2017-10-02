@@ -5,10 +5,12 @@ import {LoginComponent} from './login.component';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import {Observable} from 'rxjs/Observable';
+import {PhoenixSocket} from "../phoenixSockets/phoenixSocketGarage";
 
 @Injectable()
 export class LoginService {
   private garageUrl = 'http://localhost:4000/api/garages';
+  private phoenixSocket : PhoenixSocket;
 
   constructor(private http: Http) {
 
@@ -30,6 +32,7 @@ export class LoginService {
       .map(response => {
         localStorage.setItem('currentUser', garage.username);
         localStorage.setItem('token', response.headers.get('authorization'));
+        this.phoenixSocket = new PhoenixSocket();
       });
   }
 
