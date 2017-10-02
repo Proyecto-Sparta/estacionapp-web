@@ -12,17 +12,24 @@ import {ParkingSpaceService} from '../parking-space/parking-space.service';
 })
 export class LayoutComponent implements AfterViewInit {
   private parkingSpaces;
+  private layoutScale;
 
+  @ViewChild('garage') garage: ElementRef;
   @ViewChildren(ParkingSpaceComponent) viewChildren;
   @ContentChildren(ParkingSpaceComponent) contentChildren;
 
   constructor(private parkingSpaceService: ParkingSpaceService) {
-    parkingSpaceService
-      .getParkingSpacesForGarage(666)
-      .then((storedParkingSpaces) => this.parkingSpaces = storedParkingSpaces);
+    this.parkingSpaceService = parkingSpaceService;
   }
 
   ngAfterViewInit(): void {
+    this.layoutScale = this.garage.nativeElement.offsetWidth / 1080;
+
+    this.parkingSpaceService
+        .getParkingSpacesForGarage(666)
+        .then((parkingSpaces) => this.applyScale(parkingSpaces, this.layoutScale))
+        .then((storedParkingSpaces) => this.parkingSpaces = storedParkingSpaces);
+
     this.viewChildren.changes.subscribe(changes => console.log(changes));
     this.contentChildren.changes.subscribe(changes => console.log(changes));
     this.setupDropzone();
@@ -52,6 +59,10 @@ export class LayoutComponent implements AfterViewInit {
         event.target.classList.remove('drop-target');
       }
     });
+  }
+
+  private applyScale(parkingSpaces, scale) {
+    return parkingSpaces.map( parkingSpace => parkingSpace.applyScale(scale));
   }
 
   private setupDraggables() {
@@ -94,6 +105,9 @@ export class LayoutComponent implements AfterViewInit {
 
   saveLayout() {
     this.viewChildren.forEach(child => child.updatePosition(child));
-    this.parkingSpaceService.storeParkingSpacesForGarage(666, this.parkingSpaces);
+    this.parkingSpaceService.storeParkingSpacesForGarage(
+      666,
+      this.parkingSpaces.map((parkingSpace) => parkingSpace.applyScale(1 / this.layoutScale))
+    );
   }
 }

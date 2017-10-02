@@ -27,8 +27,8 @@ export class ParkingSpaceService {
           shape: 'square',
           x: 560,
           y: 40,
-          width: 40,
-          height: 40,
+          width: 144,
+          height: 144,
           angle: 0,
           occupied: false
         }
@@ -39,6 +39,7 @@ export class ParkingSpaceService {
   }
 
   public storeParkingSpacesForGarage(garageId: Number, parkingSpaces: Array<ParkingSpace>) {
+    console.log(parkingSpaces);
     const storableObjects = parkingSpaces.map(this.mapParkingSpaceToStorableObject);
     console.log(storableObjects);
   }
