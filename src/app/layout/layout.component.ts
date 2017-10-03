@@ -2,33 +2,35 @@ import {AfterViewInit, Component, ContentChildren, ElementRef, QueryList, ViewCh
 import * as interact from 'interactjs';
 import {ParkingSpace} from '../parking-space/parking-space';
 import {ParkingSpaceComponent} from '../parking-space/parking-space.component';
-import {ParkingSpaceService} from '../parking-space/parking-space.service';
+import {FloorService} from '../floors/floor.service';
 
 @Component({
   selector: 'layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
-  providers: [ParkingSpaceService]
+  providers: [FloorService]
 })
 export class LayoutComponent implements AfterViewInit {
-  private parkingSpaces;
+  private floors;
   private layoutScale;
+  private currentFloor = 0;
 
   @ViewChild('garage') garage: ElementRef;
   @ViewChildren(ParkingSpaceComponent) viewChildren;
   @ContentChildren(ParkingSpaceComponent) contentChildren;
 
-  constructor(private parkingSpaceService: ParkingSpaceService) {
-    this.parkingSpaceService = parkingSpaceService;
+  constructor(private floorService: FloorService) {
+    this.floorService = floorService;
+    this.floors = [{parkingSpaces: []}];
   }
 
   ngAfterViewInit(): void {
     this.layoutScale = this.garage.nativeElement.offsetWidth / 1080;
 
-    this.parkingSpaceService
-        .getParkingSpacesForGarage(666)
-        .then((parkingSpaces) => this.applyScale(parkingSpaces, this.layoutScale))
-        .then((storedParkingSpaces) => this.parkingSpaces = storedParkingSpaces);
+    this.floorService
+        .getFloorPlans(666)
+        .then((floors) => this.applyScale(floors, this.layoutScale))
+        .then((storedFloors) => this.floors = storedFloors);
 
     this.viewChildren.changes.subscribe(changes => console.log(changes));
     this.contentChildren.changes.subscribe(changes => console.log(changes));
@@ -61,8 +63,8 @@ export class LayoutComponent implements AfterViewInit {
     });
   }
 
-  private applyScale(parkingSpaces, scale) {
-    return parkingSpaces.map( parkingSpace => parkingSpace.applyScale(scale));
+  private applyScale(floors, scale) {
+    return floors.map(floor => floor.applyScaleToParkingSpaces(scale));
   }
 
   private setupDraggables() {
@@ -92,22 +94,22 @@ export class LayoutComponent implements AfterViewInit {
 
   private renderSmallParkingSpace() {
     const smallParkingSpace = new ParkingSpace('square', 10, 10, 40, 40, 0);
-    this.parkingSpaces.push(smallParkingSpace);
+    this.floors[this.currentFloor].parkingSpaces.push(smallParkingSpace);
   }
   private renderMediumParkingSpace() {
     const mediumParkingSpace = new ParkingSpace('square', 10, 10, 60, 60, 0);
-    this.parkingSpaces.push(mediumParkingSpace);
+    this.floors[this.currentFloor].push(mediumParkingSpace);
   }
   private renderLargeParkingSpace() {
     const largeParkingSpace = new ParkingSpace('square', 10, 10, 100, 100, 0);
-    this.parkingSpaces.push(largeParkingSpace);
+    this.floors[this.currentFloor].push(largeParkingSpace);
   }
 
   saveLayout() {
     this.viewChildren.forEach(child => child.updatePosition(child));
-    this.parkingSpaceService.storeParkingSpacesForGarage(
+    this.floorService.storeFloorPlansForGarage(
       666,
-      this.parkingSpaces.map((parkingSpace) => parkingSpace.applyScale(1 / this.layoutScale))
+      this.floors.map((floor) => floor.applyScale(1 / this.layoutScale))
     );
   }
 }

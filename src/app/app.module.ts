@@ -22,6 +22,7 @@ import {LayoutComponent} from './layout/layout.component';
 import {ParkingSpaceComponent} from './parking-space/parking-space.component';
 import {ParkingItemComponent} from './parking-item/parking-item.component';
 import {ViewOccupancyComponent} from './viewOccupancy/viewOccupancy.component';
+import {FloorService} from './floors/floor.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import {ViewOccupancyComponent} from './viewOccupancy/viewOccupancy.component';
       apiKey: 'AIzaSyAAsIKJcL_6F6V0FzZif5pRSwu17vY_UAU'
     })
   ],
-  providers: [GarageService, LoginService, NotificationsService, AuthGuard],
+  providers: [GarageService, LoginService, NotificationsService, FloorService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {
