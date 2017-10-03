@@ -4,6 +4,11 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">Layout</h3>
+      <span class="floor"> Floor:
+        <button *ngIf="currentFloor > 0" class="btn-primary" (click)="lowerFloor()"> < </button>
+        {{currentFloor + 1}}
+        <button class="btn-primary" (click)="upperFloor()"> > </button>
+      </span>
     </div>
     <div id="garage" #garage class="panel-body dropzone layout-container"
       [ngStyle]="{'height.px': (garage.offsetWidth/1080)*720 }">

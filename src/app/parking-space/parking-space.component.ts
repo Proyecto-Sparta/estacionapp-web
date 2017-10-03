@@ -35,6 +35,8 @@ export class ParkingSpaceComponent implements AfterViewInit {
     const x = parseFloat(component.elemRef.nativeElement.children[0].getAttribute('data-x')) || 0;
     const y = parseFloat(component.elemRef.nativeElement.children[0].getAttribute('data-y')) || 0;
 
+    console.log("updating position: "+x+", "+y);
+
     component.model.updatePosition(x, y);
   }
 }

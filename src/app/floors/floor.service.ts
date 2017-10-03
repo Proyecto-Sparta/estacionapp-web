@@ -20,8 +20,8 @@ export class FloorService {
           parking_spaces: [
             {
               shape: 'square',
-              x: 200,
-              y: 120,
+              x: 100,
+              y: 50,
               width: 60,
               height: 60,
               angle: 0,
@@ -30,7 +30,7 @@ export class FloorService {
             {
               shape: 'square',
               x: 560,
-              y: 40,
+              y: 60,
               width: 144,
               height: 144,
               angle: 0
@@ -66,7 +66,6 @@ export class FloorService {
   private mapStoredObjectToFloor(object: Object, parkingSpacesMapper: Function) {
     const floorLevel = object['floor_level'],
       parkingSpaces = object['parking_spaces'];
-      console.log(this);
     return new Floor(floorLevel, parkingSpaces.map(parkingSpacesMapper));
   }
 

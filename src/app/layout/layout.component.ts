@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ContentChildren, ElementRef, QueryList, ViewCh
 import * as interact from 'interactjs';
 import {ParkingSpace} from '../parking-space/parking-space';
 import {ParkingSpaceComponent} from '../parking-space/parking-space.component';
+import {Floor} from '../floors/floor';
 import {FloorService} from '../floors/floor.service';
 
 @Component({
@@ -32,8 +33,6 @@ export class LayoutComponent implements AfterViewInit {
         .then((floors) => this.applyScale(floors, this.layoutScale))
         .then((storedFloors) => this.floors = storedFloors);
 
-    this.viewChildren.changes.subscribe(changes => console.log(changes));
-    this.contentChildren.changes.subscribe(changes => console.log(changes));
     this.setupDropzone();
     this.setupDraggables();
   }
@@ -98,11 +97,29 @@ export class LayoutComponent implements AfterViewInit {
   }
   private renderMediumParkingSpace() {
     const mediumParkingSpace = new ParkingSpace('square', 10, 10, 60, 60, 0);
-    this.floors[this.currentFloor].push(mediumParkingSpace);
+    this.floors[this.currentFloor].parkingSpaces.push(mediumParkingSpace);
   }
   private renderLargeParkingSpace() {
     const largeParkingSpace = new ParkingSpace('square', 10, 10, 100, 100, 0);
-    this.floors[this.currentFloor].push(largeParkingSpace);
+    this.floors[this.currentFloor].parkingSpaces.push(largeParkingSpace);
+  }
+
+  private lowerFloor() {
+    if (this.floors[this.currentFloor - 1]) {
+      this.viewChildren.forEach(child => child.updatePosition(child));
+      this.currentFloor -= 1;
+      console.log(this.floors);
+    }
+  }
+
+  private upperFloor() {
+    if (!this.floors[this.currentFloor + 1]) {
+      this.floors.push(new Floor(this.currentFloor + 1, []))
+    }
+
+    console.log(this.viewChildren);
+    this.viewChildren.forEach(child => child.updatePosition(child));
+    this.currentFloor += 1;
   }
 
   saveLayout() {

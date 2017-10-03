@@ -17,8 +17,8 @@ export class ParkingSpace {
   }
 
   updatePosition(x: number, y: number) {
-    this.x += x;
-    this.y += y;
+    this.x = x;
+    this.y = y;
   }
 
   toggleOccupancy() {
@@ -30,7 +30,7 @@ export class ParkingSpace {
     this.y = this.y * scale;
     this.height = this.height * scale;
     this.width = this.width * scale;
-    
+
     return this;
   }
 }

@@ -7,6 +7,14 @@
 
 }
 
+.panel-title {
+  display: inline-block;
+}
+
+.floor {
+  float: right;
+}
+
 .cancel-button {
   margin-right: 5px;
 }
