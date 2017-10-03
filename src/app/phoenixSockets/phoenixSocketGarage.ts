@@ -12,8 +12,10 @@ export class PhoenixSocket {
     this.channel = socket.channel("garage:123", {});
 
     this.channel.on("request", (payload) => {
-      this.channel.push("accept:" + payload.driver_name);
-    });
+      this.channel.push("accept:" + payload.driver_name)
+    })
+      .receive("ok", resp => { console.log("New driver just joined", resp) })
+      .receive("error", resp => { console.log("Driver request was not accepted", resp)});
 
     this.channel.join()
       .receive("ok", resp => { console.log("Garage joined successfully", resp) })

@@ -23,6 +23,7 @@ import {ParkingSpaceComponent} from './parking-space/parking-space.component';
 import {ParkingItemComponent} from './parking-item/parking-item.component';
 import {ViewOccupancyComponent} from './viewOccupancy/viewOccupancy.component';
 import {FloorService} from './floors/floor.service';
+import {ChannelDriverMockComponent} from "./phoenixSockets/channel-driver-mock";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {FloorService} from './floors/floor.service';
     LayoutComponent,
     ParkingSpaceComponent,
     ParkingItemComponent,
-    ViewOccupancyComponent
+    ViewOccupancyComponent,
+    ChannelDriverMockComponent
   ],
   imports: [
     BrowserModule,
