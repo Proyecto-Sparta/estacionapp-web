@@ -9,9 +9,20 @@
 
   <div class="col-lg-2">
   <div class="row" *ngFor='let driver of drivers'>
+    <div class="col-lg-12">
       <div class="notification text-center">
-        {{driver.name}}
+        <span class="driver-info"> {{driver.name}} </span>
+        <span class="notification-buttons">
+          <span (click)="acceptDriver(driver.name)" class="driver-accept-button">
+            <i class="glyphicon glyphicon-ok-circle"></i>
+          </span>
+          <span (click)="denyDriver(driver.name)" class="driver-deny-button">
+            <i class="glyphicon glyphicon-remove-circle"></i>
+          </span>
+        </span>
+
       </div>
+    </div>
   </div>
 </div>
 </div>

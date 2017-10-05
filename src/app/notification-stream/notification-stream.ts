@@ -20,4 +20,12 @@ export class NotificationStream {
       .receive("error", resp => { console.log("Unable to join", resp) });
   }
 
+
+  public accept(driver){
+    this.channel.push("accept", driver);
+  }
+
+  public deny(driver){
+    this.channel.push("deny", driver);
+  }
 }

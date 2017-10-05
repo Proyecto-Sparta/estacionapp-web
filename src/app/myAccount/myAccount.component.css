@@ -9,9 +9,9 @@
 }
 
 .notification {
-  background-color: lightgreen;
   padding: 25px 10px;
   border-radius: 8px;
+  border: 2px solid gainsboro;
   display: inline-block;
   font-size: 15px;
   font-weight: bold;

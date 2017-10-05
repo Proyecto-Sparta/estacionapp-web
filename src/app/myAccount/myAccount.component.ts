@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {NotificationStream} from "../notification-stream/notification-stream";
-import {isNull} from "util";
 
 @Component({
   selector: 'myAccount',
@@ -21,9 +20,18 @@ export class MyAccountComponent {
 
 
   public addNewDriver(driver){
+    console.log(driver);
     if(driver.name) {
       this.drivers.push(driver);
     }
+  }
+
+  public acceptDriver(driver){
+    this.notificationStream.accept(driver);
+  }
+
+  public denyDriver(driver){
+    this.notificationStream.deny(driver);
   }
 
 
