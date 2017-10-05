@@ -1,20 +1,29 @@
 import {Component} from '@angular/core';
-import {LoginService} from '../login/login.service';
-import {NotificationsService} from '../notifications/notifications.service';
-import {Router, CanActivate} from '@angular/router';
+import {NotificationStream} from "../notification-stream/notification-stream";
+import {isNull} from "util";
 
 @Component({
   selector: 'myAccount',
   templateUrl: './myAccount.component.html',
-  styleUrls: ['./myAccount.component.css'],
-  providers: [NotificationsService]
+  styleUrls: ['./myAccount.component.css']
 })
 
 export class MyAccountComponent {
 
-  constructor(private loginService: LoginService,
-              private router: Router) {
+  private drivers: Array<String> = [];
+  private notificationStream : NotificationStream;
 
+  constructor() {
+
+    this.notificationStream = new NotificationStream(localStorage.getItem("currentUser"),
+      (driver) => this.addNewDriver(driver));
+  }
+
+
+  public addNewDriver(driver){
+    if(driver.name) {
+      this.drivers.push(driver);
+    }
   }
 
 

@@ -6,9 +6,11 @@ export class NotificationStream {
   id: String;
 
   constructor(id : String, callback : any){
+
     let socket = new Socket("ws://localhost:4000/socket", {});
     socket.connect();
 
+    this.id = id;
     this.channel = socket.channel(`garage:${id}`, {});
 
     this.channel.on("request", callback);

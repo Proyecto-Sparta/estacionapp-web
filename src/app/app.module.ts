@@ -11,7 +11,6 @@ import {MenuComponent} from './menu/menu.component';
 import {AppRoutingModule} from './app-routing.module';
 import {GarageService} from './garage/garage.service';
 import {LoginService} from './login/login.service';
-import {NotificationsService} from './notifications/notifications.service';
 import {DashboardComponent} from './dashboard/dashboard.component';
 import {AuthGuard} from './guards/auth-guard.service';
 import {AgmCoreModule} from '@agm/core';
@@ -23,7 +22,6 @@ import {ParkingSpaceComponent} from './parking-space/parking-space.component';
 import {ParkingItemComponent} from './parking-item/parking-item.component';
 import {ViewOccupancyComponent} from './viewOccupancy/viewOccupancy.component';
 import {FloorService} from './floors/floor.service';
-import {ChannelDriverMockComponent} from "./phoenixSockets/channel-driver-mock";
 
 @NgModule({
   declarations: [
@@ -39,8 +37,7 @@ import {ChannelDriverMockComponent} from "./phoenixSockets/channel-driver-mock";
     LayoutComponent,
     ParkingSpaceComponent,
     ParkingItemComponent,
-    ViewOccupancyComponent,
-    ChannelDriverMockComponent
+    ViewOccupancyComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +48,7 @@ import {ChannelDriverMockComponent} from "./phoenixSockets/channel-driver-mock";
       apiKey: 'AIzaSyAAsIKJcL_6F6V0FzZif5pRSwu17vY_UAU'
     })
   ],
-  providers: [GarageService, LoginService, NotificationsService, FloorService, AuthGuard],
+  providers: [GarageService, LoginService, FloorService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {
