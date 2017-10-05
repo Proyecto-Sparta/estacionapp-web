@@ -1,5 +1,5 @@
 <div class="viewOccupancy">
-  <div class="col-lg-9 col-sm-9 garage-map-layout panel panel-default">
+  <div class="garage-map-layout panel panel-default">
     <div id="garage" class="panel-body parking-elem-container dropzone">
       <parking-space *ngFor='let parkingSpace of parkingSpaces; let i = index'
         id="parking-space-{{i+1}}" [model]='parkingSpace'

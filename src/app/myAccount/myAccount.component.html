@@ -3,16 +3,15 @@
     <menu></menu>
   </div>
 
-  <div class="feature col-sm-12 col-lg-9">
+  <div class="feature col-sm-12 col-lg-8">
     <router-outlet></router-outlet>
   </div>
 
-  <div class="notifications">
-    <div *ngFor='let notification of notifications;'>
-      <div class="notification row">
-        {{notification}}
+  <div class="col-lg-2">
+  <div class="row" *ngFor='let driver of drivers'>
+      <div class="notification text-center">
+        {{driver.name}}
       </div>
-      <br>
-    </div>
   </div>
+</div>
 </div>
