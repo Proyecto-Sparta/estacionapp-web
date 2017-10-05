@@ -18,7 +18,6 @@ export class MyAccountComponent {
       (driver) => this.addNewDriver(driver));
   }
 
-
   public addNewDriver(driver){
     console.log(driver);
     if(driver.name) {
@@ -28,10 +27,13 @@ export class MyAccountComponent {
 
   public acceptDriver(driver){
     this.notificationStream.accept(driver);
+    this.drivers = this.drivers.filter(aDriver => driver === aDriver);
   }
 
   public denyDriver(driver){
     this.notificationStream.deny(driver);
+    this.drivers = this.drivers.filter(aDriver => driver === aDriver);
+
   }
 
 

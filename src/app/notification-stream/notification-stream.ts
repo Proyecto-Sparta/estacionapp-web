@@ -22,10 +22,10 @@ export class NotificationStream {
 
 
   public accept(driver){
-    this.channel.push("accept", driver);
+    this.channel.push(`accept:${this.id}`, { driver_name : driver });
   }
 
   public deny(driver){
-    this.channel.push("deny", driver);
+    this.channel.push(`deny:${this.id}`, { driver_name : driver } );
   }
 }
