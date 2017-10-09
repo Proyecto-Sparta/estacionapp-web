@@ -7,6 +7,14 @@
   margin-left: 1%;
 }
 
+.panel-title {
+  display: inline-block;
+}
+
+.floor {
+  float: right;
+}
+
 >>> .parking-space, .square{
   background-color: green !important;
 }

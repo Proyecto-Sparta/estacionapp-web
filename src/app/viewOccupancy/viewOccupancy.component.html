@@ -1,7 +1,16 @@
 <div class="viewOccupancy">
   <div class="garage-map-layout panel panel-default">
-    <div id="garage" class="panel-body parking-elem-container dropzone">
-      <parking-space *ngFor='let parkingSpace of parkingSpaces; let i = index'
+    <div class="panel-heading">
+        <h3 class="panel-title">Occupancy</h3>
+        <span class="floor"> Floor:
+          <button *ngIf="currentFloor > 0" class="btn-primary" (click)="lowerFloor()"> < </button>
+          {{currentFloor + 1}}
+          <button class="btn-primary" (click)="upperFloor()"> > </button>
+        </span>
+      </div>
+    <div id="garage" #garage class="panel-body parking-elem-container dropzone"
+      [ngStyle]="{'height.px': (garage.offsetWidth/1080)*720 }">
+      <parking-space *ngFor='let parkingSpace of floors[currentFloor].parkingSpaces; let i = index'
         id="parking-space-{{i+1}}" [model]='parkingSpace'
         (click)='toggleOccupancy(i)'></parking-space>
     </div>

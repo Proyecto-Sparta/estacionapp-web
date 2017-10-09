@@ -27,7 +27,7 @@ export class LayoutComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.layoutScale = this.garage.nativeElement.offsetWidth / 1080;
-
+    console.log(this.layoutScale);
     this.floorService
         .getFloorPlans(666)
         .then((floors) => this.applyScale(floors, this.layoutScale))
