@@ -21,19 +21,23 @@ export class MyAccountComponent {
   public addNewDriver(driver){
     console.log(driver);
     if(driver.name) {
-      this.drivers.push(driver);
+      this.drivers.push(driver.name);
     }
   }
 
   public acceptDriver(driver){
     this.notificationStream.accept(driver);
-    this.drivers = this.drivers.filter(aDriver => driver === aDriver);
+    this.drivers = this.removeDriver(driver);
   }
 
   public denyDriver(driver){
     this.notificationStream.deny(driver);
-    this.drivers = this.drivers.filter(aDriver => driver === aDriver);
+    this.drivers = this.removeDriver(driver);
 
+  }
+
+  private removeDriver(driver){
+    return this.drivers.filter(aDriver => driver === aDriver);
   }
 
 
