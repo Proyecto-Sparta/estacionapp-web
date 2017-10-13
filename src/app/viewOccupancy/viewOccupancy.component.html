@@ -1,18 +1,33 @@
 <div class="viewOccupancy">
-  <div class="garage-map-layout panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Occupancy</h3>
-        <span class="floor"> Floor:
-          <button *ngIf="currentFloor > 0" class="btn-primary" (click)="lowerFloor()"> < </button>
-          {{currentFloor + 1}}
-          <button class="btn-primary" (click)="upperFloor()"> > </button>
-        </span>
+
+  <div class="col-sm-12 col-md-9">
+    <div class="garage-map-layout panel panel-default">
+      <div class="panel-heading">
+          <h3 class="panel-title">Occupancy</h3>
+          <span class="floor"> Floor:
+            <button *ngIf="currentFloor > 0" class="btn-primary" (click)="lowerFloor()"> < </button>
+            {{currentFloor + 1}}
+            <button class="btn-primary" (click)="upperFloor()"> > </button>
+          </span>
+        </div>
+      <div id="garage" #garage class="panel-body parking-elem-container dropzone"
+        [ngStyle]="{'height.px': (garage.offsetWidth/1080)*720 }">
+        <parking-space *ngFor='let parkingSpace of floors[currentFloor].parkingSpaces; let i = index'
+          id="parking-space-{{i+1}}" [model]='parkingSpace'
+          (click)='toggleOccupancy(i)'></parking-space>
       </div>
-    <div id="garage" #garage class="panel-body parking-elem-container dropzone"
-      [ngStyle]="{'height.px': (garage.offsetWidth/1080)*720 }">
-      <parking-space *ngFor='let parkingSpace of floors[currentFloor].parkingSpaces; let i = index'
-        id="parking-space-{{i+1}}" [model]='parkingSpace'
-        (click)='toggleOccupancy(i)'></parking-space>
     </div>
   </div>
+
+  <div class="col-md-3 col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Pending Drivers</h3>
+        </div>
+        <div class="panel-body layout-container">
+          <div *ngFor='let driver of drivers; let i = index' class='driver'
+          (click)="selectDriver(i)">{{driver}}</div>
+        </div>
+      </div>
+    </div>
 </div>
