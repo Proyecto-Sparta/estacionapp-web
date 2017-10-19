@@ -4,6 +4,7 @@ import {ParkingSpace} from '../parking-space/parking-space';
 import {ParkingSpaceComponent} from '../parking-space/parking-space.component';
 import {Floor} from '../floors/floor';
 import {FloorService} from '../floors/floor.service';
+import {PendingDriversService} from '../pendingDrivers/pendingDrivers.service';
 
 @Component({
   selector: 'viewOccupancy',
@@ -17,15 +18,18 @@ export class ViewOccupancyComponent implements AfterViewInit {
   private layoutScale;
   private currentFloor = 0;
   private selectedDriverIndex = -1;
-  
-  //Mock, obtener de service
-  private drivers = ['Driver1', 'Driver2', 'Driver3'];
+
+  private pendingDriversService: PendingDriversService;
+  private pendingDrivers;
 
   @ViewChild('garage') garage: ElementRef;
   @ViewChildren(ParkingSpaceComponent) viewChildren;
   @ContentChildren(ParkingSpaceComponent) contentChildren;
 
-  constructor(private floorService: FloorService) {
+  constructor(private floorService: FloorService, pendingDriversService: PendingDriversService) {
+    this.pendingDriversService = pendingDriversService;
+    this.pendingDrivers = this.pendingDriversService.getPendingDrivers();
+
     this.floorService = floorService;
     this.floors = [{parkingSpaces: []}];
   }
@@ -77,7 +81,8 @@ export class ViewOccupancyComponent implements AfterViewInit {
 
     if (!isOccupied && driverSelected) {
       // TODO: Assign space to driver
-      this.drivers = this.drivers.filter((_, i) => i !== this.selectedDriverIndex);
+      this.pendingDriversService.removePendingDriver(this.pendingDrivers[this.selectedDriverIndex]);
+      this.pendingDrivers = this.pendingDrivers.filter((_, i) => i !== this.selectedDriverIndex);
       this.selectedDriverIndex = -1;
     }
 
