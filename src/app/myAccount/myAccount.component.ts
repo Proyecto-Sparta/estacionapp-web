@@ -27,12 +27,12 @@ export class MyAccountComponent {
 
   public acceptDriver(driver){
     this.notificationStream.accept(driver);
-    this.drivers = this.drivers.filter(aDriver => driver === aDriver);
+    this.drivers = this.drivers.filter(aDriver => driver != aDriver);
   }
 
   public denyDriver(driver){
     this.notificationStream.deny(driver);
-    this.drivers = this.drivers.filter(aDriver => driver === aDriver);
+    this.drivers = this.drivers.filter(aDriver => driver != aDriver);
 
   }
 
