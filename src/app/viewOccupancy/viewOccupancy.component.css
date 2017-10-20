@@ -1,0 +1,32 @@
+.viewOccupancy {
+  height: 600px;
+}
+
+.garage-map-layout {
+  height: inherit;
+}
+
+.panel-title {
+  display: inline-block;
+}
+
+.floor {
+  float: right;
+}
+
+.driver {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.parking-space {
+  cursor: pointer;
+}
+
+>>> .parking-space, .square{
+  background-color: green !important;
+}
+
+>>> .parking-space.occupied{
+  background-color: red !important;
+}

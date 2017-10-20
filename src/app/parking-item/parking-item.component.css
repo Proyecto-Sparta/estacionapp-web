@@ -1,0 +1,9 @@
+.square {
+  position: relative;
+  background-color: gray;
+  border-radius: 1em;
+  margin: 2%;
+  width: inherit;
+  height:inherit;
+}
+

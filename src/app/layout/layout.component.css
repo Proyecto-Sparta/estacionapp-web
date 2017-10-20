@@ -1,0 +1,54 @@
+.layout-container {
+  height: 500px;
+}
+
+.buttons-container {
+  text-align: right;
+
+}
+
+.panel-title {
+  display: inline-block;
+}
+
+.floor {
+  float: right;
+}
+
+.cancel-button {
+  margin-right: 5px;
+}
+
+.parking-space-size {
+  height: 50px;
+}
+
+.garage-elements-layout, .garage-map-layout {
+  height: inherit;
+  margin-left: 1%;
+}
+
+.panel-body.parking-elem-container {
+  height: inherit;
+}
+
+parking-space{
+  display: flow-root;
+  height: 0;
+  width: 0;
+}
+
+parking-item.xsmall {
+  width: 40px;
+  height: 40px;
+}
+
+parking-item.small {
+  width: 60px;
+  height: 60px;
+}
+
+parking-item.medium {
+  width: 100px;
+  height: 100px;
+}

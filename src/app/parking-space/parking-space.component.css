@@ -1,0 +1,13 @@
+.square {
+  position: relative;
+  width: inherit;
+  background-color: gray;
+  border-radius: 0.95em;
+  margin: 2%;
+}
+
+.square:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}

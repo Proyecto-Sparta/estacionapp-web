@@ -9,16 +9,36 @@ import {SignUpComponent} from './signup/signup.component';
 import {MapComponent} from './map/map.component';
 import {MenuComponent} from './menu/menu.component';
 import {AppRoutingModule} from './app-routing.module';
-import {GarageService} from './garage.service';
+import {GarageService} from './garage/garage.service';
+import {LoginService} from './login/login.service';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {AuthGuard} from './guards/auth-guard.service';
 import {AgmCoreModule} from '@agm/core';
+import {HomeComponent} from './home/home.component';
+import {MyAccountComponent} from './myAccount/myAccount.component';
+import {LogoutComponent} from './logout/logout.component';
+import {LayoutComponent} from './layout/layout.component';
+import {ParkingSpaceComponent} from './parking-space/parking-space.component';
+import {ParkingItemComponent} from './parking-item/parking-item.component';
+import {ViewOccupancyComponent} from './viewOccupancy/viewOccupancy.component';
+import {FloorService} from './floors/floor.service';
+import {PendingDriversService} from './pendingDrivers/pendingDrivers.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    LogoutComponent,
     SignUpComponent,
     MapComponent,
-    MenuComponent
+    MenuComponent,
+    DashboardComponent,
+    HomeComponent,
+    MyAccountComponent,
+    LayoutComponent,
+    ParkingSpaceComponent,
+    ParkingItemComponent,
+    ViewOccupancyComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +49,7 @@ import {AgmCoreModule} from '@agm/core';
       apiKey: 'AIzaSyAAsIKJcL_6F6V0FzZif5pRSwu17vY_UAU'
     })
   ],
-  providers: [GarageService],
+  providers: [GarageService, LoginService, FloorService, PendingDriversService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {
