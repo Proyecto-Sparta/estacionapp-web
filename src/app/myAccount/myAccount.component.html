@@ -14,16 +14,16 @@
         <div class="row">
           <div class="col-sm-8">
             <div class="driver-info text-left">
-        <div> {{driver.name}} </div>
+        <div> {{driver}} </div>
         <div> Otros datos </div>
             </div>
           </div>
           <div class="col-sm-4">
         <div class="notification-buttons">
-          <div (click)="acceptDriver(driver.name);" class="driver-accept-button">
+          <div (click)="acceptDriver(driver);" class="driver-accept-button">
             <i class="glyphicon glyphicon-ok-circle text-success notification-button"></i>
           </div>
-          <div (click)="denyDriver(driver.name);" class="driver-deny-button">
+          <div (click)="denyDriver(driver);" class="driver-deny-button">
             <i class="glyphicon glyphicon-remove-circle text-danger notification-button"></i>
           </div>
         </div>

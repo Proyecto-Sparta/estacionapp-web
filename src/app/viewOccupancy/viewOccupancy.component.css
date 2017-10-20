@@ -4,7 +4,23 @@
 
 .garage-map-layout {
   height: inherit;
-  margin-left: 1%;
+}
+
+.panel-title {
+  display: inline-block;
+}
+
+.floor {
+  float: right;
+}
+
+.driver {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.parking-space {
+  cursor: pointer;
 }
 
 >>> .parking-space, .square{
