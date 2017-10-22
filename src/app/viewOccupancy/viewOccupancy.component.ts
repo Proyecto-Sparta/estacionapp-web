@@ -1,10 +1,10 @@
 import {AfterViewInit, Component, ContentChildren, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import * as interact from 'interactjs';
-import {ParkingSpace} from '../parking-space/parking-space';
 import {ParkingSpaceComponent} from '../parking-space/parking-space.component';
 import {Floor} from '../floors/floor';
 import {FloorService} from '../floors/floor.service';
-import {PendingDriversService} from '../pendingDrivers/pendingDrivers.service';
+import {AngularFirestore} from "angularfire2/firestore";
+import {Observable} from "rxjs/Observable";
+import {PendingDriversService} from "../pendingDrivers/pendingDrivers.service";
 
 @Component({
   selector: 'viewOccupancy',
@@ -14,22 +14,19 @@ import {PendingDriversService} from '../pendingDrivers/pendingDrivers.service';
 })
 
 export class ViewOccupancyComponent implements AfterViewInit {
-  private floors;
+  private floors : Array<any>;
   private layoutScale;
   private currentFloor = 0;
-  private selectedDriverIndex = -1;
-
-  private pendingDriversService: PendingDriversService;
-  private pendingDrivers;
+  private selectedDriver;
+  private pendingDrivers : Observable<any[]>;
 
   @ViewChild('garage') garage: ElementRef;
   @ViewChildren(ParkingSpaceComponent) viewChildren;
   @ContentChildren(ParkingSpaceComponent) contentChildren;
 
-  constructor(private floorService: FloorService, pendingDriversService: PendingDriversService) {
-    this.pendingDriversService = pendingDriversService;
-    this.pendingDrivers = this.pendingDriversService.getPendingDrivers();
-
+  constructor(db: AngularFirestore, private floorService: FloorService,
+              private pendingDriversService : PendingDriversService) {
+    this.pendingDrivers = db.collection('drivers').valueChanges();
     this.floorService = floorService;
     this.floors = [{parkingSpaces: []}];
   }
@@ -64,26 +61,25 @@ export class ViewOccupancyComponent implements AfterViewInit {
     this.currentFloor += 1;
   }
 
-  private selectDriver(driverIndex) {
-    this.selectedDriverIndex = driverIndex;
+  private selectDriver(driver) {
+    this.selectedDriver = driver;
   }
 
 
   private toggleOccupancy(parkingSpaceIndex: number) {
     const parkingSpace = this.floors[this.currentFloor].parkingSpaces[parkingSpaceIndex],
-      isOccupied = parkingSpace.occupied,
-      driverSelected = this.selectedDriverIndex !== -1;
+      isOccupied = !parkingSpace.occupied,
+      isDriverSelected = !this.selectedDriver;
 
-    if (!isOccupied && !driverSelected) {
+    if (!isOccupied && !isDriverSelected) {
       console.log("Select a driver first!");
       return;
     }
 
-    if (!isOccupied && driverSelected) {
+    if (!isOccupied && isDriverSelected) {
       // TODO: Assign space to driver
-      this.pendingDriversService.removePendingDriver(this.pendingDrivers[this.selectedDriverIndex]);
-      this.pendingDrivers = this.pendingDrivers.filter((_, i) => i !== this.selectedDriverIndex);
-      this.selectedDriverIndex = -1;
+      this.pendingDriversService.assign(parkingSpaceIndex, this.selectedDriver);
+      this.selectedDriver = null;
     }
 
     parkingSpace.toggleOccupancy();

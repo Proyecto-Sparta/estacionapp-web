@@ -25,8 +25,8 @@
           <h3 class="panel-title">Pending Drivers</h3>
         </div>
         <div class="panel-body layout-container">
-          <div *ngFor='let driver of pendingDrivers; let i = index' class='driver'
-          (click)="selectDriver(i)">{{driver}}</div>
+          <div *ngFor='let driver of pendingDrivers | async ; let i = index' class='driver'
+          (click)="selectDriver(i)"> {{driver.name}}</div>
         </div>
       </div>
     </div>

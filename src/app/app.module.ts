@@ -1,4 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
+import { AngularFireModule } from 'angularfire2';
+import {AngularFirestoreModule} from 'angularfire2/firestore';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
@@ -23,6 +25,7 @@ import {ParkingItemComponent} from './parking-item/parking-item.component';
 import {ViewOccupancyComponent} from './viewOccupancy/viewOccupancy.component';
 import {FloorService} from './floors/floor.service';
 import {PendingDriversService} from './pendingDrivers/pendingDrivers.service';
+import {environment} from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -42,6 +45,8 @@ import {PendingDriversService} from './pendingDrivers/pendingDrivers.service';
   ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(environment.firebase, 'estacionapp'),
+    AngularFirestoreModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,
