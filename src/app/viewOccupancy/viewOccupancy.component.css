@@ -30,3 +30,30 @@
 >>> .parking-space.occupied{
   background-color: red !important;
 }
+
+
+.notifications {
+  position: absolute;
+  right: 0;
+  text-align: right;
+}
+
+.notification {
+  padding: 10px 0;
+  border-radius: 8px;
+  border: 2px solid gainsboro;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  width: 90%;
+}
+
+.notification-button {
+  font-size: 24px;
+}
+
+.driver-info {
+  padding-left: 15px;
+  padding-top: 5px;
+}

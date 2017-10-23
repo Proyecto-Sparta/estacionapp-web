@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {LoginService} from './login/login.service';
-import {AngularFirestore} from 'angularfire2/firestore';
+import {AngularFireDatabase} from "angularfire2/database";
 
 @Component({
   selector: 'app-root',
@@ -10,6 +10,6 @@ import {AngularFirestore} from 'angularfire2/firestore';
 })
 export class AppComponent {
 
-  constructor(db: AngularFirestore){}
+  constructor(db: AngularFireDatabase){}
 
 }

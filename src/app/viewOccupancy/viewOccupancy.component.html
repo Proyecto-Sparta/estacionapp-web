@@ -25,8 +25,33 @@
           <h3 class="panel-title">Pending Drivers</h3>
         </div>
         <div class="panel-body layout-container">
-          <div *ngFor='let driver of pendingDrivers | async ; let i = index' class='driver'
-          (click)="selectDriver(i)"> {{driver.name}}</div>
+          <div *ngFor='let driver of getAllDrivers() | async'>
+            <div class="row" *ngIf='driver.waiting'>
+            <div class="col-sm-12">
+              <div class="notification text-center">
+                <div class="row">
+                  <div class="col-sm-8">
+                    <div class="driver-info text-left">
+                      <div> {{driver.name}} </div>
+                      <div> {{driver.plate}} </div>
+                      <div> {{driver.waiting}} </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="notification-buttons">
+                      <div (click)="selectDriver(driver)" class="driver-accept-button">
+                        <i class="glyphicon glyphicon-ok-circle text-success notification-button"></i>
+                      </div>
+                      <div (click)="denyDriver(driver);" class="driver-deny-button">
+                        <i class="glyphicon glyphicon-remove-circle text-danger notification-button"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

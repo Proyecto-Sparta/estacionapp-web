@@ -1,13 +1,38 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore} from "angularfire2/firestore";
+import {AngularFireDatabase} from "angularfire2/database";
+import {PendingDriver} from "./pending-driver";
 import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class PendingDriversService {
 
-  constructor(private db : AngularFirestore){}
+  private pendingDrivers : Observable<PendingDriver[]>;
 
-  public assign(parkingSpace : number, driver : string){
-    console.log(`Find driver ${driver} and assign parking space ${parkingSpace}`);
+  constructor(private db : AngularFireDatabase){
+    this.pendingDrivers = db.list('drivers').valueChanges();
+  }
+
+  public getDrivers(){
+    return this.pendingDrivers;
+  }
+
+  public assign(parkingSpace : number, driver : PendingDriver){
+    console.log(driver.name, parkingSpace);
+    this.db.database.ref("drivers").orderByChild("name").equalTo(driver.name)
+      .on("child_added", function(snapshot) {
+        return snapshot.ref.update(
+          { waiting: false,
+                  parkingSpace: parkingSpace}
+        );
+    });
+  }
+
+  deny(driver: PendingDriver) {
+    this.db.database.ref("drivers").orderByChild("name").equalTo(driver.name)
+      .on("child_added", function(snapshot) {
+        return snapshot.ref.update(
+          { waiting: false }
+        );
+      });
   }
 }
