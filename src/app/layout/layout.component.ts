@@ -4,6 +4,9 @@ import {ParkingSpace} from '../parking-space/parking-space';
 import {ParkingSpaceComponent} from '../parking-space/parking-space.component';
 import {Floor} from '../floors/floor';
 import {FloorService} from '../floors/floor.service';
+import {Point} from './point';
+
+declare var jsGraphics, jsColor, jsPen, jsPoint: any;
 
 @Component({
   selector: 'layout',
@@ -15,6 +18,9 @@ export class LayoutComponent implements AfterViewInit {
   private floors;
   private layoutScale;
   private currentFloor = 0;
+  private modeLayout = true;
+  private jsGraphics;
+  private points: Array<Point> = new Array();
 
   @ViewChild('garage') garage: ElementRef;
   @ViewChildren(ParkingSpaceComponent) viewChildren;
@@ -35,6 +41,10 @@ export class LayoutComponent implements AfterViewInit {
 
     this.setupDropzone();
     this.setupDraggables();
+
+    const layoutPosition = this.garage.nativeElement.getBoundingClientRect();
+    this.jsGraphics = new jsGraphics(document.getElementById("canvas"));
+    this.jsGraphics.setOrigin(new jsPoint(layoutPosition.left + window.pageXOffset, layoutPosition.top + window.pageYOffset));
   }
 
   private setupDropzone() {
@@ -95,13 +105,19 @@ export class LayoutComponent implements AfterViewInit {
     const smallParkingSpace = new ParkingSpace('square', 10, 10, 40, 40, 0);
     this.floors[this.currentFloor].parkingSpaces.push(smallParkingSpace);
   }
+
   private renderMediumParkingSpace() {
     const mediumParkingSpace = new ParkingSpace('square', 10, 10, 60, 60, 0);
     this.floors[this.currentFloor].parkingSpaces.push(mediumParkingSpace);
   }
+
   private renderLargeParkingSpace() {
     const largeParkingSpace = new ParkingSpace('square', 10, 10, 100, 100, 0);
     this.floors[this.currentFloor].parkingSpaces.push(largeParkingSpace);
+  }
+
+  private setModeLayout(modeLayout) {
+    this.modeLayout = modeLayout;
   }
 
   private lowerFloor() {
@@ -128,5 +144,23 @@ export class LayoutComponent implements AfterViewInit {
       666,
       this.floors.map((floor) => floor.applyScale(1 / this.layoutScale))
     );
+  }
+
+  private setPoint(event) {
+    if (!this.modeLayout) {
+      return;
+    }
+    
+    const pen = new jsPen(new jsColor('red'), 1);
+    const center = new jsPoint(event.offsetX, event.offsetY);
+    this.jsGraphics.drawCircle(pen, center, 5);
+
+    this.points.push(new Point(event.offsetX, event.offsetY));
+  }
+
+  private drawLayout() {
+    const jsPoints = this.points.map((point) => new jsPoint(point.x, point.y));
+    const pen = new jsPen(new jsColor('black'), 1);
+    this.jsGraphics.drawPolygon(pen, jsPoints);
   }
 }
