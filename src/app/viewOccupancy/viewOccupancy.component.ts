@@ -84,7 +84,7 @@ export class ViewOccupancyComponent implements AfterViewInit {
 
   private toggleOccupancy(parkingSpaceIndex: number) {
     const parkingSpace : ParkingSpace = this.floors[this.currentFloor].parkingSpaces[parkingSpaceIndex],
-      isOccupied = !parkingSpace.occupied,
+      isOccupied = parkingSpace.occupied,
       isDriverSelected = !isNull(this.selectedDriver);
 
     if (!isOccupied && !isDriverSelected) {

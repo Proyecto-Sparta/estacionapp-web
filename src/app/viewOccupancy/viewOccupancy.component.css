@@ -41,7 +41,6 @@
 .notification {
   padding: 10px 0;
   border-radius: 8px;
-  border: 2px solid gainsboro;
   display: inline-block;
   font-size: 15px;
   font-weight: bold;
@@ -49,10 +48,19 @@
   width: 90%;
 }
 
-.notification-button {
-  font-size: 24px;
+.notification:hover {
+  background-color: darkseagreen;
+  cursor: hand;
 }
 
+.notification-button {
+  font-size: 16px;
+}
+
+.notification-buttons {
+  padding-top: 5px;
+  cursor: hand;
+}
 .driver-info {
   padding-left: 15px;
   padding-top: 5px;
