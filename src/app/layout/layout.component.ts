@@ -44,7 +44,11 @@ export class LayoutComponent implements AfterViewInit {
 
     const layoutPosition = this.garage.nativeElement.getBoundingClientRect();
     this.jsGraphics = new jsGraphics(document.getElementById("canvas"));
-    this.jsGraphics.setOrigin(new jsPoint(layoutPosition.left + window.pageXOffset, layoutPosition.top + window.pageYOffset));
+    this.jsGraphics.setOrigin(new jsPoint(15, 41));
+    if(this.points.length > 2) {
+      this.drawLayout();
+      this.setModeLayout(false);
+    }
   }
 
   private setupDropzone() {
@@ -117,6 +121,17 @@ export class LayoutComponent implements AfterViewInit {
   }
 
   private setModeLayout(modeLayout) {
+    if(modeLayout) {
+      this.points = new Array();
+    }else {
+      if(this.points.length == 0) {
+        console.log("Draw a layout first");
+        return;
+      }
+      this.clearLayout();
+      this.drawLayout();
+    }
+
     this.modeLayout = modeLayout;
   }
 
@@ -146,21 +161,25 @@ export class LayoutComponent implements AfterViewInit {
     );
   }
 
-  private setPoint(event) {
+  private setPoint(x, y) {
     if (!this.modeLayout) {
       return;
     }
     
     const pen = new jsPen(new jsColor('red'), 1);
-    const center = new jsPoint(event.offsetX, event.offsetY);
+    const center = new jsPoint(x, y);
     this.jsGraphics.drawCircle(pen, center, 5);
 
-    this.points.push(new Point(event.offsetX, event.offsetY));
+    this.points.push(new Point(x, y));
   }
 
   private drawLayout() {
     const jsPoints = this.points.map((point) => new jsPoint(point.x, point.y));
-    const pen = new jsPen(new jsColor('black'), 1);
+    const pen = new jsPen(new jsColor('black'), 3);
     this.jsGraphics.drawPolygon(pen, jsPoints);
+  }
+
+  private clearLayout() {
+    this.jsGraphics.clear();
   }
 }
