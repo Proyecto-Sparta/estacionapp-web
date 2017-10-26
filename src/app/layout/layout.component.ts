@@ -20,7 +20,7 @@ export class LayoutComponent implements AfterViewInit {
   private currentFloor = 0;
   private modeLayout = true;
   private jsGraphics;
-  private points: Array<Point> = new Array();
+  private points: Array<Point> = new Array(new Point(10,10),new Point(550,410), new Point(550,10));
 
   @ViewChild('garage') garage: ElementRef;
   @ViewChildren(ParkingSpaceComponent) viewChildren;
@@ -42,7 +42,6 @@ export class LayoutComponent implements AfterViewInit {
     this.setupDropzone();
     this.setupDraggables();
 
-    const layoutPosition = this.garage.nativeElement.getBoundingClientRect();
     this.jsGraphics = new jsGraphics(document.getElementById("canvas"));
     this.jsGraphics.setOrigin(new jsPoint(15, 41));
     if(this.points.length > 2) {
