@@ -42,9 +42,10 @@ export class LayoutComponent implements AfterViewInit {
     this.setupDropzone();
     this.setupDraggables();
 
-    this.jsGraphics = new jsGraphics(document.getElementById("canvas"));
+    this.jsGraphics = new jsGraphics(document.getElementById("garage"));
     this.jsGraphics.setOrigin(new jsPoint(15, 41));
     if(this.points.length > 2) {
+      this.points = this.points.map(point => point.applyScale(this.layoutScale));
       this.drawLayout();
       this.setModeLayout(false);
     }
@@ -121,13 +122,13 @@ export class LayoutComponent implements AfterViewInit {
 
   private setModeLayout(modeLayout) {
     if(modeLayout) {
-      this.points = new Array();
+      this.jsGraphics.showGrid(20);
     }else {
       if(this.points.length == 0) {
         console.log("Draw a layout first");
         return;
       }
-      this.clearLayout();
+      this.jsGraphics.clear();
       this.drawLayout();
     }
 
@@ -179,6 +180,7 @@ export class LayoutComponent implements AfterViewInit {
   }
 
   private clearLayout() {
+    this.points = new Array();
     this.jsGraphics.clear();
   }
 }

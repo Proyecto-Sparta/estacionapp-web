@@ -50,6 +50,7 @@ export class ViewOccupancyComponent implements AfterViewInit {
     this.jsGraphics = new jsGraphics(document.getElementById("canvas"));
     this.jsGraphics.setOrigin(new jsPoint(15, 41));
     if(this.points.length > 2) {
+      this.points = this.points.map(point => point.applyScale(this.layoutScale));
       this.drawLayout();
     }
   }

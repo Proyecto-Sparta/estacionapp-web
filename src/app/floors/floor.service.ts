@@ -38,7 +38,7 @@ export class FloorService {
           ]
         },
         {
-          floor_level: 0,
+          floor_level: 1,
           parking_spaces: [
             {
               shape: 'square',
