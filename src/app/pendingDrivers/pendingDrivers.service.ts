@@ -1,34 +1,38 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
-import {Router} from '@angular/router';
+import {AngularFireDatabase} from "angularfire2/database";
+import {PendingDriver} from "./pending-driver";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class PendingDriversService {
-  private LOCAL_STORAGE_KEY = 'pendingDrivers';
-  private pendingDrivers: Array<String> = [];
 
-  constructor() {
-    this.pendingDrivers = JSON.parse(localStorage.getItem(this.LOCAL_STORAGE_KEY)) || [];
-    console.log("[pendingDrivers] Stored: "+this.pendingDrivers);
+  private pendingDrivers : Observable<PendingDriver[]>;
+
+  constructor(private db : AngularFireDatabase){
+    this.pendingDrivers = db.list('drivers').valueChanges();
   }
 
-  public addPendingDriver(driver: String) {
-    this.pendingDrivers.push(driver);
-    this.storePendingDrivers();
-  }
-
-  public removePendingDriver(pendingDriver: String) {
-    console.log("[pendingDrivers] Removing: "+pendingDriver);
-    this.pendingDrivers = this.pendingDrivers.filter(driver => driver !== pendingDriver);
-    this.storePendingDrivers();
-  }
-
-  public getPendingDrivers() {
+  public getDrivers(){
     return this.pendingDrivers;
   }
 
-  private storePendingDrivers() {
-    console.log("[pendingDrivers] Storing: "+JSON.stringify(this.pendingDrivers));
-    localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(this.pendingDrivers));
+  public assign(parkingSpace : number, driver : PendingDriver){
+    console.log(driver.name, parkingSpace);
+    this.db.database.ref("drivers").orderByChild("name").equalTo(driver.name)
+      .on("child_added", function(snapshot) {
+        return snapshot.ref.update(
+          { waiting: false,
+                  parkingSpace: parkingSpace}
+        );
+    });
+  }
+
+  deny(driver: PendingDriver) {
+    this.db.database.ref("drivers").orderByChild("name").equalTo(driver.name)
+      .on("child_added", function(snapshot) {
+        return snapshot.ref.update(
+          { waiting: false }
+        );
+      });
   }
 }

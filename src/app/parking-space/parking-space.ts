@@ -1,3 +1,5 @@
+import {PendingDriver} from "app/pendingDrivers/pending-driver";
+
 export class ParkingSpace {
 
   constructor(public shape: string,
@@ -6,7 +8,8 @@ export class ParkingSpace {
               public width: number,
               public height: number,
               public angle: number,
-              public occupied: boolean = false) {
+              public occupied: boolean = false,
+              public driver : PendingDriver = null) {
     this.shape = shape;
     this.x = x;
     this.y = y;
@@ -23,6 +26,8 @@ export class ParkingSpace {
 
   toggleOccupancy() {
     this.occupied = !this.occupied;
+    if(!this.occupied)
+        this.deoccupy();
   }
 
   applyScale(scale) {
@@ -32,5 +37,13 @@ export class ParkingSpace {
     this.width = this.width * scale;
 
     return this;
+  }
+
+  assign(selectedDriver: PendingDriver) {
+    this.driver = selectedDriver;
+  }
+
+  deoccupy(){
+    this.driver = null;
   }
 }
