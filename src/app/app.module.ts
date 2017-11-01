@@ -26,6 +26,7 @@ import {FloorService} from './floors/floor.service';
 import {PendingDriversService} from './pendingDrivers/pendingDrivers.service';
 import {environment} from "../environments/environment";
 import {AngularFireDatabaseModule} from "angularfire2/database";
+import {AlertComponent} from "./alert/alert.component";
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {AngularFireDatabaseModule} from "angularfire2/database";
     LayoutComponent,
     ParkingSpaceComponent,
     ParkingItemComponent,
-    ViewOccupancyComponent
+    ViewOccupancyComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

@@ -21,6 +21,7 @@ export class ViewOccupancyComponent implements AfterViewInit {
   private layoutScale;
   private currentFloor = 0;
   private selectedDriver : PendingDriver = null;
+  private showAlert = false;
 
   @ViewChild('garage') garage: ElementRef;
   @ViewChildren(ParkingSpaceComponent) viewChildren;
@@ -88,7 +89,7 @@ export class ViewOccupancyComponent implements AfterViewInit {
       isDriverSelected = !isNull(this.selectedDriver);
 
     if (!isOccupied && !isDriverSelected) {
-      alert("Select a driver first!");
+      this.showAlert = true;
       return;
     }
 
