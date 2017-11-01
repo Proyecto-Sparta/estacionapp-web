@@ -9,7 +9,7 @@ export class PendingDriversService {
   private pendingDrivers : Observable<PendingDriver[]>;
 
   constructor(private db : AngularFireDatabase){
-    this.pendingDrivers = db.list('drivers').valueChanges();
+    this.pendingDrivers = db.list('garages/1').valueChanges();
   }
 
   public getDrivers(){
@@ -27,12 +27,8 @@ export class PendingDriversService {
     });
   }
 
-  deny(driver: PendingDriver) {
-    this.db.database.ref("drivers").orderByChild("name").equalTo(driver.name)
-      .on("child_added", function(snapshot) {
-        return snapshot.ref.update(
-          { waiting: false }
-        );
-      });
+  deny(id : string) {
+    this.db.database.ref("garages/1").child(id).remove()
+      .catch(response => console.error(response))
   }
 }

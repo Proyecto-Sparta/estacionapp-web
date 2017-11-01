@@ -21,21 +21,21 @@
 
   <div class="col-md-3 col-sm-12">
     <div class="panel-body layout-container">
-      <div *ngFor='let driver of getAllDrivers() | async'>
-        <div class="row" *ngIf='driver.waiting'>
+      <div *ngFor='let driver of getDrivers() | async'>
+        <div class="row">
           <div class="col-sm-12">
             <div (click)="selectDriver(driver)" class="notification bg-success text-center">
               <div class="row">
                 <div class="col-sm-8">
                   <div class="driver-info text-left">
                     <div> {{driver.name}}</div>
-                    <div> {{driver.plate}}</div>
-                    <div> {{driver.waiting}}</div>
+                    <div> {{driver.vehicle.plate}}</div>
+                    <div> {{driver.vehicle.type}}</div>
                   </div>
                 </div>
                 <div class="col-sm-4">
                   <div class="notification-buttons">
-                    <div (click)="denyDriver(driver);" class="driver-deny-button">
+                    <div (click)="denyDriver(driver.id);" class="driver-deny-button">
                       <i class="glyphicon glyphicon-remove text-danger notification-button"></i>
                     </div>
                   </div>

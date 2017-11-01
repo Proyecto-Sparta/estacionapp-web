@@ -29,6 +29,7 @@ export class LoginService {
       .get(url, options)
       .map(response => {
         localStorage.setItem('currentUser', garage.username);
+        localStorage.setItem('id', garage.username);
         localStorage.setItem('token', response.headers.get('authorization'));
       });
   }

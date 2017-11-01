@@ -43,13 +43,8 @@ export class ViewOccupancyComponent implements AfterViewInit {
       .then((storedFloors) => this.floors = storedFloors);
   }
 
-  private getAllDrivers() {
-    return this.pendingDriversService.getDrivers();
-  }
-
   private getDrivers() {
-    return this.pendingDriversService.getDrivers()
-      .switchMap((drivers: PendingDriver[]) => drivers.filter(driver => driver.waiting));
+    return this.pendingDriversService.getDrivers();
   }
 
   private applyScale(floors, scale) {
@@ -78,8 +73,8 @@ export class ViewOccupancyComponent implements AfterViewInit {
     console.log(`Selected ${driver}`);
   }
 
-  private denyDriver(driver : PendingDriver){
-    this.pendingDriversService.deny(driver);
+  private denyDriver(id: string){
+    this.pendingDriversService.deny(id);
   }
 
 
