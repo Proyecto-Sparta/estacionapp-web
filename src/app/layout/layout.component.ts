@@ -3,8 +3,9 @@ import * as interact from 'interactjs';
 import {ParkingSpace} from '../parking-space/parking-space';
 import {ParkingSpaceComponent} from '../parking-space/parking-space.component';
 import {Floor} from '../floors/floor';
-import {FloorService} from '../floors/floor.service';
+import {GarageLayoutService} from '../garage/garageLayout.service';
 import {Point} from './point';
+import {GarageLayout} from '../garage/garageLayout';
 
 declare var jsGraphics, jsColor, jsPen, jsPoint: any;
 
@@ -12,7 +13,7 @@ declare var jsGraphics, jsColor, jsPen, jsPoint: any;
   selector: 'layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
-  providers: [FloorService]
+  providers: [GarageLayoutService]
 })
 export class LayoutComponent implements AfterViewInit {
   private floors;
@@ -20,35 +21,39 @@ export class LayoutComponent implements AfterViewInit {
   private currentFloor = 0;
   private modeLayout = true;
   private jsGraphics;
-  private points: Array<Point> = new Array(new Point(10,10),new Point(550,410), new Point(550,10));
+  private points: Array<Point>;
 
   @ViewChild('garage') garage: ElementRef;
   @ViewChildren(ParkingSpaceComponent) viewChildren;
   @ContentChildren(ParkingSpaceComponent) contentChildren;
 
-  constructor(private floorService: FloorService) {
-    this.floorService = floorService;
+  constructor(private garageLayoutService: GarageLayoutService) {
+    this.garageLayoutService = garageLayoutService;
     this.floors = [{parkingSpaces: []}];
+    this.points = [];
   }
 
   ngAfterViewInit(): void {
     this.layoutScale = this.garage.nativeElement.offsetWidth / 1080;
     console.log(this.layoutScale);
-    this.floorService
-        .getFloorPlans(666)
-        .then((floors) => this.applyScale(floors, this.layoutScale))
-        .then((storedFloors) => this.floors = storedFloors);
+    this.garageLayoutService
+        .getGarageLayout(666)
+        .then((garageLayout: GarageLayout) => garageLayout.applyScale(this.layoutScale))
+        .then((garageLayout: GarageLayout) => {
+          this.floors = garageLayout.floors;
+          this.points = garageLayout.shape;
+
+          if (this.points.length > 2) {
+            this.drawLayout();
+            this.setModeLayout(false);
+          }
+        });
 
     this.setupDropzone();
     this.setupDraggables();
 
-    this.jsGraphics = new jsGraphics(document.getElementById("garage"));
+    this.jsGraphics = new jsGraphics(document.getElementById("canvas"));
     this.jsGraphics.setOrigin(new jsPoint(15, 41));
-    if(this.points.length > 2) {
-      this.points = this.points.map(point => point.applyScale(this.layoutScale));
-      this.drawLayout();
-      this.setModeLayout(false);
-    }
   }
 
   private setupDropzone() {
@@ -74,10 +79,6 @@ export class LayoutComponent implements AfterViewInit {
         event.target.classList.remove('drop-target');
       }
     });
-  }
-
-  private applyScale(floors, scale) {
-    return floors.map(floor => floor.applyScaleToParkingSpaces(scale));
   }
 
   private setupDraggables() {
@@ -155,9 +156,9 @@ export class LayoutComponent implements AfterViewInit {
 
   saveLayout() {
     this.viewChildren.forEach(child => child.updatePosition(child));
-    this.floorService.storeFloorPlansForGarage(
+    this.garageLayoutService.storeGarageLayout(
       666,
-      this.floors.map((floor) => floor.applyScale(1 / this.layoutScale))
+      new GarageLayout(this.points, this.floors).applyScale(1 / this.layoutScale)
     );
   }
 
