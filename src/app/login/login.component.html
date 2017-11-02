@@ -4,7 +4,7 @@
 </div>
 
 <div class="login panel panel-default centered">
-  <div class="panel-heading">Log In</div>
+  <div class="panel-heading component-dark component-title-dark">Log In</div>
   <div class="panel-body login-form">
     <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
       <div class="form-group">
@@ -17,7 +17,7 @@
         <input type="password" class="form-control" id="password" required
                [(ngModel)]="model.password" name="password" #password="ngModel">
       </div>
-      <button class="btn btn-default" [disabled]="!loginForm.form.valid">Log in</button>
+      <button class="btn btn-warning" [disabled]="!loginForm.form.valid">Log in</button>
     </form>
   </div>
 </div>

@@ -32,6 +32,7 @@ export class LoginService {
         localStorage.setItem('id', garage.username);
         localStorage.setItem('token', response.headers.get('authorization'));
       });
+
   }
 
   logout(){
