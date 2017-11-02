@@ -18,19 +18,24 @@ export class PendingDriversService {
     return this.pendingDrivers;
   }
 
-  public assign(parkingSpace: number, driver : PendingDriver){
-    console.log(driver.name, parkingSpace);
-    this.db.database.ref("drivers").orderByChild("name").equalTo(driver.name)
-      .on("child_added", function(snapshot) {
-        return snapshot.ref.update(
-          { waiting: false,
-                  parkingSpace: parkingSpace}
-        );
-    });
+  public assign(parkingSpace: number, driver: PendingDriver, currentFloor: number){
+    this.db.database.ref(`drivers/${driver.id}`).update(
+          { floor: currentFloor,
+                  garage: this.currentId,
+                    parkingSpace: parkingSpace,
+                    full_name: driver.full_name,
+                    vehicle: driver.vehicle}
+        )
+      .then(this.removePendingDriver(driver.id))
+      .catch(response => console.error(response));
+  }
+
+  removePendingDriver(id: string): any {
+    this.db.database.ref(this.garagePath).child(id).remove()
+      .catch(response => console.error(response));
   }
 
   deny(id: string) {
-    this.db.database.ref(this.currentId).child(id).remove()
-      .catch(response => console.error(response))
+   this.removePendingDriver(id);
   }
 }

@@ -1,6 +1,5 @@
 export class PendingDriver {
-  constructor(public name: string,
+  constructor(public full_name: string,
               public id: string,
-              public vehicle
-              ) {}
+              public vehicle) {}
 }

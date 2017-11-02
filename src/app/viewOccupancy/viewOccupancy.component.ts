@@ -90,7 +90,7 @@ export class ViewOccupancyComponent implements AfterViewInit {
 
     if (!isOccupied && isDriverSelected) {
       // TODO: Assign space to driver
-      this.pendingDriversService.assign(parkingSpaceIndex, this.selectedDriver);
+      this.pendingDriversService.assign(parkingSpaceIndex, this.selectedDriver, this.currentFloor);
       parkingSpace.assign(this.selectedDriver);
       this.selectedDriver = null;
     }
