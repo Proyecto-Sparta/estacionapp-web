@@ -28,8 +28,9 @@ export class LoginService {
     return this.http
       .get(url, options)
       .map(response => {
+        let currentGarage = response.json();
         localStorage.setItem('currentUser', garage.username);
-        localStorage.setItem('id', garage.username);
+        localStorage.setItem('garage', JSON.stringify(currentGarage));
         localStorage.setItem('token', response.headers.get('authorization'));
       });
 

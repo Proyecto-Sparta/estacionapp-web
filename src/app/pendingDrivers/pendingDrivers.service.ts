@@ -7,16 +7,18 @@ import {Observable} from "rxjs/Observable";
 export class PendingDriversService {
 
   private pendingDrivers : Observable<PendingDriver[]>;
+  private currentId = JSON.parse(localStorage.getItem('garage')).id;
+  private garagePath = `garages/${this.currentId}`;
 
   constructor(private db : AngularFireDatabase){
-    this.pendingDrivers = db.list('garages/1').valueChanges();
+    this.pendingDrivers = db.list(this.garagePath).valueChanges();
   }
 
   public getDrivers(){
     return this.pendingDrivers;
   }
 
-  public assign(parkingSpace : number, driver : PendingDriver){
+  public assign(parkingSpace: number, driver : PendingDriver){
     console.log(driver.name, parkingSpace);
     this.db.database.ref("drivers").orderByChild("name").equalTo(driver.name)
       .on("child_added", function(snapshot) {
@@ -27,8 +29,8 @@ export class PendingDriversService {
     });
   }
 
-  deny(id : string) {
-    this.db.database.ref("garages/1").child(id).remove()
+  deny(id: string) {
+    this.db.database.ref(this.currentId).child(id).remove()
       .catch(response => console.error(response))
   }
 }
