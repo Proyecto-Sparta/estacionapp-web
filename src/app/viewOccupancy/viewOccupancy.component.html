@@ -3,32 +3,51 @@
   <div class="col-sm-12 col-md-9">
     <div class="garage-map-layout panel panel-default">
       <div class="panel-heading">
-          <h3 class="panel-title">Occupancy</h3>
-          <span class="floor"> Floor:
+        <h3 class="panel-title">Occupancy</h3>
+        <span class="floor"> Floor:
             <button *ngIf="currentFloor > 0" class="btn-primary" (click)="lowerFloor()"> < </button>
             {{currentFloor + 1}}
             <button class="btn-primary" (click)="upperFloor()"> > </button>
           </span>
-        </div>
+      </div>
       <div id="garage" #garage class="panel-body parking-elem-container dropzone"
         [ngStyle]="{'height.px': (garage.offsetWidth/1080)*720 }">
         <div id="canvas"></div>
         <parking-space *ngFor='let parkingSpace of floors[currentFloor].parkingSpaces; let i = index'
-          id="parking-space-{{i+1}}" [model]='parkingSpace'
-          (click)='toggleOccupancy(i)'></parking-space>
+                       id="parking-space-{{i+1}}" [model]='parkingSpace'
+                       (click)='toggleOccupancy(i)'></parking-space>
       </div>
     </div>
   </div>
 
   <div class="col-md-3 col-sm-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Pending Drivers</h3>
-        </div>
-        <div class="panel-body layout-container">
-          <div *ngFor='let driver of pendingDrivers; let i = index' class='driver'
-          (click)="selectDriver(i)">{{driver}}</div>
+    <div class="panel-body layout-container">
+      <div *ngFor='let driver of getDrivers() | async'>
+        <div class="row">
+          <div class="col-sm-12">
+            <div (click)="selectDriver(driver)" class="notification bg-success text-center">
+              <div class="row">
+                <div class="col-sm-8">
+                  <div class="driver-info text-left">
+                    <div> {{driver.full_name}}</div>
+                    <div> {{driver.vehicle.plate}}</div>
+                    <div> {{driver.vehicle.type}}</div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="notification-buttons">
+                    <div (click)="denyDriver(driver.id);" class="driver-deny-button">
+                      <i class="glyphicon glyphicon-remove text-danger notification-button"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
 </div>
+
+<select-driver-alert></select-driver-alert>

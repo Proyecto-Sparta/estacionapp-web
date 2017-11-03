@@ -1,34 +1,41 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
-import {Router} from '@angular/router';
+import {AngularFireDatabase} from "angularfire2/database";
+import {PendingDriver} from "./pending-driver";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class PendingDriversService {
-  private LOCAL_STORAGE_KEY = 'pendingDrivers';
-  private pendingDrivers: Array<String> = [];
 
-  constructor() {
-    this.pendingDrivers = JSON.parse(localStorage.getItem(this.LOCAL_STORAGE_KEY)) || [];
-    console.log("[pendingDrivers] Stored: "+this.pendingDrivers);
+  private pendingDrivers : Observable<PendingDriver[]>;
+  private currentId = JSON.parse(localStorage.getItem('garage')).id;
+  private garagePath = `garages/${this.currentId}`;
+
+  constructor(private db : AngularFireDatabase){
+    this.pendingDrivers = db.list(this.garagePath).valueChanges();
   }
 
-  public addPendingDriver(driver: String) {
-    this.pendingDrivers.push(driver);
-    this.storePendingDrivers();
-  }
-
-  public removePendingDriver(pendingDriver: String) {
-    console.log("[pendingDrivers] Removing: "+pendingDriver);
-    this.pendingDrivers = this.pendingDrivers.filter(driver => driver !== pendingDriver);
-    this.storePendingDrivers();
-  }
-
-  public getPendingDrivers() {
+  public getDrivers(){
     return this.pendingDrivers;
   }
 
-  private storePendingDrivers() {
-    console.log("[pendingDrivers] Storing: "+JSON.stringify(this.pendingDrivers));
-    localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(this.pendingDrivers));
+  public assign(parkingSpace: number, driver: PendingDriver, currentFloor: number){
+    this.db.database.ref(`drivers/${driver.id}`).update(
+          { floor: currentFloor,
+                  garage: this.currentId,
+                    parkingSpace: parkingSpace,
+                    full_name: driver.full_name,
+                    vehicle: driver.vehicle}
+        )
+      .then(this.removePendingDriver(driver.id))
+      .catch(response => console.error(response));
+  }
+
+  removePendingDriver(id: string): any {
+    this.db.database.ref(this.garagePath).child(id).remove()
+      .catch(response => console.error(response));
+  }
+
+  deny(id: string) {
+   this.removePendingDriver(id);
   }
 }

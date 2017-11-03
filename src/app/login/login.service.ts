@@ -5,12 +5,10 @@ import {LoginComponent} from './login.component';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import {Observable} from 'rxjs/Observable';
-import {NotificationStream} from "app/notification-stream/notification-stream";
 
 @Injectable()
 export class LoginService {
   private garageUrl = 'http://localhost:4000/api/garages';
-  private notificationStream : NotificationStream;
 
   constructor(private http: Http) {
 
@@ -30,9 +28,12 @@ export class LoginService {
     return this.http
       .get(url, options)
       .map(response => {
+        let currentGarage = response.json();
         localStorage.setItem('currentUser', garage.username);
+        localStorage.setItem('garage', JSON.stringify(currentGarage));
         localStorage.setItem('token', response.headers.get('authorization'));
       });
+
   }
 
   logout(){

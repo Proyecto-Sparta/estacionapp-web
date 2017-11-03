@@ -11,3 +11,12 @@
   margin-right: auto;
   max-width: 380px;
 }
+
+
+.component-dark {
+  background-color: #444444
+}
+
+.component-title-dark {
+  color: #e7e7e7;
+}

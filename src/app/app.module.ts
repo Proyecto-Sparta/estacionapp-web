@@ -1,4 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
+import { AngularFireModule } from 'angularfire2';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
@@ -23,6 +24,9 @@ import {ParkingItemComponent} from './parking-item/parking-item.component';
 import {ViewOccupancyComponent} from './viewOccupancy/viewOccupancy.component';
 import {GarageLayoutService} from './garage/garageLayout.service';
 import {PendingDriversService} from './pendingDrivers/pendingDrivers.service';
+import {environment} from "../environments/environment";
+import {AngularFireDatabaseModule} from "angularfire2/database";
+import {AlertComponent} from "./alert/alert.component";
 
 @NgModule({
   declarations: [
@@ -38,10 +42,13 @@ import {PendingDriversService} from './pendingDrivers/pendingDrivers.service';
     LayoutComponent,
     ParkingSpaceComponent,
     ParkingItemComponent,
-    ViewOccupancyComponent
+    ViewOccupancyComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(environment.firebase, 'estacionapp'),
+    AngularFireDatabaseModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,
