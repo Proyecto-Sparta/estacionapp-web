@@ -1,8 +1,7 @@
-import {AfterViewInit, Component, ContentChildren, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, ContentChildren, ElementRef, ViewChild, ViewChildren} from '@angular/core';
 import {ParkingSpaceComponent} from '../parking-space/parking-space.component';
 import {Floor} from '../floors/floor';
 import {FloorService} from '../floors/floor.service';
-import {Observable} from "rxjs/Observable";
 import {PendingDriversService} from "../pendingDrivers/pendingDrivers.service";
 import {AngularFireDatabase} from "angularfire2/database";
 import {isNull} from "util";
@@ -17,10 +16,10 @@ import {ParkingSpace} from "../parking-space/parking-space";
 })
 
 export class ViewOccupancyComponent implements AfterViewInit {
-  private floors : Array<any>;
+  private floors: Array<any>;
   private layoutScale;
   private currentFloor = 0;
-  private selectedDriver : PendingDriver = null;
+  private selectedDriver: PendingDriver = null;
   private showAlert = false;
 
   @ViewChild('garage') garage: ElementRef;
@@ -28,7 +27,7 @@ export class ViewOccupancyComponent implements AfterViewInit {
   @ContentChildren(ParkingSpaceComponent) contentChildren;
 
   constructor(db: AngularFireDatabase, private floorService: FloorService,
-              private pendingDriversService : PendingDriversService) {
+              private pendingDriversService: PendingDriversService) {
     this.floorService = floorService;
     this.floors = [{parkingSpaces: []}];
   }
@@ -68,18 +67,18 @@ export class ViewOccupancyComponent implements AfterViewInit {
     this.currentFloor += 1;
   }
 
-  private selectDriver(driver : PendingDriver) {
+  private selectDriver(driver: PendingDriver) {
     this.selectedDriver = driver;
     console.log(`Selected ${driver}`);
   }
 
-  private denyDriver(id: string){
+  private denyDriver(id: string) {
     this.pendingDriversService.deny(id);
   }
 
 
   private toggleOccupancy(parkingSpaceIndex: number) {
-    const parkingSpace : ParkingSpace = this.floors[this.currentFloor].parkingSpaces[parkingSpaceIndex],
+    const parkingSpace: ParkingSpace = this.floors[this.currentFloor].parkingSpaces[parkingSpaceIndex],
       isOccupied = parkingSpace.occupied,
       isDriverSelected = !isNull(this.selectedDriver);
 

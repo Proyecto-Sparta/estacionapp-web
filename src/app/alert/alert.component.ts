@@ -1,4 +1,3 @@
-
 import {Component} from "@angular/core";
 
 @Component({
@@ -6,4 +5,5 @@ import {Component} from "@angular/core";
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.css']
 })
-export class AlertComponent {}
+export class AlertComponent {
+}

@@ -25,7 +25,7 @@ export class Marker {
   long: Number;
 
   public constructor(lat: Number, long: Number) {
-    this. lat = lat;
+    this.lat = lat;
     this.long = long;
   }
 }

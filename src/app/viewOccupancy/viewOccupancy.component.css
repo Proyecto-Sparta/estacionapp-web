@@ -23,14 +23,13 @@
   cursor: pointer;
 }
 
->>> .parking-space, .square{
+> > > .parking-space, .square {
   background-color: green !important;
 }
 
->>> .parking-space.occupied{
+> > > .parking-space.occupied {
   background-color: red !important;
 }
-
 
 .notifications {
   position: absolute;
@@ -61,6 +60,7 @@
   padding-top: 5px;
   cursor: hand;
 }
+
 .driver-info {
   padding-left: 15px;
   padding-top: 5px;

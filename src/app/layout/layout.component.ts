@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ContentChildren, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, ContentChildren, ElementRef, ViewChild, ViewChildren} from '@angular/core';
 import * as interact from 'interactjs';
 import {ParkingSpace} from '../parking-space/parking-space';
 import {ParkingSpaceComponent} from '../parking-space/parking-space.component';
@@ -29,9 +29,9 @@ export class LayoutComponent implements AfterViewInit {
     this.layoutScale = this.garage.nativeElement.offsetWidth / 1080;
     console.log(this.layoutScale);
     this.floorService
-        .getFloorPlans(666)
-        .then((floors) => this.applyScale(floors, this.layoutScale))
-        .then((storedFloors) => this.floors = storedFloors);
+      .getFloorPlans(666)
+      .then((floors) => this.applyScale(floors, this.layoutScale))
+      .then((storedFloors) => this.floors = storedFloors);
 
     this.setupDropzone();
     this.setupDraggables();
@@ -76,7 +76,7 @@ export class LayoutComponent implements AfterViewInit {
       },
 
       autoScroll: true,
-      onmove: function(event){
+      onmove: function (event) {
         const target = event.target,
           x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
           y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
@@ -95,10 +95,12 @@ export class LayoutComponent implements AfterViewInit {
     const smallParkingSpace = new ParkingSpace('square', 10, 10, 40, 40, 0);
     this.floors[this.currentFloor].parkingSpaces.push(smallParkingSpace);
   }
+
   private renderMediumParkingSpace() {
     const mediumParkingSpace = new ParkingSpace('square', 10, 10, 60, 60, 0);
     this.floors[this.currentFloor].parkingSpaces.push(mediumParkingSpace);
   }
+
   private renderLargeParkingSpace() {
     const largeParkingSpace = new ParkingSpace('square', 10, 10, 100, 100, 0);
     this.floors[this.currentFloor].parkingSpaces.push(largeParkingSpace);

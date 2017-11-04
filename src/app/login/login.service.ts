@@ -36,14 +36,14 @@ export class LoginService {
 
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('token');
     return Observable.of(true);
   }
 
   isLoggedIn() {
-    return !! localStorage.getItem('token');
+    return !!localStorage.getItem('token');
   }
 
 }

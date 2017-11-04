@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {LoginService} from '../login/login.service';
-import {Router, CanActivate} from '@angular/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +10,8 @@ import {Router, CanActivate} from '@angular/router';
 
 export class HomeComponent {
   constructor(private loginService: LoginService,
-              private router: Router) {}
+              private router: Router) {
+  }
 
 }
 

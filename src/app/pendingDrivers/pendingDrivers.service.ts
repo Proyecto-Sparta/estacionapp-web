@@ -6,26 +6,28 @@ import {Observable} from "rxjs/Observable";
 @Injectable()
 export class PendingDriversService {
 
-  private pendingDrivers : Observable<PendingDriver[]>;
+  private pendingDrivers: Observable<PendingDriver[]>;
   private currentId = JSON.parse(localStorage.getItem('garage')).id;
   private garagePath = `garages/${this.currentId}`;
 
-  constructor(private db : AngularFireDatabase){
+  constructor(private db: AngularFireDatabase) {
     this.pendingDrivers = db.list(this.garagePath).valueChanges();
   }
 
-  public getDrivers(){
+  public getDrivers() {
     return this.pendingDrivers;
   }
 
-  public assign(parkingSpace: number, driver: PendingDriver, currentFloor: number){
+  public assign(parkingSpace: number, driver: PendingDriver, currentFloor: number) {
     this.db.database.ref(`drivers/${driver.id}`).update(
-          { floor: currentFloor,
-                  garage: this.currentId,
-                    parkingSpace: parkingSpace,
-                    full_name: driver.full_name,
-                    vehicle: driver.vehicle}
-        )
+      {
+        floor: currentFloor,
+        garage: this.currentId,
+        parkingSpace: parkingSpace,
+        full_name: driver.full_name,
+        vehicle: driver.vehicle
+      }
+    )
       .then(this.removePendingDriver(driver.id))
       .catch(response => console.error(response));
   }
@@ -36,6 +38,6 @@ export class PendingDriversService {
   }
 
   deny(id: string) {
-   this.removePendingDriver(id);
+    this.removePendingDriver(id);
   }
 }

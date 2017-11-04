@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, ElementRef, Input} from '@angular/core';
-import * as interact from 'interactjs';
 import {ParkingSpace} from './parking-space';
 
 @Component({
@@ -12,6 +11,7 @@ export class ParkingSpaceComponent implements AfterViewInit {
   private elementHTML: HTMLElement;
 
   @Input() model: ParkingSpace;
+
   constructor(private elemRef: ElementRef) {
   }
 
@@ -35,7 +35,7 @@ export class ParkingSpaceComponent implements AfterViewInit {
     const x = parseFloat(component.elemRef.nativeElement.children[0].getAttribute('data-x')) || 0;
     const y = parseFloat(component.elemRef.nativeElement.children[0].getAttribute('data-y')) || 0;
 
-    console.log("updating position: "+x+", "+y);
+    console.log("updating position: " + x + ", " + y);
 
     component.model.updatePosition(x, y);
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'parking-item',
@@ -7,11 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ParkingItemComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
-
 
 
 }

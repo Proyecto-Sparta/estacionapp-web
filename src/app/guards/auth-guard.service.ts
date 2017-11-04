@@ -8,7 +8,8 @@ import 'rxjs/add/operator/catch';
 export class AuthGuard implements CanActivateChild, CanActivate {
 
   constructor(private loginService: LoginService,
-              private router: Router) {}
+              private router: Router) {
+  }
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.loginService.isLoggedIn();

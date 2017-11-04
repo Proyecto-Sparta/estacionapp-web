@@ -1,7 +1,5 @@
 import {Component} from '@angular/core';
 import {mapListener} from '../interfaces/mapListener';
-import {Garage} from '../garage/garage';
-import {NgForm} from '@angular/forms';
 import {GarageService} from '../garage/garage.service';
 import {Marker} from '../map/map.component';
 import {SignUpModelValidator} from './signupModelValidator';
@@ -37,11 +35,11 @@ export class SignUpComponent implements mapListener {
       return false;
     }
 
-/*
-    this.garageService.login(new Garage(
-      loginForm.value.username,
-      loginForm.value.password));
-      */
+    /*
+        this.garageService.login(new Garage(
+          loginForm.value.username,
+          loginForm.value.password));
+          */
   }
 
 }

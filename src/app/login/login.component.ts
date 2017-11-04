@@ -14,7 +14,7 @@ import {Router} from '@angular/router';
 export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
-    if(this.loginService.isLoggedIn())
+    if (this.loginService.isLoggedIn())
       this.router.navigate(['/myAccount']);
   }
 
@@ -31,7 +31,9 @@ export class LoginComponent implements OnInit {
       loginForm.value.password), this)
       .subscribe(
         (token: any) => this.router.navigate(['/myAccount']),
-        () => { this.makeInvalid(); }
+        () => {
+          this.makeInvalid();
+        }
       );
   }
 

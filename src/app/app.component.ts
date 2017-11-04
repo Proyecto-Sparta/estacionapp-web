@@ -10,6 +10,7 @@ import {AngularFireDatabase} from "angularfire2/database";
 })
 export class AppComponent {
 
-  constructor(db: AngularFireDatabase){}
+  constructor(db: AngularFireDatabase) {
+  }
 
 }

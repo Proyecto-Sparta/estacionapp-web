@@ -9,7 +9,7 @@ export class ParkingSpace {
               public height: number,
               public angle: number,
               public occupied: boolean = false,
-              public driver : PendingDriver = null) {
+              public driver: PendingDriver = null) {
     this.shape = shape;
     this.x = x;
     this.y = y;
@@ -26,8 +26,8 @@ export class ParkingSpace {
 
   toggleOccupancy() {
     this.occupied = !this.occupied;
-    if(!this.occupied)
-        this.deoccupy();
+    if (!this.occupied)
+      this.deoccupy();
   }
 
   applyScale(scale) {
@@ -43,7 +43,7 @@ export class ParkingSpace {
     this.driver = selectedDriver;
   }
 
-  deoccupy(){
+  deoccupy() {
     this.driver = null;
   }
 }
