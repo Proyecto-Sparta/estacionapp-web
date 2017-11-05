@@ -1,3 +1,4 @@
-<div class="parking-space square" data-toggle="tooltip" title="Show driver name"
+<div class="parking-space square" data-toggle="tooltip" data-html="true"
+     [attr.title]="model.tooltipAssignedDriver"
      [ngClass]="{'occupied': model.occupied}">
 </div>

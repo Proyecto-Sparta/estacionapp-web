@@ -33,6 +33,7 @@ export class PendingDriversService {
   }
 
   removePendingDriver(id: string): any {
+    console.log(`garage: ${this.garagePath} and child ${id}`);
     this.db.database.ref(this.garagePath).child(id).remove()
       .catch(response => console.error(response));
   }

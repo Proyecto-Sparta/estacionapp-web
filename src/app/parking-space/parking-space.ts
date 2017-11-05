@@ -1,4 +1,5 @@
 import {PendingDriver} from "app/pending-drivers/pending-driver";
+import {isNull} from "util";
 
 export class ParkingSpace {
 
@@ -9,6 +10,7 @@ export class ParkingSpace {
               public height: number,
               public angle: number,
               public occupied: boolean = false,
+              public tooltipAssignedDriver: string = "Free",
               public driver: PendingDriver = null) {
     this.shape = shape;
     this.x = x;
@@ -41,9 +43,18 @@ export class ParkingSpace {
 
   assign(selectedDriver: PendingDriver) {
     this.driver = selectedDriver;
+    this.changeTooltip();
   }
 
   deoccupy() {
     this.driver = null;
+    this.changeTooltip();
+  }
+
+  changeTooltip(){
+    if(!isNull(this.driver))
+      this.tooltipAssignedDriver = `Assigned to driver: ${this.driver.full_name} \nPlate: ${this.driver.vehicle.plate}`;
+    else
+      this.tooltipAssignedDriver = "Free"
   }
 }

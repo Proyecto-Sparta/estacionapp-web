@@ -31,8 +31,7 @@ export class GarageLayoutService {
               y: 50,
               width: 60,
               height: 60,
-              angle: 0,
-              occupied: true
+              angle: 0
             },
             {
               shape: 'square',
@@ -53,8 +52,7 @@ export class GarageLayoutService {
               y: 420,
               width: 60,
               height: 60,
-              angle: 0,
-              occupied: true
+              angle: 0
             }
           ]
         }
