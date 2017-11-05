@@ -1,4 +1,4 @@
-import {PendingDriver} from "app/pendingDrivers/pending-driver";
+import {PendingDriver} from "app/pending-drivers/pending-driver";
 
 export class ParkingSpace {
 

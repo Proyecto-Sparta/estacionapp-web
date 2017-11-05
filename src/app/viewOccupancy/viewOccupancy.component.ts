@@ -2,10 +2,10 @@ import {AfterViewInit, Component, ContentChildren, ElementRef, ViewChild, ViewCh
 import {ParkingSpaceComponent} from '../parking-space/parking-space.component';
 import {Floor} from '../floors/floor';
 import {FloorService} from '../floors/floor.service';
-import {PendingDriversService} from "../pendingDrivers/pendingDrivers.service";
+import {PendingDriversService} from "../pending-drivers/pending-drivers.service";
 import {AngularFireDatabase} from "angularfire2/database";
 import {isNull} from "util";
-import {PendingDriver} from "../pendingDrivers/pending-driver";
+import {PendingDriver} from "../pending-drivers/pending-driver";
 import {ParkingSpace} from "../parking-space/parking-space";
 
 @Component({
