@@ -27,6 +27,7 @@ import {environment} from "../environments/environment";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {GarageLayoutService} from "app/garage/garageLayout.service";
 import {PendingDriversService} from "./pending-drivers/pending-drivers.service";
+import {AssignedDriversService} from "./driver/assigned-drivers.service";
 
 
 @NgModule({
@@ -57,7 +58,7 @@ import {PendingDriversService} from "./pending-drivers/pending-drivers.service";
       apiKey: 'AIzaSyAAsIKJcL_6F6V0FzZif5pRSwu17vY_UAU'
     })
   ],
-  providers: [GarageService, LoginService, GarageLayoutService, PendingDriversService, AuthGuard],
+  providers: [GarageService, LoginService, GarageLayoutService, PendingDriversService, AssignedDriversService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

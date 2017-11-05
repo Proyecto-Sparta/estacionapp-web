@@ -37,8 +37,7 @@ export class LoginService {
   }
 
   logout() {
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('token');
+    localStorage.clear();
     return Observable.of(true);
   }
 
