@@ -23,7 +23,7 @@ import {ParkingSpaceComponent} from './parking-space/parking-space.component';
 import {ParkingItemComponent} from './parking-item/parking-item.component';
 import {ViewOccupancyComponent} from './viewOccupancy/viewOccupancy.component';
 import {FloorService} from './floors/floor.service';
-import {PendingDriversService} from './pendingDrivers/pendingDrivers.service';
+import {PendingDriversService} from './pending-drivers/pending-drivers.service';
 import {environment} from "../environments/environment";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {AlertComponent} from "./alert/alert.component";
