@@ -22,11 +22,12 @@ import {LayoutComponent} from './layout/layout.component';
 import {ParkingSpaceComponent} from './parking-space/parking-space.component';
 import {ParkingItemComponent} from './parking-item/parking-item.component';
 import {ViewOccupancyComponent} from './viewOccupancy/viewOccupancy.component';
-import {FloorService} from './floors/floor.service';
-import {PendingDriversService} from './pending-drivers/pending-drivers.service';
+import {AlertComponent} from "app/alert/alert.component";
 import {environment} from "../environments/environment";
 import {AngularFireDatabaseModule} from "angularfire2/database";
-import {AlertComponent} from "./alert/alert.component";
+import {GarageLayoutService} from "app/garage/garageLayout.service";
+import {PendingDriversService} from "./pending-drivers/pending-drivers.service";
+
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import {AlertComponent} from "./alert/alert.component";
       apiKey: 'AIzaSyAAsIKJcL_6F6V0FzZif5pRSwu17vY_UAU'
     })
   ],
-  providers: [GarageService, LoginService, FloorService, PendingDriversService, AuthGuard],
+  providers: [GarageService, LoginService, GarageLayoutService, PendingDriversService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

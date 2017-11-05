@@ -11,8 +11,24 @@
   display: inline-block;
 }
 
-.floor {
+.panel-title > span {
+  cursor: pointer;
+}
+
+.panel-title > span.active {
+  font-weight: bold;
+}
+
+#garage.editLayout {
+  cursor: crosshair;
+}
+
+.floor, .drawFloor {
   float: right;
+}
+
+.drawFloor button[disabled] {
+  background-color: grey !important;
 }
 
 .cancel-button {

@@ -3,38 +3,56 @@ import * as interact from 'interactjs';
 import {ParkingSpace} from '../parking-space/parking-space';
 import {ParkingSpaceComponent} from '../parking-space/parking-space.component';
 import {Floor} from '../floors/floor';
-import {FloorService} from '../floors/floor.service';
+import {GarageLayoutService} from '../garage/garageLayout.service';
+import {Point} from './point';
+import {GarageLayout} from '../garage/garageLayout';
+
+declare var jsGraphics, jsColor, jsPen, jsPoint: any;
 
 @Component({
   selector: 'layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
-  providers: [FloorService]
+  providers: [GarageLayoutService]
 })
 export class LayoutComponent implements AfterViewInit {
   private floors;
   private layoutScale;
   private currentFloor = 0;
+  private modeLayout = true;
+  private jsGraphics;
+  private points: Array<Point>;
 
   @ViewChild('garage') garage: ElementRef;
   @ViewChildren(ParkingSpaceComponent) viewChildren;
   @ContentChildren(ParkingSpaceComponent) contentChildren;
 
-  constructor(private floorService: FloorService) {
-    this.floorService = floorService;
+  constructor(private garageLayoutService: GarageLayoutService) {
+    this.garageLayoutService = garageLayoutService;
     this.floors = [{parkingSpaces: []}];
+    this.points = [];
   }
 
   ngAfterViewInit(): void {
     this.layoutScale = this.garage.nativeElement.offsetWidth / 1080;
     console.log(this.layoutScale);
-    this.floorService
-      .getFloorPlans(666)
-      .then((floors) => this.applyScale(floors, this.layoutScale))
-      .then((storedFloors) => this.floors = storedFloors);
+    this.garageLayoutService
+        .getGarageLayout(666)
+        .then((garageLayout: GarageLayout) => garageLayout.applyScale(this.layoutScale))
+        .then((garageLayout: GarageLayout) => {
+          this.floors = garageLayout.floors;
+          this.points = garageLayout.shape;
 
+          if (this.points.length > 2) {
+            this.drawLayout();
+            this.setModeLayout(false);
+          }
+        });
     this.setupDropzone();
     this.setupDraggables();
+
+    this.jsGraphics = new jsGraphics(document.getElementById("canvas"));
+    this.jsGraphics.setOrigin(new jsPoint(15, 41));
   }
 
   private setupDropzone() {
@@ -60,10 +78,6 @@ export class LayoutComponent implements AfterViewInit {
         event.target.classList.remove('drop-target');
       }
     });
-  }
-
-  private applyScale(floors, scale) {
-    return floors.map(floor => floor.applyScaleToParkingSpaces(scale));
   }
 
   private setupDraggables() {
@@ -106,6 +120,21 @@ export class LayoutComponent implements AfterViewInit {
     this.floors[this.currentFloor].parkingSpaces.push(largeParkingSpace);
   }
 
+  private setModeLayout(modeLayout) {
+    if(modeLayout) {
+      this.jsGraphics.showGrid(20);
+    }else {
+      if(this.points.length == 0) {
+        console.log("Draw a layout first");
+        return;
+      }
+      this.jsGraphics.clear();
+      this.drawLayout();
+    }
+
+    this.modeLayout = modeLayout;
+  }
+
   private lowerFloor() {
     if (this.floors[this.currentFloor - 1]) {
       this.viewChildren.forEach(child => child.updatePosition(child));
@@ -126,9 +155,32 @@ export class LayoutComponent implements AfterViewInit {
 
   saveLayout() {
     this.viewChildren.forEach(child => child.updatePosition(child));
-    this.floorService.storeFloorPlansForGarage(
+    this.garageLayoutService.storeGarageLayout(
       666,
-      this.floors.map((floor) => floor.applyScale(1 / this.layoutScale))
+      new GarageLayout(this.points, this.floors).applyScale(1 / this.layoutScale)
     );
+  }
+
+  private setPoint(x, y) {
+    if (!this.modeLayout) {
+      return;
+    }
+
+    const pen = new jsPen(new jsColor('red'), 1);
+    const center = new jsPoint(x, y);
+    this.jsGraphics.drawCircle(pen, center, 5);
+
+    this.points.push(new Point(x, y));
+  }
+
+  private drawLayout() {
+    const jsPoints = this.points.map((point) => new jsPoint(point.x, point.y));
+    const pen = new jsPen(new jsColor('black'), 3);
+    this.jsGraphics.drawPolygon(pen, jsPoints);
+  }
+
+  private clearLayout() {
+    this.points = new Array();
+    this.jsGraphics.clear();
   }
 }

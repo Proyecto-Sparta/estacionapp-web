@@ -1,41 +1,51 @@
 <div class="layout">
   <div class="row">
     <div class="col-sm-12 col-lg-9">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Layout</h3>
-          <span class="floor"> Floor:
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title mode">
+        <span [class.active]="modeLayout" (click)="setModeLayout(true)">Layout</span> |
+        <span [class.active]="!modeLayout" (click)="setModeLayout(false)">Parking Spaces</span>
+      </h3>
+      <span *ngIf="!modeLayout" class="floor"> Floor:
         <button *ngIf="currentFloor > 0" class="btn-primary" (click)="lowerFloor()"> < </button>
         {{currentFloor + 1}}
         <button class="btn-primary" (click)="upperFloor()"> > </button>
       </span>
-        </div>
-        <div id="garage" #garage class="panel-body dropzone layout-container"
-             [ngStyle]="{'height.px': (garage.offsetWidth/1080)*720 }">
-          <parking-space *ngFor='let parkingSpace of floors[currentFloor].parkingSpaces; let i = index'
-                         id="parking-space-{{i+1}}" [model]='parkingSpace'></parking-space>
-        </div>
-      </div>
+      <span *ngIf="modeLayout" class="drawFloor">
+        <button class="btn-danger" (click)="clearLayout()"> Clear </button>
+          <button class="btn-primary" (click)="drawLayout()" [disabled]="points.length < 3"> Draw </button>
+      </span>
     </div>
-    <div class="col-lg-3 col-sm-12">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Choose a parking space</h3>
-        </div>
-        <div class="panel-body layout-container">
-          <parking-item class="xsmall" (click)="renderSmallParkingSpace()"></parking-item>
-          <parking-item class="small" (click)="renderMediumParkingSpace()"></parking-item>
-          <parking-item class="medium" (click)="renderLargeParkingSpace()"></parking-item>
-        </div>
-      </div>
+    <div id="garage" #garage class="panel-body dropzone layout-container" [class.editLayout]="modeLayout"
+      [ngStyle]="{'height.px': (garage.offsetWidth/1080)*720 }" (click)="setPoint($event.offsetX, $event.offsetY)">
+      <div id="canvas"></div>
+      <ng-container *ngIf="!modeLayout">
+        <parking-space *ngFor='let parkingSpace of floors[currentFloor].parkingSpaces; let i = index'
+          id="parking-space-{{i+1}}" [model]='parkingSpace'></parking-space>
+      </ng-container>
     </div>
+  </div>
+    </div>
+  <div class="col-lg-3 col-sm-12">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Choose a parking space</h3>
+    </div>
+    <div class="panel-body layout-container">
+    <parking-item class="xsmall" (click)="renderSmallParkingSpace()"></parking-item>
+    <parking-item class="small" (click)="renderMediumParkingSpace()"></parking-item>
+    <parking-item class="medium" (click)="renderLargeParkingSpace()"></parking-item>
+    </div>
+  </div>
+  </div>
   </div>
   <div class="row">
     <div class="col-sm-12 col-lg-9">
-      <div class="buttons-container">
-        <button class="btn btn-danger cancel-button">Cancel</button>
-        <button (click)="saveLayout()" class="btn btn-success">Save</button>
-      </div>
+    <div class="buttons-container">
+      <button class="btn btn-danger cancel-button">Cancel</button>
+      <button (click)="saveLayout()" class="btn btn-success">Save</button>
+    </div>
     </div>
   </div>
 </div>
