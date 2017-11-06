@@ -26,7 +26,7 @@ export class LoginService {
     const options = new RequestOptions({headers: this.generateHeaders(garage)});
     const url = `${this.garageUrl}/login`;
     return this.http
-      .get(url, options)
+      .post(url, {}, options)
       .map(response => {
         let currentGarage = response.json();
         localStorage.setItem('currentUser', garage.username);
@@ -44,5 +44,4 @@ export class LoginService {
   isLoggedIn() {
     return !!localStorage.getItem('token');
   }
-
 }
