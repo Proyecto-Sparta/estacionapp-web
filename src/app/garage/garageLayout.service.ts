@@ -1,14 +1,17 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Headers, Http, RequestOptions} from '@angular/http';
 import {Router} from '@angular/router';
 import {ParkingSpace} from '../parking-space/parking-space';
 import {Floor} from '../floors/floor';
 import {Point} from '../layout/point';
 import {GarageLayout} from '../garage/garageLayout';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class GarageLayoutService {
-  private apiUrl = 'http://localhost:4000/api/garage';
+  private apiUrl = 'http://localhost:4000/api/garages';
 
   constructor(private http: Http,
               private router: Router) {
@@ -64,9 +67,29 @@ export class GarageLayoutService {
   }
 
   public storeGarageLayout(garageId: Number, garageLayout: GarageLayout) {
-    console.log(garageLayout);
     const storableObject = this.mapGarageLayoutToObject(garageLayout);
-    console.log(storableObject);
+    let garage = JSON.parse(localStorage.getItem('garage'));
+    garage['layouts'] = storableObject.floors;
+    console.log(garage);
+    localStorage.setItem('garage', JSON.stringify(garage));
+    this.updateGarage(garage);
+  }
+
+  generateHeaders() {
+    const headers = new Headers({'Content-Type': 'application/json; charset=utf-8'});
+    headers.append('authorization', localStorage.getItem('token'));
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    return headers;
+  }
+
+  private updateGarage(garage){
+    const options = new RequestOptions({headers: this.generateHeaders()});
+    return this.http
+      .patch(this.apiUrl, {
+        "garage" : garage
+      }, options)
+      .map(response =>response.json)
+      .subscribe();
   }
 
   private mapObjectToGarageLayout(object: Object) {
@@ -94,7 +117,8 @@ export class GarageLayoutService {
   private mapFloorToStorableObject(floor: Floor, parkingSpaceMapper) {
     return {
       floor_level: floor.floorLevel,
-      parkingSpaces: floor.parkingSpaces.map(parkingSpaceMapper)
+      garage_id : JSON.parse(localStorage.getItem('garage')).id,
+      parking_spaces: floor.parkingSpaces.map(parkingSpaceMapper)
     };
   }
 
