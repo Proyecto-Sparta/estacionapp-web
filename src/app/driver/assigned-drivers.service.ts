@@ -24,9 +24,10 @@ export class AssignedDriversService {
   const options = new RequestOptions({headers: this.generateHeaders()});
   return this.http
     .post(this.reservationsUrl, {
-      "driver" : driver.id,
-      "garage_layout" : JSON.parse(localStorage.getItem("garage")).layouts,
+      "driver_id" : driver.id,
+      "garage_layout_id" : JSON.parse(localStorage.getItem("garage")).id,
       "parking_space_id" : parkingSpace,
+      "status" : 0
     }, options)
     .map(response =>response.json)
     .subscribe();
