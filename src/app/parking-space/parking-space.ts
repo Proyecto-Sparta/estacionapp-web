@@ -9,12 +9,14 @@ export class ParkingSpace {
               public width: number,
               public height: number,
               public angle: number,
+              public id: number,
               public occupied: boolean = false,
               public tooltipAssignedDriver: string = "Free",
               public driver: PendingDriver = null) {
     this.shape = shape;
     this.x = x;
     this.y = y;
+    this.id = id;
     this.width = width;
     this.height = height;
     this.angle = angle;
@@ -24,6 +26,7 @@ export class ParkingSpace {
   updatePosition(x: number, y: number) {
     this.x = x;
     this.y = y;
+    return this;
   }
 
   toggleOccupancy() {

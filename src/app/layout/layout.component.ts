@@ -37,7 +37,7 @@ export class LayoutComponent implements AfterViewInit {
     this.layoutScale = this.garage.nativeElement.offsetWidth / 1080;
     console.log(this.layoutScale);
     this.garageLayoutService
-        .getGarageLayout(666)
+        .getGarageLayout()
         .then((garageLayout: GarageLayout) => garageLayout.applyScale(this.layoutScale))
         .then((garageLayout: GarageLayout) => {
           this.floors = garageLayout.floors;
@@ -106,17 +106,17 @@ export class LayoutComponent implements AfterViewInit {
   }
 
   private renderSmallParkingSpace() {
-    const smallParkingSpace = new ParkingSpace('square', 10, 10, 40, 40, 0);
+    const smallParkingSpace = new ParkingSpace('square', 10, 10, 0, 40, 40, 0);
     this.floors[this.currentFloor].parkingSpaces.push(smallParkingSpace);
   }
 
   private renderMediumParkingSpace() {
-    const mediumParkingSpace = new ParkingSpace('square', 10, 10, 60, 60, 0);
+    const mediumParkingSpace = new ParkingSpace('square', 10, 10, 0, 60, 60, 0);
     this.floors[this.currentFloor].parkingSpaces.push(mediumParkingSpace);
   }
 
   private renderLargeParkingSpace() {
-    const largeParkingSpace = new ParkingSpace('square', 10, 10, 100, 100, 0);
+    const largeParkingSpace = new ParkingSpace('square', 10, 10, 0, 100, 100, 0);
     this.floors[this.currentFloor].parkingSpaces.push(largeParkingSpace);
   }
 
@@ -145,7 +145,7 @@ export class LayoutComponent implements AfterViewInit {
 
   private upperFloor() {
     if (!this.floors[this.currentFloor + 1]) {
-      this.floors.push(new Floor(this.currentFloor + 1, []))
+      this.floors.push(new Floor(this.currentFloor + 1, 0, []))
     }
 
     console.log(this.viewChildren);
@@ -154,9 +154,8 @@ export class LayoutComponent implements AfterViewInit {
   }
 
   saveLayout() {
-    this.viewChildren.forEach(child => child.updatePosition(child));
+    this.viewChildren.map(child => child.updatePosition());
     this.garageLayoutService.storeGarageLayout(
-      666,
       new GarageLayout(this.points, this.floors).applyScale(1 / this.layoutScale)
     );
   }

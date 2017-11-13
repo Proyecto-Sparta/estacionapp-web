@@ -49,7 +49,7 @@ export class ViewOccupancyComponent implements AfterViewInit {
     this.layoutScale = this.garage.nativeElement.offsetWidth / 1080;
     console.log(this.layoutScale);
     this.garageLayoutService
-      .getGarageLayout(666)
+      .getGarageLayout()
       .then((garageLayout: GarageLayout) => garageLayout.applyScale(this.layoutScale))
       .then((garageLayout: GarageLayout) => {
         this.floors = garageLayout.floors;
@@ -75,17 +75,17 @@ export class ViewOccupancyComponent implements AfterViewInit {
 
   private lowerFloor() {
     if (this.floors[this.currentFloor - 1]) {
-      this.viewChildren.forEach(child => child.updatePosition(child));
+      this.viewChildren.forEach(child => child.updatePosition());
       this.currentFloor -= 1;
     }
   }
 
   private upperFloor() {
     if (!this.floors[this.currentFloor + 1]) {
-      this.floors.push(new Floor(this.currentFloor + 1, []))
+      this.floors.push(new Floor(this.currentFloor + 1, 0, []))
     }
 
-    this.viewChildren.forEach(child => child.updatePosition(child));
+    this.viewChildren.forEach(child => child.updatePosition());
     this.currentFloor += 1;
   }
 

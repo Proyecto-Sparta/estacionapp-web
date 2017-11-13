@@ -31,12 +31,14 @@ export class ParkingSpaceComponent implements AfterViewInit {
     this.elementHTML.style.height = `${this.model.height}px`;
   }
 
-  updatePosition(component) {
-    const x = parseFloat(component.elemRef.nativeElement.children[0].getAttribute('data-x')) || 0;
-    const y = parseFloat(component.elemRef.nativeElement.children[0].getAttribute('data-y')) || 0;
+  updatePosition() {
+    const x = parseFloat(this.elemRef.nativeElement.children[0].getAttribute('data-x')) || 0;
+    const y = parseFloat(this.elemRef.nativeElement.children[0].getAttribute('data-y')) || 0;
 
     console.log("updating position: " + x + ", " + y);
 
-    component.model.updatePosition(x, y);
+    this.model = this.model.updatePosition(x, y);
+
+    return this;
   }
 }
