@@ -29,7 +29,7 @@ export class LayoutComponent implements AfterViewInit {
 
   constructor(private garageLayoutService: GarageLayoutService) {
     this.garageLayoutService = garageLayoutService;
-    this.floors = [{parkingSpaces: []}];
+    this.floors = [new Floor(1, 0, [])];
     this.points = [];
   }
 
@@ -51,7 +51,7 @@ export class LayoutComponent implements AfterViewInit {
     this.setupDropzone();
     this.setupDraggables();
 
-    this.jsGraphics = new jsGraphics(document.getElementById("canvas"));
+    this.jsGraphics = new jsGraphics(document.getElementById('canvas'));
     this.jsGraphics.setOrigin(new jsPoint(15, 41));
   }
 
@@ -156,6 +156,7 @@ export class LayoutComponent implements AfterViewInit {
 
   saveLayout() {
     this.viewChildren.map(child => child.updatePosition());
+    console.log(this.floors);
     this.garageLayoutService.storeGarageLayout(
       new GarageLayout(this.points, this.floors).applyScale(1 / this.layoutScale)
     );
