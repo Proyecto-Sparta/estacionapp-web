@@ -68,11 +68,10 @@ export class GarageLayoutService {
   }
 
   private updateLayout(layout){
+    debugger;
     const options = new RequestOptions({headers: this.generateHeaders()});
     return this.http
-      .patch(`${this.apiUrl + layout.id}`, {
-        layout
-      }, options)
+      .patch(`${this.apiUrl + layout.id}`, layout, options)
       .map(response => response.json)
       .subscribe();
   }
