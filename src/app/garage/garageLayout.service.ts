@@ -65,7 +65,6 @@ export class GarageLayoutService {
         let garage = JSON.parse(localStorage.getItem('garage'));
         garage['layouts'] = floors;
         localStorage.setItem('garage', JSON.stringify(garage));
-        debugger;
   }
 
   private updateLayout(layout){
@@ -133,6 +132,7 @@ export class GarageLayoutService {
       width: parkingSpace.width,
       height: parkingSpace.height,
       angle: parkingSpace.angle,
+      id: parkingSpace.id,
       occupied: parkingSpace.occupied
     };
   }
