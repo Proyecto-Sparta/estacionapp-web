@@ -106,17 +106,18 @@ export class LayoutComponent implements AfterViewInit {
   }
 
   private renderSmallParkingSpace() {
-    const smallParkingSpace = new ParkingSpace('square', 10, 10, 0, 40, 40, 0);
+    const smallParkingSpace = new ParkingSpace('square', 10, 10, 40, 40, 0, 0);
     this.floors[this.currentFloor].parkingSpaces.push(smallParkingSpace);
+    console.log(this.floors[this.currentFloor]);
   }
 
   private renderMediumParkingSpace() {
-    const mediumParkingSpace = new ParkingSpace('square', 10, 10, 0, 60, 60, 0);
+    const mediumParkingSpace = new ParkingSpace('square', 10, 10, 60, 60, 0, 0);
     this.floors[this.currentFloor].parkingSpaces.push(mediumParkingSpace);
   }
 
   private renderLargeParkingSpace() {
-    const largeParkingSpace = new ParkingSpace('square', 10, 10, 0, 100, 100, 0);
+    const largeParkingSpace = new ParkingSpace('square', 10, 10, 100, 100, 0, 0);
     this.floors[this.currentFloor].parkingSpaces.push(largeParkingSpace);
   }
 
