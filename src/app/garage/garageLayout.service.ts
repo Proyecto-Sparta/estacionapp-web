@@ -25,9 +25,11 @@ export class GarageLayoutService {
 
   public storeGarageLayout(garageLayout: GarageLayout) {
     const storableObject = this.mapGarageLayoutToObject(garageLayout);
+    console.log(storableObject);
     let garage = JSON.parse(localStorage.getItem('garage'));
     this.createLayouts(storableObject.floors, garage['layouts']);
     this.updateLayouts(storableObject.floors);
+    this.updateOutline(storableObject);
   }
 
   private createLayouts(newLayouts, oldLayouts) {
@@ -68,12 +70,17 @@ export class GarageLayoutService {
   }
 
   private updateLayout(layout){
-    debugger;
     const options = new RequestOptions({headers: this.generateHeaders()});
     return this.http
       .patch(`${this.apiUrl + layout.id}`, layout, options)
       .map(response => response.json)
       .subscribe();
+  }
+
+  private updateOutline(storableObject) {
+      let garage = JSON.parse(localStorage.getItem('garage'));
+      garage['outline'] = storableObject.shape;
+      localStorage.setItem('garage', JSON.stringify(garage));
   }
 
   private mapObjectToGarageLayout(garage: Object) {

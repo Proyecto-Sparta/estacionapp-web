@@ -21,7 +21,7 @@
       [ngStyle]="{'height.px': (garage.offsetWidth/1080)*720 }" (click)="setPoint($event.offsetX, $event.offsetY)">
       <div id="canvas"></div>
       <ng-container *ngIf="!modeLayout">
-        <parking-space *ngFor='let parkingSpace of floors[currentFloor].parkingSpaces; let i = index'
+        <parking-space *ngFor='let parkingSpace of floors[currentFloor]?.parkingSpaces; let i = index'
           id="parking-space-{{i+1}}" [model]='parkingSpace'></parking-space>
       </ng-container>
     </div>

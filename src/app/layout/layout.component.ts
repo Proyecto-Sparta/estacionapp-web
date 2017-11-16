@@ -40,7 +40,7 @@ export class LayoutComponent implements AfterViewInit {
         .getGarageLayout()
         .then((garageLayout: GarageLayout) => garageLayout.applyScale(this.layoutScale))
         .then((garageLayout: GarageLayout) => {
-          this.floors = garageLayout.floors;
+          this.floors = garageLayout.floors.length > 0? garageLayout.floors : [new Floor(1, 0, [])];
           this.points = garageLayout.shape;
 
           if (this.points.length > 2) {
