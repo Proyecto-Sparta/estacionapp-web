@@ -100,6 +100,7 @@ export class ViewOccupancyComponent implements AfterViewInit {
 
   private drawLayout() {
     const jsPoints = this.points.map((point) => new jsPoint(point.x, point.y));
+    console.log(jsPoints);
     const pen = new jsPen(new jsColor('black'), 3);
     this.jsGraphics.drawPolygon(pen, jsPoints);
   }
