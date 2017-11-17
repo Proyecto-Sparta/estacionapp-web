@@ -12,7 +12,6 @@ export class ParkingSpace {
               public id: number = null,
               public occupied: boolean = false,
               public tooltipAssignedDriver: string = "Free",
-              public reservation: number = null,
               public driver: PendingDriver = null) {
     this.shape = shape;
     this.x = x;
@@ -57,26 +56,24 @@ export class ParkingSpace {
 
   changeTooltip(){
     if(!isNull(this.driver))
-      this.tooltipAssignedDriver = `Reservation: ${this.reservation}\n Driver: ${this.driver.full_name} \nPlate: ${this.driver.vehicle.plate}`;
+      this.tooltipAssignedDriver = `Driver: ${this.driver.full_name} \nPlate: ${this.driver.vehicle.plate}`;
     else
       this.tooltipAssignedDriver = "Free"
   }
 
-  setReservation(id : number, floor : number) {
-    this.reservation = id;
-    this.updateGarage(floor);
-
-  }
-
-  private updateGarage(floor : number) {
+  public updateGarage(floor : number) {
     const garage = JSON.parse(localStorage.getItem("garage"));
-    garage['layouts'][floor] = this.updateOccupancy(garage, floor);
+    garage['layouts'][floor]['parking_spaces'] = this.updateOccupancy(garage, floor);
     localStorage.setItem("garage", JSON.stringify(garage));
+    return garage;
   }
 
   private updateOccupancy(garage, floor){
-    debugger;
-    garage['layouts'][floor].map(parkingSpace =>
-    { if(parkingSpace.id === this.id) parkingSpace['occupied'] = true; });
+    let parkingSpaces = garage['layouts'][floor].parking_spaces;
+    parkingSpaces.forEach(parkingSpace =>
+    { delete parkingSpace["occupied?"];
+      if(parkingSpace.id === this.id) parkingSpace['occupied'] = true;
+    });
+    return parkingSpaces;
   }
 }

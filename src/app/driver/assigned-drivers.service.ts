@@ -5,12 +5,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import {Observable} from 'rxjs/Observable';
 import {ParkingSpace} from "../parking-space/parking-space";
+import {GarageService} from "../garage/garage.service";
+import {GarageLayoutService} from "../garage/garageLayout.service";
 
 @Injectable()
 export class AssignedDriversService {
   private reservationsUrl = 'http://localhost:4000/api/reservations';
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private layoutService : GarageLayoutService) {
 
   }
 
@@ -27,18 +29,17 @@ export class AssignedDriversService {
     .post(this.reservationsUrl, {
       "driver_id" : driver.id,
       "garage_layout_id" : this.getLayoutId(currentFloor),
-      "parking_space_id" : parkingSpace.id,
-      "status" : 0
+      "parking_space_id" : parkingSpace.id
     }, options)
     .map(response => response.json().id)
-    .subscribe((reservation) => parkingSpace.setReservation(reservation, currentFloor));
+    .subscribe((reservation) =>  {
+    debugger;
+      let garage = parkingSpace.updateGarage(currentFloor);
+      this.layoutService.updateLayout(garage['layouts'][currentFloor]);
+  });
   }
 
   private getLayoutId(currentFloor: number) : number {
-    return JSON.parse(localStorage.getItem('garage')).layouts
-      .filter(layout => layout.floor_level === currentFloor)
-      .map(layout => layout.id)[0];
+    return JSON.parse(localStorage.getItem('garage')).layouts[currentFloor].id;
   }
-
-  // TODO update garage occupied
 }

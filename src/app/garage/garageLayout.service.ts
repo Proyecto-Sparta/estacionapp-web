@@ -7,6 +7,7 @@ import {Point} from '../layout/point';
 import {GarageLayout} from '../garage/garageLayout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import {isNull} from "util";
 
 @Injectable()
 export class GarageLayoutService {
@@ -40,7 +41,6 @@ export class GarageLayoutService {
   }
 
   private static hasToBeCreated(floor, existingLayouts){
-    debugger;
     return !existingLayouts.includes(floor.floor_level) && floor.parking_spaces.length > 0;
   }
 
@@ -48,11 +48,11 @@ export class GarageLayoutService {
     let garage = JSON.parse(localStorage.getItem('garage'));
     const options = new RequestOptions({headers: this.generateHeaders()});
     return this.http
-      .post(`${this.apiUrl}`, {
-        floor
-      }, options)
+      .post(`${this.apiUrl}`, floor
+      , options)
       .map(response => {
         garage['layouts'] = response.json;
+        localStorage.setItem('garage', JSON.stringify(garage));
       })
       .subscribe();
   }
@@ -66,17 +66,22 @@ export class GarageLayoutService {
 
   private updateLayouts(floors) {
     floors.forEach(floor => { if(floor.parking_spaces.length > 0) this.updateLayout(floor) });
-
-        let garage = JSON.parse(localStorage.getItem('garage'));
-        garage['layouts'] = floors;
-        localStorage.setItem('garage', JSON.stringify(garage));
   }
 
-  private updateLayout(layout){
+  public updateLayout(layout){
+    let garage = JSON.parse(localStorage.getItem('garage'));
+    layout['parking_spaces'] = layout.parking_spaces
+      .map(parkingSpace => this.mapParkingSpaceToStorableObject(parkingSpace));
     const options = new RequestOptions({headers: this.generateHeaders()});
     return this.http
       .patch(`${this.apiUrl + layout.id}`, layout, options)
-      .map(response => response.json)
+      .map(response => {
+        garage['layouts'][layout.floor_level - 1] = response.json();
+        garage['layouts'][layout.floor_level -1]['parking_spaces'].forEach(
+          parkingSpace => parkingSpace['occupied'] = parkingSpace['occupied?']
+        );
+        localStorage.setItem('garage', JSON.stringify(garage));
+      })
       .subscribe();
   }
 
@@ -118,12 +123,19 @@ export class GarageLayoutService {
   }
 
   private mapFloorToStorableObject(floor: Floor, parkingSpaceMapper) {
-    return {
+    let storableFloor = {
       floor_level: floor.floorLevel,
       garage_id: JSON.parse(localStorage.getItem('garage')).id,
       id: floor.id,
       parking_spaces: floor.parkingSpaces.map(parkingSpaceMapper)
     };
+
+    if(isNull(floor.id)){
+      delete storableFloor.id
+    }
+
+    return storableFloor;
+
   }
 
   private mapObjectToParkingSpace(object: Object) {
@@ -140,7 +152,7 @@ export class GarageLayoutService {
   }
 
   private mapParkingSpaceToStorableObject(parkingSpace: ParkingSpace) {
-    return {
+    let storableParkingSpace = {
       shape: parkingSpace.shape,
       x: parkingSpace.x,
       y: parkingSpace.y,
@@ -148,7 +160,14 @@ export class GarageLayoutService {
       height: parkingSpace.height,
       angle: parkingSpace.angle,
       id: parkingSpace.id,
-      occupied: parkingSpace.occupied
+      'occupied?': parkingSpace.occupied
     };
+
+    if(isNull(parkingSpace.id)){
+      delete storableParkingSpace.id;
+    }
+
+    return storableParkingSpace;
   }
+
 }
