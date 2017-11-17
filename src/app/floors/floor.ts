@@ -3,7 +3,7 @@ import {ParkingSpace} from '../parking-space/parking-space';
 export class Floor {
   constructor(public floorLevel: number,
               public id: number = null,
-              public parkingSpaces: Array<ParkingSpace>) {
+              public parkingSpaces: Array<ParkingSpace> = []) {
     this.id = id;
     this.floorLevel = floorLevel;
     this.parkingSpaces = parkingSpaces;

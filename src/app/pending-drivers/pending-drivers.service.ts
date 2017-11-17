@@ -3,6 +3,7 @@ import {AngularFireDatabase} from "angularfire2/database";
 import {PendingDriver} from "./pending-driver";
 import {Observable} from "rxjs/Observable";
 import {AssignedDriversService} from "../driver/assigned-drivers.service";
+import {ParkingSpace} from "../parking-space/parking-space";
 
 @Injectable()
 export class PendingDriversService {
@@ -19,18 +20,19 @@ export class PendingDriversService {
     return this.pendingDrivers;
   }
 
-  public assign(parkingSpace: number, driver: PendingDriver, currentFloor: number) {
+  public assign(parkingSpace: ParkingSpace, driver: PendingDriver, currentFloor: number) {
     this.db.database.ref(`drivers/${driver.id}`).update(
       {
         floor: currentFloor,
         garage: this.currentId,
-        parkingSpace: parkingSpace,
+        parkingSpace: parkingSpace.id,
         full_name: driver.full_name,
         vehicle: driver.vehicle
       }
     )
-      .then(_ => {this.removePendingDriver(driver.id);
-      this.assignedDriversService.makeReservation(driver, parkingSpace, currentFloor)})
+      .then(_ => {
+      //  this.removePendingDriver(driver.id);
+        this.assignedDriversService.makeReservation(driver, parkingSpace, currentFloor)})
       .catch(response => console.error(response));
   }
 

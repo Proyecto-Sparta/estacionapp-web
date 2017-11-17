@@ -29,13 +29,12 @@ export class LayoutComponent implements AfterViewInit {
 
   constructor(private garageLayoutService: GarageLayoutService) {
     this.garageLayoutService = garageLayoutService;
-    this.floors = [new Floor(1, 0, [])];
+    this.floors = [];
     this.points = [];
   }
 
   ngAfterViewInit(): void {
     this.layoutScale = this.garage.nativeElement.offsetWidth / 1080;
-    console.log(this.layoutScale);
     this.garageLayoutService
         .getGarageLayout()
         .then((garageLayout: GarageLayout) => garageLayout.applyScale(this.layoutScale))

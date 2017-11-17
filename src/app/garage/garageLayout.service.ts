@@ -38,7 +38,6 @@ export class GarageLayoutService {
 
   private createLayout(floor) {
     let garage = JSON.parse(localStorage.getItem('garage'));
-
     const options = new RequestOptions({headers: this.generateHeaders()});
     return this.http
       .post(`${this.apiUrl}`, {
@@ -59,8 +58,7 @@ export class GarageLayoutService {
 
   private updateLayouts(floors) {
     floors.forEach(
-      floor => this.updateLayout(floor)
-    );
+      floor => this.updateLayout(floor));
 
         let garage = JSON.parse(localStorage.getItem('garage'));
         garage['layouts'] = floors;
@@ -68,7 +66,6 @@ export class GarageLayoutService {
   }
 
   private updateLayout(layout){
-    debugger;
     const options = new RequestOptions({headers: this.generateHeaders()});
     return this.http
       .patch(`${this.apiUrl + layout.id}`, layout, options)
