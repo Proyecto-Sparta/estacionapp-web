@@ -39,7 +39,7 @@ export class LayoutComponent implements AfterViewInit {
         .getGarageLayout()
         .then((garageLayout: GarageLayout) => garageLayout.applyScale(this.layoutScale))
         .then((garageLayout: GarageLayout) => {
-          this.floors = garageLayout.floors.length > 0? garageLayout.floors : [new Floor(1, 0, [])];
+          this.floors = garageLayout.floors.length > 0? garageLayout.floors : [new Floor(1)];
           this.points = garageLayout.shape;
 
           if (this.points.length > 2) {
@@ -105,18 +105,18 @@ export class LayoutComponent implements AfterViewInit {
   }
 
   private renderSmallParkingSpace() {
-    const smallParkingSpace = new ParkingSpace('square', 10, 10, 40, 40, 0, 0);
+    const smallParkingSpace = new ParkingSpace('square', 10, 10, 40, 40, 0);
     this.floors[this.currentFloor].parkingSpaces.push(smallParkingSpace);
     console.log(this.floors[this.currentFloor]);
   }
 
   private renderMediumParkingSpace() {
-    const mediumParkingSpace = new ParkingSpace('square', 10, 10, 60, 60, 0, 0);
+    const mediumParkingSpace = new ParkingSpace('square', 10, 10, 60, 60, 0);
     this.floors[this.currentFloor].parkingSpaces.push(mediumParkingSpace);
   }
 
   private renderLargeParkingSpace() {
-    const largeParkingSpace = new ParkingSpace('square', 10, 10, 100, 100, 0, 0);
+    const largeParkingSpace = new ParkingSpace('square', 10, 10, 100, 100, 0);
     this.floors[this.currentFloor].parkingSpaces.push(largeParkingSpace);
   }
 

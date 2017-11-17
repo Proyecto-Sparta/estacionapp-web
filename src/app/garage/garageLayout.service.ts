@@ -28,15 +28,20 @@ export class GarageLayoutService {
     const storableObject = this.mapGarageLayoutToObject(garageLayout);
     console.log(storableObject);
     let garage = JSON.parse(localStorage.getItem('garage'));
+    this.updateOutline(storableObject);
     this.createLayouts(storableObject.floors, garage['layouts']);
     this.updateLayouts(storableObject.floors);
-    this.updateOutline(storableObject);
   }
 
   private createLayouts(newLayouts, oldLayouts) {
     const existingLayouts = oldLayouts.map(floor => floor.floor_level);
-    newLayouts.filter(floor => !existingLayouts.includes(floor.floor_level))
+    newLayouts.filter(floor => GarageLayoutService.hasToBeCreated(floor, existingLayouts))
       .forEach(floor => this.createLayout(floor));
+  }
+
+  private static hasToBeCreated(floor, existingLayouts){
+    debugger;
+    return !existingLayouts.includes(floor.floor_level) && floor.parking_spaces.length > 0;
   }
 
   private createLayout(floor) {
@@ -60,8 +65,7 @@ export class GarageLayoutService {
   }
 
   private updateLayouts(floors) {
-    floors.forEach(
-      floor => this.updateLayout(floor));
+    floors.forEach(floor => { if(floor.parking_spaces.length > 0) this.updateLayout(floor) });
 
         let garage = JSON.parse(localStorage.getItem('garage'));
         garage['layouts'] = floors;

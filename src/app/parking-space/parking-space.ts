@@ -9,10 +9,10 @@ export class ParkingSpace {
               public width: number,
               public height: number,
               public angle: number,
-              public id: number,
+              public id: number = null,
               public occupied: boolean = false,
               public tooltipAssignedDriver: string = "Free",
-              public reservation: number = 0,
+              public reservation: number = null,
               public driver: PendingDriver = null) {
     this.shape = shape;
     this.x = x;

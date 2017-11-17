@@ -13,4 +13,8 @@ export class Floor {
     this.parkingSpaces = this.parkingSpaces.map(space => space.applyScale(scale));
     return this;
   }
+
+  public hasParkingSpaces(){
+    return this.parkingSpaces.length > 0;
+  }
 }
