@@ -11,6 +11,7 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class GarageLayoutService {
   private apiUrl = 'http://localhost:4000/api/layouts/';
+  private garageApiUrl = 'http://localhost:4000/api/garages/';
 
   constructor(private http: Http,
               private router: Router) {
@@ -81,6 +82,12 @@ export class GarageLayoutService {
       let garage = JSON.parse(localStorage.getItem('garage'));
       garage['outline'] = storableObject.shape;
       localStorage.setItem('garage', JSON.stringify(garage));
+
+      const options = new RequestOptions({headers: this.generateHeaders()});
+      return this.http
+        .patch(`${this.garageApiUrl}`, {outline: storableObject.shape}, options)
+        .map(response => response.json)
+        .subscribe();
   }
 
   private mapObjectToGarageLayout(garage: Object) {
