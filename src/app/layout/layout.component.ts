@@ -35,6 +35,7 @@ export class LayoutComponent implements AfterViewInit {
 
   private drawGarage(){
     this.layoutScale = this.garage.nativeElement.offsetWidth / 1080;
+    console.log(this.layoutScale);
     this.garageLayoutService
       .getGarageLayout()
       .then((garageLayout: GarageLayout) => garageLayout.applyScale(this.layoutScale))
@@ -183,7 +184,7 @@ export class LayoutComponent implements AfterViewInit {
   }
 
   private drawLayout() {
-    const jsPoints = this.points.map((point) => new jsPoint(point.x, point.y));
+    const jsPoints = this.points.map((point) => new jsPoint(point.x.toFixed(0), point.y.toFixed(0)));
     const pen = new jsPen(new jsColor('black'), 3);
     this.jsGraphics.drawPolygon(pen, jsPoints);
   }

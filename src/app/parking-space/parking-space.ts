@@ -36,10 +36,10 @@ export class ParkingSpace {
   }
 
   applyScale(scale) {
-    this.x = this.x * scale;
-    this.y = this.y * scale;
-    this.height = this.height * scale;
-    this.width = this.width * scale;
+    this.x = +(this.x * scale).toFixed(0);
+    this.y = +(this.y * scale).toFixed(0);
+    this.height = +(this.height * scale).toFixed(0);
+    this.width = +(this.width * scale).toFixed(0);
 
     return this;
   }

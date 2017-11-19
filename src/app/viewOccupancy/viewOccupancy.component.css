@@ -19,8 +19,9 @@
   cursor: pointer;
 }
 
-.parking-space {
+parking-space {
   cursor: pointer;
+  margin: 0;
 }
 
 >>> .parking-space, .square {
