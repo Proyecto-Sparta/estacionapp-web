@@ -7,7 +7,9 @@
         <span [class.active]="modeLayout" (click)="setModeLayout(true)">Layout</span> |
         <span [class.active]="!modeLayout" (click)="setModeLayout(false)">Parking Spaces</span>
       </h3>
-      <span *ngIf="!modeLayout" class="floor"> Floor:
+      <span *ngIf="!modeLayout" class="floor"> 
+        <button class="btn-danger deleteModeBtn" (click)="toggleDeleteMode()" [class.active]="deleteMode"> Delete parking space </button>
+        Floor:
         <button *ngIf="currentFloor > 0" class="btn-primary" (click)="lowerFloor()"> < </button>
         {{currentFloor + 1}}
         <button class="btn-primary" (click)="upperFloor()"> > </button>
@@ -18,11 +20,14 @@
       </span>
     </div>
     <div id="garage" #garage class="panel-body dropzone layout-container" [class.editLayout]="modeLayout"
+      [class.deleteMode]="!modeLayout && deleteMode"
       [ngStyle]="{'height.px': (garage.offsetWidth/1080)*720 }" (click)="setPoint($event.offsetX, $event.offsetY)">
       <div id="canvas"></div>
       <ng-container *ngIf="!modeLayout">
         <parking-space *ngFor='let parkingSpace of floors[currentFloor]?.parkingSpaces; let i = index'
-          id="parking-space-{{i+1}}" [model]='parkingSpace'></parking-space>
+          id="parking-space-{{i+1}}" [model]='parkingSpace' 
+          (click)="deleteParkingSpace(currentFloor, i);">
+        </parking-space>
       </ng-container>
     </div>
   </div>

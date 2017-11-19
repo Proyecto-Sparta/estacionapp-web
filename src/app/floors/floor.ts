@@ -17,4 +17,9 @@ export class Floor {
   public hasParkingSpaces(){
     return this.parkingSpaces.length > 0;
   }
+
+  public removeParkingSpace(index) {
+    this.parkingSpaces = this.parkingSpaces.filter((p, i) => i !== index);
+    return this;
+  }
 }

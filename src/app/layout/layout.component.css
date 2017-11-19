@@ -23,6 +23,14 @@
   cursor: crosshair;
 }
 
+#garage.deleteMode {
+  cursor: no-drop;
+}
+
+.deleteModeBtn.active {
+  background-color: #761c19;
+}
+
 .floor, .drawFloor {
   float: right;
 }

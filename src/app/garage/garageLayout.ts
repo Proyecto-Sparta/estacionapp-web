@@ -8,6 +8,7 @@ export class GarageLayout {
   constructor(shape: Array<Point>, floors: Array<Floor>) {
     this.shape = shape;
     this.floors = floors;
+    console.log("Saved "+floors.length +" floors");
   }
 
   applyScale(scale) {

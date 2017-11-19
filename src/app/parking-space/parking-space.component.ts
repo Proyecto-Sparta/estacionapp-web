@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, Attribute} from '@angular/core';
 import {ParkingSpace} from './parking-space';
 
 @Component({

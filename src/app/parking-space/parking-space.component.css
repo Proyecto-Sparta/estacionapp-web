@@ -11,3 +11,10 @@
   display: block;
   padding-bottom: 100%;
 }
+
+.deleteParkingSpace {
+  display: inline-block;
+  float: right;
+  margin-right: 9px;
+  cursor: pointer;
+}

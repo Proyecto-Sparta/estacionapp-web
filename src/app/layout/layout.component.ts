@@ -22,6 +22,7 @@ export class LayoutComponent implements AfterViewInit {
   private modeLayout = true;
   private jsGraphics;
   private points: Array<Point>;
+  private deleteMode: Boolean = false;
 
   @ViewChild('garage') garage: ElementRef;
   @ViewChildren(ParkingSpaceComponent) viewChildren;
@@ -158,7 +159,7 @@ export class LayoutComponent implements AfterViewInit {
     this.viewChildren.map(child => child.updatePosition());
     console.log(this.floors);
     this.garageLayoutService.storeGarageLayout(
-      new GarageLayout(this.points, this.floors).applyScale(1 / this.layoutScale)
+      new GarageLayout(this.points, this.floors.filter(f => f.parkingSpaces.length > 0)).applyScale(1 / this.layoutScale)
     );
   }
 
@@ -183,5 +184,16 @@ export class LayoutComponent implements AfterViewInit {
   private clearLayout() {
     this.points = new Array();
     this.jsGraphics.clear();
+  }
+
+  private toggleDeleteMode() {
+    this.deleteMode = !this.deleteMode;
+  }
+
+  private deleteParkingSpace(floorIndex, parkingSpaceIndex) {
+    if (this.deleteMode) {
+      console.log("Deleting: "+floorIndex+ " " +parkingSpaceIndex);
+      this.floors[floorIndex] = this.floors[floorIndex].removeParkingSpace(parkingSpaceIndex);
+    }
   }
 }
