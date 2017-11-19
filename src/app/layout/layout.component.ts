@@ -34,26 +34,30 @@ export class LayoutComponent implements AfterViewInit {
     this.points = [];
   }
 
-  ngAfterViewInit(): void {
+  private drawGarage(){
     this.layoutScale = this.garage.nativeElement.offsetWidth / 1080;
     console.log(this.layoutScale);
     this.garageLayoutService
-        .getGarageLayout()
-        .then((garageLayout: GarageLayout) => garageLayout.applyScale(this.layoutScale))
-        .then((garageLayout: GarageLayout) => {
-          this.floors = garageLayout.floors.length > 0? garageLayout.floors : [new Floor(1)];
-          this.points = garageLayout.shape;
+      .getGarageLayout()
+      .then((garageLayout: GarageLayout) => garageLayout.applyScale(this.layoutScale))
+      .then((garageLayout: GarageLayout) => {
+        this.floors = garageLayout.floors.length > 0? garageLayout.floors : [new Floor(1)];
+        this.points = garageLayout.shape;
 
-          if (this.points.length > 2) {
-            this.drawLayout();
-            this.setModeLayout(false);
-          }
-        });
+        if (this.points.length > 2) {
+          this.drawLayout();
+          this.setModeLayout(false);
+        }
+      });
     this.setupDropzone();
     this.setupDraggables();
 
     this.jsGraphics = new jsGraphics(document.getElementById('canvas'));
     this.jsGraphics.setOrigin(new jsPoint(15, 41));
+  }
+
+  ngAfterViewInit(): void {
+   this.drawGarage();
   }
 
   private setupDropzone() {
@@ -141,26 +145,31 @@ export class LayoutComponent implements AfterViewInit {
     if (this.floors[this.currentFloor - 1]) {
       this.viewChildren.forEach(child => child.updatePosition(child));
       this.currentFloor -= 1;
-      console.log(this.floors);
     }
   }
 
   private upperFloor() {
-    if (!this.floors[this.currentFloor + 1]) {
-      this.floors.push(new Floor(this.currentFloor + 1, 0, []))
-    }
 
-    console.log(this.viewChildren);
-    this.viewChildren.forEach(child => child.updatePosition(child));
+    const hasNoUpperFloor = !this.floors[this.currentFloor + 1];
+
     this.currentFloor += 1;
+
+    if (hasNoUpperFloor)
+      this.floors.push(new Floor(this.currentFloor + 1));
+
+    this.viewChildren.forEach(child => child.updatePosition(child));
+
   }
 
   saveLayout() {
     this.viewChildren.map(child => child.updatePosition());
-    console.log(this.floors);
     this.garageLayoutService.storeGarageLayout(
       new GarageLayout(this.points, this.floors.filter(f => f.parkingSpaces.length > 0)).applyScale(1 / this.layoutScale)
     );
+  }
+
+  cancelLayout(){
+    this.drawGarage();
   }
 
   private setPoint(x, y) {

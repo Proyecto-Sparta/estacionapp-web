@@ -35,7 +35,7 @@ export class AssignedDriversService {
     .subscribe((reservation) =>  {
     debugger;
       let garage = parkingSpace.updateGarage(currentFloor);
-      this.layoutService.updateLayout(garage['layouts'][currentFloor]);
+      this.layoutService.updateLayout(garage['layouts'][currentFloor], this.getLayoutId(currentFloor));
   });
   }
 

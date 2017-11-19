@@ -21,26 +21,34 @@ export class GarageLayoutService {
   public getGarageLayout() {
     return new Promise((resolve, reject) =>
       resolve(JSON.parse(localStorage.getItem('garage'))))
-        .then((persistedObject: Object) =>
-          {return this.mapObjectToGarageLayout(persistedObject);});
+      .then((persistedObject: Object) => {
+        return this.mapObjectToGarageLayout(persistedObject);
+      });
   }
 
   public storeGarageLayout(garageLayout: GarageLayout) {
     const storableObject = this.mapGarageLayoutToObject(garageLayout);
-    console.log(storableObject);
-    let garage = JSON.parse(localStorage.getItem('garage'));
+    const previousLayouts = this.previousLayoutLevels();
     this.updateOutline(storableObject);
-    this.createLayouts(storableObject.floors, garage['layouts']);
-    this.updateLayouts(storableObject.floors);
+    this.createLayouts(storableObject.floors);
+    this.updateLayouts(storableObject.floors, previousLayouts);
   }
 
-  private createLayouts(newLayouts, oldLayouts) {
-    const existingLayouts = oldLayouts.map(floor => floor.floor_level);
+  private getLayouts() {
+    return JSON.parse(localStorage.getItem('garage'))['layouts'];
+  }
+
+  private previousLayoutLevels(){
+    return this.getLayouts().map(floor => floor.floor_level);
+  }
+
+  private createLayouts(newLayouts) {
+    const existingLayouts = this.previousLayoutLevels();
     newLayouts.filter(floor => GarageLayoutService.hasToBeCreated(floor, existingLayouts))
       .forEach(floor => this.createLayout(floor));
   }
 
-  private static hasToBeCreated(floor, existingLayouts){
+  private static hasToBeCreated(floor, existingLayouts) {
     return !existingLayouts.includes(floor.floor_level) && floor.parking_spaces.length > 0;
   }
 
@@ -49,12 +57,13 @@ export class GarageLayoutService {
     const options = new RequestOptions({headers: this.generateHeaders()});
     return this.http
       .post(`${this.apiUrl}`, floor
-      , options)
-      .map(response => {
-        garage['layouts'] = response.json;
+        , options)
+      .map(response => response.json())
+      .subscribe((resp) => {
+      debugger;
+        garage['layouts'].push(resp);
         localStorage.setItem('garage', JSON.stringify(garage));
-      })
-      .subscribe();
+      });
   }
 
   generateHeaders() {
@@ -64,12 +73,20 @@ export class GarageLayoutService {
     return headers;
   }
 
-  private updateLayouts(floors) {
-    floors.forEach(floor => { if(floor.parking_spaces.length > 0) this.updateLayout(floor) });
+  private updateLayouts(floors, previousLayouts) {
+    floors.forEach(floor => {
+      if (floor.parking_spaces.length > 0 && previousLayouts.includes(floor.floor_level))
+        this.updateLayout(floor, this.getFloorId(floor));
+    });
   }
 
-  public updateLayout(layout){
+  private getFloorId(floor) {
+    return floor['floor_level'];
+  }
+
+  public updateLayout(layout, id) {
     let garage = JSON.parse(localStorage.getItem('garage'));
+    layout['id'] = id;
     layout['parking_spaces'] = layout.parking_spaces
       .map(parkingSpace => this.mapParkingSpaceToStorableObject(parkingSpace));
     const options = new RequestOptions({headers: this.generateHeaders()});
@@ -77,7 +94,7 @@ export class GarageLayoutService {
       .patch(`${this.apiUrl + layout.id}`, layout, options)
       .map(response => {
         garage['layouts'][layout.floor_level - 1] = response.json();
-        garage['layouts'][layout.floor_level -1]['parking_spaces'].forEach(
+        garage['layouts'][layout.floor_level - 1]['parking_spaces'].forEach(
           parkingSpace => parkingSpace['occupied'] = parkingSpace['occupied?']
         );
         localStorage.setItem('garage', JSON.stringify(garage));
@@ -86,18 +103,18 @@ export class GarageLayoutService {
   }
 
   private updateOutline(storableObject) {
-      let garage = JSON.parse(localStorage.getItem('garage'));
-      garage['outline'] = storableObject.shape;
-      localStorage.setItem('garage', JSON.stringify(garage));
+    let garage = JSON.parse(localStorage.getItem('garage'));
+    garage['outline'] = storableObject.shape;
+    localStorage.setItem('garage', JSON.stringify(garage));
 
-      const options = new RequestOptions({headers: this.generateHeaders()});
-      return this.http
-        .patch(`${this.garageApiUrl}`, {outline: storableObject.shape}, options)
-        .map(response => response.json)
-        .subscribe();
+    const options = new RequestOptions({headers: this.generateHeaders()});
+    return this.http
+      .patch(`${this.garageApiUrl}`, {outline: storableObject.shape}, options)
+      .map(response => response.json)
+      .subscribe();
   }
 
-  private mapObjectToGarageLayout(garage: Object) {
+  public mapObjectToGarageLayout(garage: Object): GarageLayout {
     const shape = garage['outline'].map((obj) => new Point(obj.x, obj.y));
     const floors = garage['layouts'].map((obj) => this.mapObjectToFloor(obj, this.mapObjectToParkingSpace));
     return new GarageLayout(shape, floors);
@@ -130,7 +147,7 @@ export class GarageLayoutService {
       parking_spaces: floor.parkingSpaces.map(parkingSpaceMapper)
     };
 
-    if(isNull(floor.id)){
+    if (isNull(floor.id)) {
       delete storableFloor.id
     }
 
@@ -163,7 +180,7 @@ export class GarageLayoutService {
       'occupied?': parkingSpace.occupied
     };
 
-    if(isNull(parkingSpace.id)){
+    if (isNull(parkingSpace.id)) {
       delete storableParkingSpace.id;
     }
 
