@@ -130,8 +130,8 @@ export class LayoutComponent implements AfterViewInit {
     if(modeLayout) {
       this.jsGraphics.showGrid(20);
     }else {
-      if(this.points.length == 0) {
-        console.log("Draw a layout first");
+      if(!this.garageLayoutService.hasOutline()) {
+        alert("Draw a layout first!");
         return;
       }
       this.jsGraphics.clear();
