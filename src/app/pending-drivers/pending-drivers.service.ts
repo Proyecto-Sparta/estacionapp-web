@@ -26,12 +26,13 @@ export class PendingDriversService {
         floor: currentFloor,
         garage: this.currentId,
         parkingSpace: parkingSpace.id,
+        isAccepted: true,
         full_name: driver.full_name,
         vehicle: driver.vehicle
       }
     )
       .then(_ => {
-      //  this.removePendingDriver(driver.id);
+        this.removePendingDriver(driver.id);
         this.assignedDriversService.makeReservation(driver, parkingSpace, currentFloor)})
       .catch(response => console.error(response));
   }
@@ -43,7 +44,16 @@ export class PendingDriversService {
       .catch(response => console.error(response));
   }
 
-  deny(id: string) {
-    this.removePendingDriver(id);
+  deny(driver : PendingDriver) {
+    this.db.database.ref(`drivers/${driver.id}`).update(
+      {
+        garage: this.currentId,
+        isAccepted: false,
+      }
+    )
+      .then(_ => {
+        this.removePendingDriver(driver.id);
+      })
+      .catch(response => console.error(response));
   }
 }

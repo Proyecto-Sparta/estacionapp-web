@@ -94,8 +94,8 @@ export class ViewOccupancyComponent implements AfterViewInit {
     console.log(`Selected ${driver}`);
   }
 
-  private denyDriver(id: string) {
-    this.pendingDriversService.deny(id);
+  private denyDriver(driver : PendingDriver) {
+    this.pendingDriversService.deny(driver);
   }
 
   private drawLayout() {
@@ -116,7 +116,6 @@ export class ViewOccupancyComponent implements AfterViewInit {
     }
 
     if (!isOccupied && isDriverSelected) {
-      // TODO: Assign space to driver
       this.pendingDriversService.assign(parkingSpace, this.selectedDriver, this.currentFloor);
       parkingSpace.assign(this.selectedDriver);
       this.selectedDriver = null;
