@@ -7,6 +7,7 @@ import {Observable} from 'rxjs/Observable';
 import {ParkingSpace} from "../parking-space/parking-space";
 import {GarageService} from "../garage/garage.service";
 import {GarageLayoutService} from "../garage/garageLayout.service";
+import {Floor} from "../floors/floor";
 
 @Injectable()
 export class AssignedDriversService {
@@ -33,9 +34,10 @@ export class AssignedDriversService {
     }, options)
     .map(response => response.json().id)
     .subscribe((reservation) =>  {
-    debugger;
       let garage = parkingSpace.updateGarage(currentFloor);
-      this.layoutService.updateLayout(garage['layouts'][currentFloor], this.getLayoutId(currentFloor));
+      let floor : Floor = this.layoutService.mapObjectToFloor(garage['layouts'][currentFloor],
+        this.layoutService.mapObjectToParkingSpace);
+      this.layoutService.updateFloor(floor);
   });
   }
 

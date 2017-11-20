@@ -161,11 +161,24 @@ export class LayoutComponent implements AfterViewInit {
 
   }
 
-  saveLayout() {
+  saveShape(){
     this.viewChildren.map(child => child.updatePosition());
-    this.garageLayoutService.storeGarageLayout(
-      new GarageLayout(this.points, this.floors.filter(f => f.parkingSpaces.length > 0)).applyScale(1 / this.layoutScale)
-    );
+    return new Promise((resolve, reject) =>
+      resolve(this.garageLayoutService.storeShape(
+        new GarageLayout(this.points, []).applyScale(1 / this.layoutScale))))
+        .then(() => alert("Shape saved!"));
+
+
+  }
+
+  saveLayout(currentFloor : number) {
+    this.viewChildren.map(child => child.updatePosition());
+    this.garageLayoutService.storeFloor(this.floors[this.currentFloor]);
+  }
+
+  deleteFloor(currentFloor : number){
+    this.viewChildren.map(child => child.updatePosition());
+    this.garageLayoutService.removeFloor(this.floors[this.currentFloor]);
   }
 
   cancelLayout(){

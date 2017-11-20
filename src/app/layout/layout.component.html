@@ -7,7 +7,7 @@
         <span [class.active]="modeLayout" (click)="setModeLayout(true)">Layout</span> |
         <span [class.active]="!modeLayout" (click)="setModeLayout(false)">Parking Spaces</span>
       </h3>
-      <span *ngIf="!modeLayout" class="floor"> 
+      <span *ngIf="!modeLayout" class="floor">
         <button class="btn-danger deleteModeBtn" (click)="toggleDeleteMode()" [class.active]="deleteMode"> Delete parking space </button>
         Floor:
         <button *ngIf="currentFloor > 0" class="btn-primary" (click)="lowerFloor()"> < </button>
@@ -25,7 +25,7 @@
       <div id="canvas"></div>
       <ng-container *ngIf="!modeLayout">
         <parking-space *ngFor='let parkingSpace of floors[currentFloor]?.parkingSpaces; let i = index'
-          id="parking-space-{{i+1}}" [model]='parkingSpace' 
+          id="parking-space-{{i+1}}" [model]='parkingSpace'
           (click)="deleteParkingSpace(currentFloor, i);">
         </parking-space>
       </ng-container>
@@ -48,8 +48,10 @@
   <div class="row">
     <div class="col-sm-12 col-lg-9">
     <div class="buttons-container">
+      <button (click)="saveShape()" class="btn btn-success">Save Shape</button>
       <button (click)="cancelLayout()" class="btn btn-danger cancel-button">Cancel</button>
-      <button (click)="saveLayout()" class="btn btn-success">Save</button>
+      <button (click)="deleteFloor(currentFloor)" class="btn btn-danger cancel-button">Delete Floor</button>
+      <button (click)="saveLayout(currentFloor)" class="btn btn-success">Save Floor</button>
     </div>
     </div>
   </div>
