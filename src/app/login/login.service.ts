@@ -5,6 +5,7 @@ import {LoginComponent} from './login.component';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import {Observable} from 'rxjs/Observable';
+import {reject, resolve} from "q";
 
 @Injectable()
 export class LoginService {
@@ -27,14 +28,16 @@ export class LoginService {
     const url = `${this.garageUrl}/login`;
     return this.http
       .post(url, {}, options)
-      .map(response => {
+      .toPromise()
+      .then( (response) => {
         let currentGarage = response.json();
+        currentGarage['layouts'] = currentGarage['layouts'].sort((floor, otherFloor) => floor.floor_level > otherFloor.floor_level);
         localStorage.setItem('currentUser', garage.username);
         localStorage.setItem('garage', JSON.stringify(currentGarage));
         localStorage.setItem('token', response.headers.get('authorization'));
       });
-
   }
+
 
   logout() {
     localStorage.clear();

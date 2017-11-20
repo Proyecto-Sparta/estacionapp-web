@@ -4,6 +4,7 @@ import {NgForm} from '@angular/forms';
 import {GarageService} from '../garage/garage.service';
 import {LoginService} from './login.service';
 import {Router} from '@angular/router';
+import {reject} from "q";
 
 @Component({
   selector: 'login',
@@ -26,15 +27,11 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(loginForm: NgForm) {
-    this.loginService.login(new Garage(
-      loginForm.value.username,
-      loginForm.value.password), this)
-      .subscribe(
-        (token: any) => this.router.navigate(['/myAccount']),
-        () => {
-          this.makeInvalid();
-        }
-      );
+    return this.loginService.login(new Garage(
+        loginForm.value.username,
+        loginForm.value.password), this)
+      .then(() => this.router.navigate(['/myAccount']))
+      .catch(() => this.makeInvalid());
   }
 
   makeInvalid() {
