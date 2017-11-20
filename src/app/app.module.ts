@@ -28,6 +28,8 @@ import {AngularFireDatabaseModule} from "angularfire2/database";
 import {GarageLayoutService} from "app/garage/garageLayout.service";
 import {PendingDriversService} from "./pending-drivers/pending-drivers.service";
 import {AssignedDriversService} from "./driver/assigned-drivers.service";
+import { SettingsComponent } from './settings/settings.component';
+import { HelpComponent } from './help/help.component';
 
 
 @NgModule({
@@ -45,7 +47,9 @@ import {AssignedDriversService} from "./driver/assigned-drivers.service";
     ParkingSpaceComponent,
     ParkingItemComponent,
     ViewOccupancyComponent,
-    AlertComponent
+    AlertComponent,
+    SettingsComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,

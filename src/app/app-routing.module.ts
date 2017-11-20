@@ -7,6 +7,8 @@ import {MyAccountComponent} from './myAccount/myAccount.component';
 import {LogoutComponent} from './logout/logout.component';
 import {LayoutComponent} from './layout/layout.component';
 import {ViewOccupancyComponent} from './viewOccupancy/viewOccupancy.component';
+import {SettingsComponent} from "./settings/settings.component";
+import {HelpComponent} from "./help/help.component";
 
 const routes: Routes = [
   {
@@ -30,6 +32,14 @@ const routes: Routes = [
       {
         path: 'occupancy',
         component: ViewOccupancyComponent
+      },
+      {
+        path: 'settings',
+        component: SettingsComponent
+      },
+      {
+        path: 'help',
+        component: HelpComponent
       }
     ]
   },
