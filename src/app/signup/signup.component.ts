@@ -30,16 +30,8 @@ export class SignUpComponent implements mapListener {
 
   onSubmit() {
     const validation = this.validator.validate(this.model);
-    if (!validation.result) {
-      this.errors = validation.errors;
-      return false;
-    }
-
-    /*
-        this.garageService.login(new Garage(
-          loginForm.value.username,
-          loginForm.value.password));
-          */
+    this.errors = validation.errors;
+    return !validation.result;
   }
 
 }

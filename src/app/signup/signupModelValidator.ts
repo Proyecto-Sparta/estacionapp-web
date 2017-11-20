@@ -10,9 +10,8 @@ export class SignUpModelValidator {
       errors.push('Please select the location of the garage');
     }
 
-    // Check existing etc..
     return {
-      result: errors.length === 0 ? true : false,
+      result: errors.length === 0,
       errors: errors
     };
   }
