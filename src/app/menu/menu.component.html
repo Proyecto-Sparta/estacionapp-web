@@ -1,5 +1,6 @@
 <ul class="nav nav-pills nav-stacked">
   <li *ngFor="let link of links">
-    <a href="{{link.path}}">{{link.name}}</a>
+    <a class="component-dark" href="{{link.path}}">
+      <span class="component-title-dark">{{link.name}}</span></a>
   </li>
 </ul>

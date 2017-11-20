@@ -48,18 +48,17 @@ parking-space {
   width: 90%;
 }
 
-.notification:hover {
-  background-color: darkseagreen;
-  cursor: hand;
-}
-
 .notification-button {
   font-size: 16px;
 }
 
 .driver-deny-button {
   padding-top: 5px;
-  cursor: hand;
+  cursor: pointer;
+}
+
+.driver-deny-button:hover {
+  color: lightsalmon;
 }
 
 .driver-info {
