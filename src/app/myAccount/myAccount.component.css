@@ -1,3 +1,15 @@
 .parking-space, .square {
   background-color: green;
 }
+
+menu.no-padding {
+  -webkit-padding-start: 40px;
+}
+
+@media(min-width: 768px) {
+
+  menu.no-padding {
+    -webkit-padding-start: 0;
+  }
+
+}
