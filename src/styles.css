@@ -1,1 +1,47 @@
-/* You can add global styles to this file, and also import other style files */
+
+div.panel-heading.component-dark,
+.component-dark {
+  background-color: #444444
+}
+
+div.panel-heading.component-title-dark,
+.component-title-dark {
+  color: #e7e7e7;
+}
+
+a.component-dark:hover {
+  background-color: #666666;
+}
+
+
+div.border-dark {
+  border: 1px solid #444444;
+}
+
+.nav>li>a.component-dark:hover {
+  background-color: #666666;
+}
+
+.title-color {
+  color: #f8f8f8;
+}
+
+.component-dark-orange {
+  background-color: #ffb732;
+}
+
+.component-title-dark-orange {
+  color: #ffb732;
+}
+
+.component-title-dark-orange:hover {
+  color: #ffd27f;
+}
+
+.clickable.component-dark-orange:hover {
+  background-color: #ffd27f;
+}
+
+.clickable:hover {
+  cursor : pointer;
+}
