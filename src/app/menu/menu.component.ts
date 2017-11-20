@@ -16,6 +16,14 @@ export class MenuComponent {
       path: '/myAccount/layout'
     },
     {
+      name: 'Settings',
+      path: 'myAccount/settings'
+    },
+    {
+      name: 'Help',
+      path: 'myAccount/help'
+    },
+    {
       name: 'Logout',
       path: '/logout'
     },
