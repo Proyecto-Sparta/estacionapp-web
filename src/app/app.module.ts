@@ -30,6 +30,7 @@ import {PendingDriversService} from "./pending-drivers/pending-drivers.service";
 import {AssignedDriversService} from "./driver/assigned-drivers.service";
 import { SettingsComponent } from './settings/settings.component';
 import { HelpComponent } from './help/help.component';
+import {ConvertersService} from "./garage/converters.service";
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { HelpComponent } from './help/help.component';
       apiKey: 'AIzaSyAAsIKJcL_6F6V0FzZif5pRSwu17vY_UAU'
     })
   ],
-  providers: [GarageService, LoginService, GarageLayoutService, PendingDriversService, AssignedDriversService, AuthGuard],
+  providers: [GarageService, LoginService, GarageLayoutService, ConvertersService,
+    PendingDriversService, AssignedDriversService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -6,6 +6,7 @@ import {Floor} from '../floors/floor';
 import {GarageLayoutService} from '../garage/garageLayout.service';
 import {Point} from './point';
 import {GarageLayout} from '../garage/garageLayout';
+import {ConvertersService} from "../garage/converters.service";
 
 declare var jsGraphics, jsColor, jsPen, jsPoint: any;
 
@@ -28,7 +29,7 @@ export class LayoutComponent implements AfterViewInit {
   @ViewChildren(ParkingSpaceComponent) viewChildren;
   @ContentChildren(ParkingSpaceComponent) contentChildren;
 
-  constructor(private garageLayoutService: GarageLayoutService) {
+  constructor(private garageLayoutService: GarageLayoutService, private converters : ConvertersService) {
     this.garageLayoutService = garageLayoutService;
     this.floors = [];
     this.points = [];
@@ -164,7 +165,7 @@ export class LayoutComponent implements AfterViewInit {
 
   canDeleteFloor(floor : number){
     return !this.garageLayoutService.hasUpperFloor(floor) &&
-      this.garageLayoutService.hasFloor(floor);
+      this.garageLayoutService.hasFloor(floor) && floor != 0;
   }
 
   saveShape(){
@@ -177,15 +178,19 @@ export class LayoutComponent implements AfterViewInit {
   }
 
   saveLayout(currentFloor : number) {
-    this.viewChildren.map(child => child.updatePosition());
-    this.garageLayoutService.storeFloor(this.floors[this.currentFloor]);
+    return new Promise((resolve, reject) =>
+    resolve(this.garageLayoutService.storeFloor(this.floors[currentFloor])))
+      .then(this.floors[currentFloor].id = this.garageLayoutService.getGarage()['layouts'][currentFloor]['id'])
+      .then(this.viewChildren.map(child => child.updatePosition()))
+      .then(() => alert("Floor updated!"))
+      .catch(() => alert("Floor couldn't be stored."));
   }
 
   deleteFloor(currentFloor : number){
-    let floor = currentFloor;
-    this.lowerFloor();
-    this.drawGarage();
-    this.garageLayoutService.removeFloor(this.floors[floor]);
+    return new Promise((resolve, reject) =>
+      resolve(this.garageLayoutService.removeFloor(this.floors[currentFloor])))
+        .then(() => this.lowerFloor())
+        .then(() => this.floors.pop());
   }
 
   cancelLayout(currentFloor : number){
