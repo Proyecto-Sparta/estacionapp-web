@@ -34,7 +34,7 @@ export class GarageLayoutService {
     return this.getGarage()['layouts'];
   }
 
-  private getGarage() {
+  public getGarage() {
     return JSON.parse(localStorage.getItem('garage'));
   }
 
@@ -143,19 +143,21 @@ export class GarageLayoutService {
       alert(`Floor ${floor.floorLevel} deleted!`);
       this.deleteFloor(floor);
     }
+
+    return floor;
   }
 
   storeFloor(floor: Floor) {
     if (this.canBeStored(floor)) {
       if (!this.floorAlreadyExists(floor)) {
         this.createFloor(floor);
-        alert(`Floor ${floor.floorLevel} created!`);
       }
       else {
         this.updateFloor(floor);
-        alert(`Floor ${floor.floorLevel} updated!`);
       }
+
     }
+    return floor;
   }
 
 }

@@ -11,6 +11,8 @@ import {Point} from "../layout/point";
 @Injectable()
 export class ConvertersService {
 
+  public constructor(){}
+
   public mapObjectToGarageLayout(garage: Object): GarageLayout {
     const shape = garage['outline'].map((obj) => new Point(obj.x, obj.y));
     const floors = garage['layouts'].map((obj) => this.mapObjectToFloor(obj, this.mapObjectToParkingSpace, this.mapObjectToReservation));
