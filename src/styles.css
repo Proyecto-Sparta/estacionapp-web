@@ -45,3 +45,12 @@ div.border-dark {
 .clickable:hover {
   cursor : pointer;
 }
+
+
+.text-bold {
+  font-weight: bold;
+}
+
+.padding-right-sm {
+  padding-right: 10px;
+}

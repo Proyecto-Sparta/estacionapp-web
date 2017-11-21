@@ -1,18 +1,23 @@
 <div class="layout">
   <div class="row">
     <div class="col-sm-12 col-lg-9">
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="panel panel-default border-dark">
+    <div class="panel-heading component-dark component-title-dark">
       <h3 class="panel-title mode">
         <span [class.active]="modeLayout" (click)="setModeLayout(true)">Layout</span> |
         <span [class.active]="!modeLayout" (click)="setModeLayout(false)">Parking Spaces</span>
       </h3>
       <span *ngIf="!modeLayout" class="floor">
-        <button class="btn-danger deleteModeBtn" (click)="toggleDeleteMode()" [class.active]="deleteMode"> Delete parking space </button>
-        Floor:
-        <button *ngIf="currentFloor > 0" class="btn-primary" (click)="lowerFloor()"> < </button>
-        {{currentFloor + 1}}
-        <button class="btn-primary" (click)="upperFloor()"> > </button>
+        <a class="text-danger clickable deleteModeBtn" (click)="toggleDeleteMode()" [class.active]="deleteMode"> Delete parking space </a>
+        <span class="text-bold padding-right-sm">Floor:</span>
+        <a class="clickable component-title-dark-orange"
+           [style.visibility]="currentFloor > 0? 'visible' : 'hidden'" (click)="lowerFloor()">
+          <i class="glyphicon glyphicon-chevron-left"></i>
+        </a>
+        <span class="text-bold">{{ currentFloor + 1 }}</span>
+        <a class="clickable component-title-dark-orange" (click)="upperFloor()">
+          <i class="glyphicon glyphicon-chevron-right"></i>
+        </a>
       </span>
       <span *ngIf="modeLayout" class="drawFloor">
         <button class="btn-danger" (click)="clearLayout()"> Clear </button>
@@ -34,7 +39,7 @@
     </div>
   <div class="col-lg-3 col-sm-12">
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="panel-heading component-title-dark component-dark">
       <h3 class="panel-title">Choose a parking space</h3>
     </div>
     <div class="panel-body layout-container">
@@ -48,10 +53,10 @@
   <div class="row">
     <div class="col-sm-12 col-lg-9">
     <div class="buttons-container">
-      <button (click)="saveShape()" class="btn btn-success">Save Shape</button>
-      <button (click)="cancelLayout()" class="btn btn-danger cancel-button">Cancel</button>
-      <button (click)="deleteFloor(currentFloor)" class="btn btn-danger cancel-button">Delete Floor</button>
-      <button (click)="saveLayout(currentFloor)" class="btn btn-success">Save Floor</button>
+      <button (click)="cancelLayout(currentFloor)" class="btn btn-danger cancel-button pull-left">Cancel</button>
+      <button (click)="saveShape()" class="btn btn-warning" [disabled]="!modeLayout">Save Shape</button>
+      <button (click)="deleteFloor(currentFloor)" class="btn btn-danger cancel-button" [disabled]="modeLayout || !canDeleteFloor(currentFloor)">Delete Floor</button>
+      <button (click)="saveLayout(currentFloor)" class="btn btn-warning" [disabled]="modeLayout || !floors[currentFloor]?.parkingSpaces.length > 0">Save Floor</button>
     </div>
     </div>
   </div>
