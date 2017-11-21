@@ -4,7 +4,6 @@ import {NgForm} from '@angular/forms';
 import {GarageService} from '../garage/garage.service';
 import {LoginService} from './login.service';
 import {Router} from '@angular/router';
-import {reject} from "q";
 
 @Component({
   selector: 'login',

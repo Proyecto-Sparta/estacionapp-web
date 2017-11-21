@@ -1,5 +1,4 @@
 import {Injectable} from "@angular/core";
-import {isNull} from "util";
 import {ParkingSpace} from "../parking-space/parking-space";
 import {AssignedDriver} from "../driver/assigned-driver";
 import {Reservation} from "../floors/reservation";
@@ -7,6 +6,7 @@ import {Vehicle} from "../vehicle/vehicle";
 import {Floor} from "../floors/floor";
 import {GarageLayout} from "./garageLayout";
 import {Point} from "../layout/point";
+import {isNull} from 'util';
 
 @Injectable()
 export class ConvertersService {

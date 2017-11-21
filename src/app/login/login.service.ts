@@ -5,7 +5,6 @@ import {LoginComponent} from './login.component';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import {Observable} from 'rxjs/Observable';
-import {reject, resolve} from "q";
 
 @Injectable()
 export class LoginService {

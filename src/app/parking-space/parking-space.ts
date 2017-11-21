@@ -1,6 +1,4 @@
-import {PendingDriver} from "app/pending-drivers/pending-driver";
-import {isNull} from "util";
-import {AssignedDriver} from "../driver/assigned-driver";
+import {PendingDriver} from 'app/pending-drivers/pending-driver';
 
 export class ParkingSpace {
 
@@ -60,17 +58,17 @@ export class ParkingSpace {
       this.tooltipAssignedDriver = "Free"
   } */
 
-  public updateGarage(floor : number) {
-    const garage = JSON.parse(localStorage.getItem("garage"));
+  public updateGarage(floor: number) {
+    const garage = JSON.parse(localStorage.getItem('garage'));
     garage['layouts'][floor]['parking_spaces'] = this.updateOccupancy(garage, floor);
-    localStorage.setItem("garage", JSON.stringify(garage));
+    localStorage.setItem('garage', JSON.stringify(garage));
     return garage;
   }
 
   private updateOccupancy(garage, floor){
     let parkingSpaces = garage['layouts'][floor].parking_spaces;
     parkingSpaces.forEach(parkingSpace =>
-    { delete parkingSpace["occupied?"];
+    { delete parkingSpace['occupied?'];
       if(parkingSpace.id === this.id) parkingSpace['occupied'] = true;
     });
     return parkingSpaces;
