@@ -4,6 +4,7 @@ import {PendingDriver} from "./pending-driver";
 import {Observable} from "rxjs/Observable";
 import {AssignedDriversService} from "../driver/assigned-drivers.service";
 import {ParkingSpace} from "../parking-space/parking-space";
+import {Floor} from "../floors/floor";
 
 @Injectable()
 export class PendingDriversService {
@@ -20,10 +21,10 @@ export class PendingDriversService {
     return this.pendingDrivers;
   }
 
-  public assign(parkingSpace: ParkingSpace, driver: PendingDriver, currentFloor: number) {
+  public assign(parkingSpace: ParkingSpace, driver: PendingDriver, currentFloor: Floor) {
     this.db.database.ref(`drivers/${driver.id}`).update(
       {
-        floor: currentFloor,
+        floor: currentFloor.floorLevel,
         garage: this.currentId,
         parkingSpace: parkingSpace.id,
         isAccepted: true,
@@ -32,7 +33,7 @@ export class PendingDriversService {
       }
     )
       .then(_ => {
-        this.removePendingDriver(driver.id);
+     //   this.removePendingDriver(driver.id);
         this.assignedDriversService.makeReservation(driver, parkingSpace, currentFloor)})
       .catch(response => console.error(response));
   }
@@ -52,7 +53,7 @@ export class PendingDriversService {
       }
     )
       .then(_ => {
-        this.removePendingDriver(driver.id);
+      //  this.removePendingDriver(driver.id);
       })
       .catch(response => console.error(response));
   }

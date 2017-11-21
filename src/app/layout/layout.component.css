@@ -17,6 +17,7 @@
 
 .panel-title > span.active {
   font-weight: bold;
+  color: darkorange;
 }
 
 #garage.editLayout {
@@ -27,8 +28,13 @@
   cursor: no-drop;
 }
 
+.deleteModeBtn {
+  color: orangered;
+  font-weight: bold;
+  padding-right: 20px;
+}
 .deleteModeBtn.active {
-  background-color: #761c19;
+ color: red
 }
 
 .floor, .drawFloor {

@@ -1,16 +1,17 @@
 import {ParkingSpace} from '../parking-space/parking-space';
+import {Reservation} from "./reservation";
 
 export class Floor {
   constructor(public floorLevel: number,
               public id: number = null,
-              public parkingSpaces: Array<ParkingSpace> = []) {
+              public parkingSpaces: Array<ParkingSpace> = [],
+              public reservations : Array<Reservation> = []) {
     this.id = id;
     this.floorLevel = floorLevel;
     this.parkingSpaces = parkingSpaces;
   }
 
   public applyScaleToParkingSpaces(scale) {
-    this.parkingSpaces = this.parkingSpaces.map(space => space.applyScale(scale));
     return this;
   }
 
@@ -22,4 +23,5 @@ export class Floor {
     this.parkingSpaces = this.parkingSpaces.filter((p, i) => i !== index);
     return this;
   }
+
 }

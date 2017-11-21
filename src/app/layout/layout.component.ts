@@ -35,11 +35,8 @@ export class LayoutComponent implements AfterViewInit {
   }
 
   private drawGarage(){
-    this.layoutScale = this.garage.nativeElement.offsetWidth / 1080;
-    console.log(this.layoutScale);
     this.garageLayoutService
       .getGarageLayout()
-      .then((garageLayout: GarageLayout) => garageLayout.applyScale(this.layoutScale))
       .then((garageLayout: GarageLayout) => {
         this.floors = garageLayout.floors.length > 0? garageLayout.floors : [new Floor(1)];
         this.points = garageLayout.shape;
@@ -161,13 +158,21 @@ export class LayoutComponent implements AfterViewInit {
 
   }
 
+  hasParkingSpaces(floor : number){
+    return this.floors[floor].parkingSpaces.length > 0;
+  }
+
+  canDeleteFloor(floor : number){
+    return !this.garageLayoutService.hasUpperFloor(floor) &&
+      this.garageLayoutService.hasFloor(floor);
+  }
+
   saveShape(){
     this.viewChildren.map(child => child.updatePosition());
     return new Promise((resolve, reject) =>
       resolve(this.garageLayoutService.storeShape(
-        new GarageLayout(this.points, []).applyScale(1 / this.layoutScale))))
+        new GarageLayout(this.points, []))))
         .then(() => alert("Shape saved!"));
-
 
   }
 
@@ -177,11 +182,14 @@ export class LayoutComponent implements AfterViewInit {
   }
 
   deleteFloor(currentFloor : number){
-    this.viewChildren.map(child => child.updatePosition());
-    this.garageLayoutService.removeFloor(this.floors[this.currentFloor]);
+    let floor = currentFloor;
+    this.lowerFloor();
+    this.drawGarage();
+    this.garageLayoutService.removeFloor(this.floors[floor]);
   }
 
-  cancelLayout(){
+  cancelLayout(currentFloor : number){
+    this.lowerFloor();
     this.drawGarage();
   }
 

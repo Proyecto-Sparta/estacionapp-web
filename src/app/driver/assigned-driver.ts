@@ -1,6 +1,9 @@
+import {Vehicle} from "../vehicle/vehicle";
+
 export class AssignedDriver {
-  constructor(public full_name: string,
-              public id: string,
-              public vehicle) {
+  constructor(public id: number,
+              public email: string,
+              public fullName: string,
+              public vehicle: Vehicle) {
   }
 }

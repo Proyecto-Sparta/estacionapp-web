@@ -46,11 +46,8 @@ export class ViewOccupancyComponent implements AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    this.layoutScale = this.garage.nativeElement.offsetWidth / 1080;
-    console.log(this.layoutScale);
     this.garageLayoutService
       .getGarageLayout()
-      .then((garageLayout: GarageLayout) => garageLayout.applyScale(this.layoutScale))
       .then((garageLayout: GarageLayout) => {
         this.floors = garageLayout.floors;
         this.points = garageLayout.shape;
@@ -116,7 +113,7 @@ export class ViewOccupancyComponent implements AfterViewInit {
     }
 
     if (!isOccupied && isDriverSelected) {
-      this.pendingDriversService.assign(parkingSpace, this.selectedDriver, this.currentFloor);
+      this.pendingDriversService.assign(parkingSpace, this.selectedDriver, this.floors[this.currentFloor]);
       parkingSpace.assign(this.selectedDriver);
       this.selectedDriver = null;
     }

@@ -24,24 +24,17 @@ export class AssignedDriversService {
     return headers;
   }
 
-  makeReservation(driver: PendingDriver, parkingSpace: ParkingSpace, currentFloor: number) : any {
+  makeReservation(driver: PendingDriver, parkingSpace: ParkingSpace, floor: Floor) : any {
   const options = new RequestOptions({headers: this.generateHeaders()});
   return this.http
     .post(this.reservationsUrl, {
       "driver_id" : driver.id,
-      "garage_layout_id" : this.getLayoutId(currentFloor),
+      "garage_layout_id" : floor.id,
       "parking_space_id" : parkingSpace.id
     }, options)
     .map(response => response.json().id)
     .subscribe((reservation) =>  {
-      let garage = parkingSpace.updateGarage(currentFloor);
-      let floor : Floor = this.layoutService.mapObjectToFloor(garage['layouts'][currentFloor],
-        this.layoutService.mapObjectToParkingSpace);
       this.layoutService.updateFloor(floor);
   });
-  }
-
-  private getLayoutId(currentFloor: number) : number {
-    return JSON.parse(localStorage.getItem('garage')).layouts[currentFloor].id;
   }
 }

@@ -1,13 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Headers, Http, RequestOptions} from '@angular/http';
 import {Router} from '@angular/router';
-import {ParkingSpace} from '../parking-space/parking-space';
 import {Floor} from '../floors/floor';
-import {Point} from '../layout/point';
-import {GarageLayout} from '../garage/garageLayout';
+import {GarageLayout} from './garageLayout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import {isNull} from "util";
+import {ConvertersService} from "./converters.service";
 
 @Injectable()
 export class GarageLayoutService {
@@ -15,19 +13,19 @@ export class GarageLayoutService {
   private garageApiUrl = 'http://localhost:4000/api/garages/';
 
   constructor(private http: Http,
-              private router: Router) {
+              private router: Router, private converters : ConvertersService) {
   }
 
   public getGarageLayout() {
     return new Promise((resolve, reject) =>
       resolve(this.getGarage()))
       .then((persistedObject: Object) => {
-        return this.mapObjectToGarageLayout(persistedObject);
+        return this.converters.mapObjectToGarageLayout(persistedObject);
       });
   }
 
   public storeShape(garageLayout: GarageLayout) {
-    const storableObject = this.mapGarageLayoutToObject(garageLayout);
+    const storableObject = this.converters.mapGarageLayoutToObject(garageLayout);
     return this.updateOutline(storableObject);
   }
 
@@ -49,7 +47,8 @@ export class GarageLayoutService {
   }
 
   private createFloor(floor: Floor) {
-    const storableFloor = this.mapFloorToStorableObject(floor, this.mapParkingSpaceToStorableObject);
+    const storableFloor = this.converters
+      .mapFloorToStorableObject(floor, this.converters.mapParkingSpaceToStorableObject, this.converters.mapReservationToStorableObject);
     let garage = this.getGarage();
     const options = new RequestOptions({headers: this.generateHeaders()});
     return this.http
@@ -81,7 +80,8 @@ export class GarageLayoutService {
 
   public updateFloor(floor: Floor) {
     let garage = this.getGarage();
-    let layout = this.mapFloorToStorableObject(floor, this.mapParkingSpaceToStorableObject);
+    let layout = this.converters.
+    mapFloorToStorableObject(floor, this.converters.mapParkingSpaceToStorableObject, this.converters.mapReservationToStorableObject);
     const options = new RequestOptions({headers: this.generateHeaders()});
     return this.http
       .patch(`${this.apiUrl + layout.id}`, layout, options)
@@ -98,94 +98,29 @@ export class GarageLayoutService {
     const options = new RequestOptions({headers: this.generateHeaders()});
     return this.http
       .patch(`${this.garageApiUrl}`, {outline: storableObject.shape}, options)
-      .map(response => response.json)
-      .subscribe((storedGarage) => {
+      .map(response => response.json())
+      .subscribe(storedGarage => {
         let garage = this.getGarage();
         garage['outline'] = storedGarage['outline'];
         localStorage.setItem('garage', JSON.stringify(garage));
       });
   }
 
-  public mapObjectToGarageLayout(garage: Object): GarageLayout {
-    const shape = garage['outline'].map((obj) => new Point(obj.x, obj.y));
-    const floors = garage['layouts'].map((obj) => this.mapObjectToFloor(obj, this.mapObjectToParkingSpace));
-    return new GarageLayout(shape, floors);
-  }
-
   public hasOutline() {
     return this.getGarage()['outline'].length > 0;
-  }
-
-  private mapGarageLayoutToObject(garageLayout: GarageLayout) {
-    return {
-      shape: garageLayout.shape.map((point: Point) => {
-        return {
-          x: point.x,
-          y: point.y
-        }
-      }),
-      floors: garageLayout.floors.map((floor) => this.mapFloorToStorableObject(floor, this.mapParkingSpaceToStorableObject))
-    };
-  }
-
-  public mapObjectToFloor(object: Object, parkingSpacesMapper: Function): Floor {
-    const floorLevel = object['floor_level'],
-      parkingSpaces = object['parking_spaces'],
-      id = object['id'];
-    return new Floor(floorLevel, id, parkingSpaces.map(parkingSpacesMapper));
-  }
-
-  private mapFloorToStorableObject(floor: Floor, parkingSpaceMapper) {
-    let storableFloor = {
-      floor_level: floor.floorLevel,
-      garage_id: this.getGarage().id,
-      id: floor.id,
-      parking_spaces: floor.parkingSpaces.map(parkingSpaceMapper)
-    };
-
-    if (!floor.id) {
-      delete storableFloor.id
-    }
-
-    return storableFloor;
-
-  }
-
-  public mapObjectToParkingSpace(object: Object) {
-    const shape = object['shape'],
-      x = object['x'],
-      y = object['y'],
-      id = object['id'],
-      width = object['width'],
-      height = object['height'],
-      angle = object['angle'],
-      occupied = object['occupied?'];
-
-    return new ParkingSpace(shape, x, y, width, height, angle, id, occupied);
-  }
-
-  private mapParkingSpaceToStorableObject(parkingSpace: ParkingSpace) {
-    let storableParkingSpace = {
-      shape: parkingSpace.shape,
-      x: parkingSpace.x,
-      y: parkingSpace.y,
-      width: parkingSpace.width,
-      height: parkingSpace.height,
-      angle: parkingSpace.angle,
-      id: parkingSpace.id,
-      'occupied?': parkingSpace.occupied
-    };
-
-    if (isNull(parkingSpace.id)) {
-      delete storableParkingSpace.id;
-    }
-
-    return storableParkingSpace;
   }
 
 
   upperFloorExists(floor: Floor) {
     return this.previousLayoutLevels().includes(floor.floorLevel + 1);
+  }
+
+  hasUpperFloor(floorIndex : number){
+    return this.previousLayoutLevels().includes(floorIndex + 2);
+  }
+
+  hasFloor(floorIndex : number){
+    return this.previousLayoutLevels().includes(floorIndex + 1);
   }
 
   lowerFloorExists(floor: Floor) {
@@ -222,4 +157,5 @@ export class GarageLayoutService {
       }
     }
   }
+
 }
