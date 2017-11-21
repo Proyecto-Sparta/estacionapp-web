@@ -83,7 +83,7 @@ export class GarageLayoutService {
     let layout = this.converters.
     mapFloorToStorableObject(floor, this.converters.mapParkingSpaceToStorableObject, this.converters.mapReservationToStorableObject);
     const options = new RequestOptions({headers: this.generateHeaders()});
-    /*return this.http
+    return this.http
       .patch(`${this.apiUrl + layout.id}`, layout, options)
       .map(response => response.json())
       .subscribe((updatedLayout) => {
@@ -91,7 +91,7 @@ export class GarageLayoutService {
         garage['layouts'][floor.floorLevel - 1]['parking_spaces'].forEach(
           parkingSpace => parkingSpace['occupied'] = parkingSpace['occupied?']);
         localStorage.setItem('garage', JSON.stringify(garage));
-      });*/
+      });
   }
 
   private updateOutline(storableObject) {
