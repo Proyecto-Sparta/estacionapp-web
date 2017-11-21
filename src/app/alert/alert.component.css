@@ -1,3 +1,16 @@
-.popup-alert {
-  z-index: 999;
+.estacionapp-alert {
+  position: fixed;
+  z-index: 10;
+  top: 20px;
+  padding: 0
+}
+
+.estacionapp-alert .alert-success {
+  border-color: #9daf8e;
+  border-width: 2px;
+}
+
+.estacionapp-alert .alert-danger {
+  border-color: #a79195;
+  border-width: 2px;
 }

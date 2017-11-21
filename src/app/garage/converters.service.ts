@@ -34,6 +34,7 @@ export class ConvertersService {
   }
 
   public mapObjectToFloor(object: Object, parkingSpacesMapper: Function, reservationsMapper: Function): Floor {
+    console.log(object);
     const floorLevel = object['floor_level'],
       id = object['id'],
       parkingSpaces = object['parking_spaces'],

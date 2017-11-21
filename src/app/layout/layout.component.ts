@@ -7,6 +7,7 @@ import {GarageLayoutService} from '../garage/garageLayout.service';
 import {Point} from './point';
 import {GarageLayout} from '../garage/garageLayout';
 import {ConvertersService} from "../garage/converters.service";
+import {AlertComponent} from "../alert/alert.component";
 
 declare var jsGraphics, jsColor, jsPen, jsPoint: any;
 
@@ -26,6 +27,7 @@ export class LayoutComponent implements AfterViewInit {
   private deleteMode: Boolean = false;
 
   @ViewChild('garage') garage: ElementRef;
+  @ViewChild(AlertComponent) alertComponent;
   @ViewChildren(ParkingSpaceComponent) viewChildren;
   @ContentChildren(ParkingSpaceComponent) contentChildren;
 
@@ -129,7 +131,7 @@ export class LayoutComponent implements AfterViewInit {
       this.jsGraphics.showGrid(20);
     }else {
       if(!this.garageLayoutService.hasOutline()) {
-        alert("Draw a layout first!");
+        this.alertComponent.newError("Draw a layout first!");
         return;
       }
       this.jsGraphics.clear();
@@ -173,7 +175,7 @@ export class LayoutComponent implements AfterViewInit {
     return new Promise((resolve, reject) =>
       resolve(this.garageLayoutService.storeShape(
         new GarageLayout(this.points, []))))
-        .then(() => alert("Shape saved!"));
+        .then(() => this.alertComponent.newAlert("Shape saved!"));
 
   }
 
@@ -182,8 +184,8 @@ export class LayoutComponent implements AfterViewInit {
     resolve(this.garageLayoutService.storeFloor(this.floors[currentFloor])))
       .then(this.floors[currentFloor].id = this.garageLayoutService.getGarage()['layouts'][currentFloor]['id'])
       .then(this.viewChildren.map(child => child.updatePosition()))
-      .then(() => alert("Floor updated!"))
-      .catch(() => alert("Floor couldn't be stored."));
+      .then(() => this.alertComponent.newAlert("Floor updated!"))
+      .catch(() => this.alertComponent.newError("Floor couldn't be stored."));
   }
 
   deleteFloor(currentFloor : number){
