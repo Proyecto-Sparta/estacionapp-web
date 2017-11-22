@@ -61,6 +61,7 @@
           </div>
         </div>
         <div class="form-group">
+          <label for="">Amenities</label>
           <div *ngFor="let amenity of availableAmenities(); let i = index;" class="checkbox">
             <label for="amenity-{{i}}">
               <input id='amenity-{{i}}' name="amenities"
