@@ -41,13 +41,17 @@ export class SignUpComponent implements mapListener {
   chooseAmenity(amenity : Amenity, event) {
     const index = this.model.amenities.indexOf(amenity);
     if (event.target.checked) {
-      this.model.amenities.push(this.availableAmenities()[event.target.value]);
+      console.log(`amenity added: ${amenity.id}`);
+      this.model.amenities.push(this.availableAmenities()[event.target.value - 1]);
     }
     else {
       if (index > -1) {
+        console.log(`quit: ${amenity.id}`);
         this.model.amenities.splice(index, 1);
       }
     }
+
+    return;
   }
 
 }
