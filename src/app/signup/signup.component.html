@@ -65,7 +65,7 @@
             <label for="amenity-{{i}}">
               <input id='amenity-{{i}}' name="amenities"
                      type="checkbox" value="{{ i }}"
-                     (change)="chooseAmenity(amenity, $event)">{{ amenity.name }}
+                     (change)="chooseAmenity(amenity, $event)" [checked]="isAmenitySelected(amenity.id)">{{ amenity.name }}
             </label>
           </div>
         </div>

@@ -38,20 +38,22 @@ export class SignUpComponent implements mapListener {
     return this.garageService.getAmenities();
   }
 
-  chooseAmenity(amenity : Amenity, event) {
-    const index = this.model.amenities.indexOf(amenity);
+  chooseAmenity(amenity: Amenity, event) {
+    amenity = this.availableAmenities()[event.target.value];
     if (event.target.checked) {
       console.log(`amenity added: ${amenity.id}`);
-      this.model.amenities.push(this.availableAmenities()[event.target.value - 1]);
-    }
-    else {
-      if (index > -1) {
-        console.log(`quit: ${amenity.id}`);
-        this.model.amenities.splice(index, 1);
-      }
+      this.model.amenities.push(amenity);
+    }else {
+      console.log(`quit: ${amenity.id}`);
+      this.model.amenities = this.model.amenities.filter(am => am.id !== amenity.id);
     }
 
+    console.log(this.model.amenities);
     return;
+  }
+
+  isAmenitySelected(amenityId: String) {
+    return this.model.amenities.find(am => am.id === amenityId);
   }
 
 }
