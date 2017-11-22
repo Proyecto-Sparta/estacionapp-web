@@ -63,10 +63,8 @@
         <div class="form-group">
           <div *ngFor="let amenityCheckbox of model.amenities;" class="checkbox">
             <label>
-              <input name="amenities-{{amenityCheckbox.amenity.id}}"
-                     type="checkbox" value="{{ amenityCheckbox.amenity.keyword }}"
-                     [(ngModel)]="amenityCheckbox.checked">
-              {{ amenityCheckbox.amenity.name }}
+              <input name="amenities-{{amenityCheckbox.amenity.id}}" type="checkbox"
+                     [(ngModel)]="amenityCheckbox.checked"> {{ amenityCheckbox.amenity.name }}
             </label>
           </div>
         </div>

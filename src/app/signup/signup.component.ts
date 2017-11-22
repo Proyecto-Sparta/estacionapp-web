@@ -42,7 +42,6 @@ export class SignUpComponent implements mapListener, OnInit {
     }
   }
 
-
   getChecked() {
     return this.model.amenities.filter(amenity => amenity.checked);
   }
