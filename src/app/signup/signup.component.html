@@ -5,8 +5,13 @@
       <form (ngSubmit)="onSubmit(signupForm)" #signupForm="ngForm">
         <div class="form-group">
           <label for="username">Username</label>
-          <input type="string" class="form-control" id="username" required
+          <input type="text" class="form-control" id="username" required
                  [(ngModel)]="model.username" name="username">
+        </div>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" required
+                 [(ngModel)]="model.name" name="username">
         </div>
         <div class="form-group">
           <label for="email">E-mail</label>
@@ -24,8 +29,45 @@
                  [(ngModel)]="model.confirmPassword" name="confirmPassword">
         </div>
         <div class="form-group">
-          <label for="map">Garage's location</label>
-          <map [listener]="this"></map>
+          <label for="location">Garage's location</label>
+          <map id="location" [listener]="this"></map>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-4">
+              <label for="bike">Bike</label>
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input type="number" class="form-control form-inline" id="bike" required
+                       [(ngModel)]="model.pricing.bike" name="bike">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label for="car">Car</label>
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input type="number" class="form-control form-inline" id="car" required
+                       [(ngModel)]="model.pricing.car" name="car">
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label for="pickup">Pick-up</label>
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input type="number" class="form-control form-inline" id="pickup" required
+                       [(ngModel)]="model.pricing.pickup" name="pickup">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div *ngFor="let amenity of availableAmenities(); let i = index;" class="checkbox">
+            <label for="amenity-{{i}}">
+              <input id='amenity-{{i}}' name="amenities"
+                     type="checkbox" value="{{ i }}"
+                     (change)="chooseAmenity(amenity, $event)">{{ amenity.name }}
+            </label>
+          </div>
         </div>
         <div class="form-group">
           <div [hidden]="errors.length == 0"
