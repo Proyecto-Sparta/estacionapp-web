@@ -22,7 +22,7 @@ export class LoginService {
     return headers;
   }
 
-  login(garage: Garage, login: LoginComponent) {
+  login(garage: Garage) {
     const options = new RequestOptions({headers: this.generateHeaders(garage)});
     const url = `${this.garageUrl}/login`;
     return this.http

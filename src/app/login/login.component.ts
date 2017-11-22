@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   onSubmit(loginForm: NgForm) {
     return this.loginService.login(new Garage(
         loginForm.value.username,
-        loginForm.value.password), this)
+        loginForm.value.password))
       .then(() => this.router.navigate(['/myAccount/dashboard']))
       .catch(() => this.makeInvalid());
   }
