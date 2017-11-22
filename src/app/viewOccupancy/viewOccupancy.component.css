@@ -22,7 +22,11 @@
 parking-space {
   cursor: pointer;
   margin: 0;
+  display: flow-root;
+  height: 0;
+  width: 0;
 }
+
 
 >>> .parking-space, .square {
   background-color: green !important;
