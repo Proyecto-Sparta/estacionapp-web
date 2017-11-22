@@ -1,11 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {mapListener} from '../interfaces/mapListener';
 import {GarageService} from '../garage/garage.service';
 import {Marker} from '../map/map.component';
 import {SignUpModelValidator} from './signupModelValidator';
-import {Pricing} from "../garage/pricing";
-import {SignupModel} from "./signup";
-import {Amenity} from "../garage/amenity";
+import {AmenityCheckbox, SignupModel} from "./signup";
+import {SignupService} from "./signup.service";
 
 @Component({
   selector: 'signup',
@@ -13,9 +12,15 @@ import {Amenity} from "../garage/amenity";
   styleUrls: ['./signup.component.css'],
   providers: [GarageService]
 })
-export class SignUpComponent implements mapListener {
+export class SignUpComponent implements mapListener, OnInit {
 
-  constructor(private garageService : GarageService){}
+  ngOnInit(): void {
+    this.model.amenities = this.garageService.getAmenities()
+      .map(amenity => new AmenityCheckbox(amenity, false));
+  }
+
+  constructor(private garageService: GarageService, private  signupService : SignupService) {
+  }
 
   submitted = false;
   errors = [];
@@ -24,6 +29,7 @@ export class SignUpComponent implements mapListener {
 
   validator = new SignUpModelValidator();
 
+
   onMarkerLocationChanged(marker: Marker) {
     this.model.location = marker;
   }
@@ -31,27 +37,14 @@ export class SignUpComponent implements mapListener {
   onSubmit() {
     const validation = this.validator.validate(this.model);
     this.errors = validation.errors;
-    return !validation.result;
+    if(!validation.result){
+      this.signupService.signup(this.model);
+    }
   }
 
-  availableAmenities(){
-    return this.garageService.getAmenities();
-  }
 
-  chooseAmenity(amenity : Amenity, event) {
-    const index = this.model.amenities.indexOf(amenity);
-    if (event.target.checked) {
-      console.log(`amenity added: ${amenity.id}`);
-      this.model.amenities.push(this.availableAmenities()[event.target.value - 1]);
-    }
-    else {
-      if (index > -1) {
-        console.log(`quit: ${amenity.id}`);
-        this.model.amenities.splice(index, 1);
-      }
-    }
-
-    return;
+  getChecked() {
+    return this.model.amenities.filter(amenity => amenity.checked);
   }
 
 }

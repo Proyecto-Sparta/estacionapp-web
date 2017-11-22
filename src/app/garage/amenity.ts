@@ -1,4 +1,4 @@
 export class Amenity{
 
-  constructor(public id : string, public name : string){}
+  constructor(public id : number, public keyword : string, public name : string){}
 }

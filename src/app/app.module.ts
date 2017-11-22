@@ -31,6 +31,7 @@ import {AssignedDriversService} from "./driver/assigned-drivers.service";
 import { SettingsComponent } from './settings/settings.component';
 import { HelpComponent } from './help/help.component';
 import {ConvertersService} from "./garage/converters.service";
+import {SignupService} from "./signup/signup.service";
 
 
 @NgModule({
@@ -64,7 +65,7 @@ import {ConvertersService} from "./garage/converters.service";
     })
   ],
   providers: [GarageService, LoginService, GarageLayoutService, ConvertersService,
-    PendingDriversService, AssignedDriversService, AuthGuard],
+    PendingDriversService, AssignedDriversService, SignupService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -11,6 +11,13 @@ export class SignupModel {
     public confirmPassword: string = null,
     public location = null,
     public pricing : Pricing = new Pricing(),
-    public amenities : Array<Amenity> = []){}
+    public amenities : Array<AmenityCheckbox> = []){}
+
+}
+
+
+export class AmenityCheckbox {
+
+  constructor(public amenity : Amenity, public checked : Boolean){}
 
 }
