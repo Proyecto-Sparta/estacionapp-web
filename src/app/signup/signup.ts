@@ -18,11 +18,9 @@ export class SignupModel {
     return {
       username : this.username,
       name : this.name,
+      password : this.password,
       email : this.email,
-      location : {
-        x : this.location.x,
-        y : this.location.y
-      },
+      location : [this.location.long, this.location.lat],
       outline : [],
       pricing : this.pricing.mapToRequest(),
       amenities : this.amenities
@@ -31,12 +29,9 @@ export class SignupModel {
 
     }
 
-
-
   }
 
 }
-
 
 export class AmenityCheckbox {
 
