@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {SettingsValidator} from "./settings-validator";
+import {SettingsModel} from "./settings";
+import {GarageService} from "../garage/garage.service";
+import {SettingsService} from "./settings.service";
 
 @Component({
   selector: 'settings',
@@ -8,23 +11,18 @@ import {SettingsValidator} from "./settings-validator";
 })
 export class SettingsComponent implements OnInit {
 
+  constructor(private settingsService : SettingsService, private garageService : GarageService){}
+
+  private model : SettingsModel;
+
   ngOnInit() {
     const garage = JSON.parse(localStorage.getItem('garage'));
-    this.model.username = garage['name'];
-    this.model.email = garage['email'];
+    this.model = this.settingsService.mapToSettingsModel(garage);
 
   }
 
   submitted = false;
   errors = [];
-
-  model = {
-    username: null,
-    email: null,
-    actualPassword: null,
-    newPassword: null,
-    confirmPassword: null
-  };
 
   validator = new SettingsValidator();
 

@@ -32,6 +32,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { HelpComponent } from './help/help.component';
 import {ConvertersService} from "./garage/converters.service";
 import {SignupService} from "./signup/signup.service";
+import {SettingsService} from "./settings/settings.service";
 
 
 @NgModule({
@@ -65,7 +66,7 @@ import {SignupService} from "./signup/signup.service";
     })
   ],
   providers: [GarageService, LoginService, GarageLayoutService, ConvertersService,
-    PendingDriversService, AssignedDriversService, SignupService, AuthGuard],
+    PendingDriversService, AssignedDriversService, SignupService, SettingsService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {
