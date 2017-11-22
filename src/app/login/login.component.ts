@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     return this.loginService.login(new Garage(
         loginForm.value.username,
         loginForm.value.password), this)
-      .then(() => this.router.navigate(['/myAccount']))
+      .then(() => this.router.navigate(['/myAccount/dashboard']))
       .catch(() => this.makeInvalid());
   }
 

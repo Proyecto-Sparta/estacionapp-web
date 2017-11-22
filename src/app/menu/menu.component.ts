@@ -8,6 +8,10 @@ import {Component} from '@angular/core';
 export class MenuComponent {
   links = [
     {
+      name: 'Dashboard',
+      path: '/myAccount/dashboard'
+    },
+    {
       name: 'View Occupancy',
       path: '/myAccount/occupancy'
     },

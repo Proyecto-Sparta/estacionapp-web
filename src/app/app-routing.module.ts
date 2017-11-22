@@ -9,6 +9,7 @@ import {LayoutComponent} from './layout/layout.component';
 import {ViewOccupancyComponent} from './viewOccupancy/viewOccupancy.component';
 import {SettingsComponent} from "./settings/settings.component";
 import {HelpComponent} from "./help/help.component";
+import {DashboardComponent} from "./dashboard/dashboard.component";
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
     component: MyAccountComponent,
     canActivate: [AuthGuard],
     children: [
+      {
+        path: 'dashboard',
+        component: DashboardComponent
+      },
       {
         path: 'layout',
         component: LayoutComponent
