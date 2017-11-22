@@ -6,4 +6,12 @@ export class Pricing {
 
   }
 
+  public mapToRequest(){
+    return {
+      bike : this.bike,
+      car : this.car,
+      pickup : this.pickup
+    }
+  }
+
 }

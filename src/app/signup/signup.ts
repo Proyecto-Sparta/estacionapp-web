@@ -13,6 +13,28 @@ export class SignupModel {
     public pricing : Pricing = new Pricing(),
     public amenities : Array<AmenityCheckbox> = []){}
 
+
+  public mapToRequest(){
+    return {
+      username : this.username,
+      name : this.name,
+      email : this.email,
+      location : {
+        x : this.location.x,
+        y : this.location.y
+      },
+      outline : [],
+      pricing : this.pricing.mapToRequest(),
+      amenities : this.amenities
+        .filter(amenity => amenity.checked)
+        .map(amenity => amenity.amenity.id)
+
+    }
+
+
+
+  }
+
 }
 
 
@@ -21,3 +43,5 @@ export class AmenityCheckbox {
   constructor(public amenity : Amenity, public checked : Boolean){}
 
 }
+
+
