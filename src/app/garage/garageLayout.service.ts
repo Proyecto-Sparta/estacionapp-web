@@ -6,11 +6,12 @@ import {GarageLayout} from './garageLayout';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import {ConvertersService} from "./converters.service";
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class GarageLayoutService {
-  private apiUrl = 'http://localhost:4000/api/layouts/';
-  private garageApiUrl = 'http://localhost:4000/api/garages/';
+  private apiUrl = `${environment.backendURL}/api/layouts/`;
+  private garageApiUrl = `${environment.backendURL}/api/garages/`;
 
   constructor(private http: Http,
               private router: Router, private converters : ConvertersService) {

@@ -12,5 +12,6 @@ export const environment = {
     projectId: "estacionapp-1499982667186",
     storageBucket: "estacionapp-1499982667186.appspot.com",
     messagingSenderId: "538707157913"
-  }
+  },
+  backendURL: process.env.BACKEND_URL || "http://localhost:4000"
 };

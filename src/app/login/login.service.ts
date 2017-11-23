@@ -5,10 +5,11 @@ import {LoginComponent} from './login.component';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import {Observable} from 'rxjs/Observable';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class LoginService {
-  private garageUrl = 'http://localhost:4000/api/garages';
+  private garageUrl = `${environment.backendURL}/api/garages`;
 
   constructor(private http: Http) {
 

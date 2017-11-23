@@ -2,10 +2,11 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Router} from '@angular/router';
 import {Amenity} from "./amenity";
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class GarageService {
-  private garageUrl = 'http://localhost:4000/api/garage';
+  private garageUrl = `${environment.backendURL}/api/garage`;
 
   constructor(private http: Http,
               private router: Router) {

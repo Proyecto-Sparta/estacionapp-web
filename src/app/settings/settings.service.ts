@@ -4,11 +4,12 @@ import {AmenityCheckbox} from "../signup/signup";
 import {GarageService} from "../garage/garage.service";
 import {Injectable} from "@angular/core";
 import {Headers, Http, RequestOptions} from "@angular/http";
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class SettingsService {
 
-  private garageUrl = 'http://localhost:4000/api/garages';
+  private garageUrl = `${environment.backendURL}/api/garages`;
 
   constructor(public garageService : GarageService, private http : Http){}
 

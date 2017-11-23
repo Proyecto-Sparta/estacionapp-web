@@ -8,10 +8,11 @@ import {ParkingSpace} from "../parking-space/parking-space";
 import {GarageService} from "../garage/garage.service";
 import {GarageLayoutService} from "../garage/garageLayout.service";
 import {Floor} from "../floors/floor";
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class AssignedDriversService {
-  private reservationsUrl = 'http://localhost:4000/api/reservations';
+  private reservationsUrl = `${environment.backendURL}/api/reservations`;
 
   constructor(private http: Http, private layoutService : GarageLayoutService) {
 
