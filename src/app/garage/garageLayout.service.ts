@@ -73,7 +73,7 @@ export class GarageLayoutService {
     return this.http
       .delete(`${this.apiUrl + floor.id}`, options)
       .subscribe(() => {
-        delete garage['layouts'][floor.floorLevel - 1];
+        garage['layouts'] = garage['layouts'].filter(l => l.floor_level !== floor.floorLevel);
         localStorage.setItem('garage', JSON.stringify(garage));
       });
   }
