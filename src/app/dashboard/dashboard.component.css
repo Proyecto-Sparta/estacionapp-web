@@ -1,16 +1,24 @@
 .statistic-card {
-  height: 300px;
-  border-radius: 20%;
+  height: 30px;
+  width: 200px;
+  border-radius: 5%;
 }
 
 .statistics {
-  padding-top: 20px;
+  padding-top: 5px;
 }
 
 .padding-top-md {
-  padding-top: 40%;
+}
+
+.padding-bottom-sm {
+  padding-bottom: 10px;
 }
 
 .text-lg {
   font-size: 40px;
+}
+
+.text-sm {
+  font-size : 15px;
 }
