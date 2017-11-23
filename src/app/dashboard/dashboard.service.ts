@@ -17,16 +17,17 @@ export class DashboardService {
 
   public getOccupancies(){
     return this.garageService.getGarage()['layouts'].map(layout => layout['reservations'].length)
+      .reduce((a, b) => a + b);
   }
 
 
   public getTotalParkingSpaces(){
     return this.garageService.getGarage()['layouts'].map(layout => layout['parking_spaces'].length)
-      .reduce((a, b) => a + b);
+      .reduce((a, b) => a + b)
   }
 
   public getPercentage(){
-    return (this.getOccupancies() / this.getTotalParkingSpaces()) * 100;
+    return (this.getOccupancies() / this.getTotalParkingSpaces()) * 100 || 0;
   }
 
 }
