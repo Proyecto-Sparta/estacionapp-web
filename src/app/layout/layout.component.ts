@@ -156,7 +156,7 @@ export class LayoutComponent implements AfterViewInit {
 
     if (hasNoUpperFloor)
       this.floors.push(new Floor(this.currentFloor + 1));
-      
+
     this.viewChildren.forEach(child => child.updatePosition(child));
   }
 
@@ -180,9 +180,9 @@ export class LayoutComponent implements AfterViewInit {
 
   saveLayout(currentFloor: number) {
     console.log("Getting: "+currentFloor);
+    this.viewChildren.map(child => child.updatePosition());
     return new Promise((resolve, reject) =>
     resolve(this.garageLayoutService.storeFloor(this.floors[currentFloor])))
-      .then(this.viewChildren.map(child => child.updatePosition()))
       .then(() => this.alertComponent.newAlert("Floor updated!"))
       .catch(() => this.alertComponent.newError("Floor couldn't be stored."));
   }
