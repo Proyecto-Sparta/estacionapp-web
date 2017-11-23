@@ -33,6 +33,7 @@ import { HelpComponent } from './help/help.component';
 import {ConvertersService} from "./garage/converters.service";
 import {SignupService} from "./signup/signup.service";
 import {SettingsService} from "./settings/settings.service";
+import {DashboardService} from "./dashboard/dashboard.service";
 
 
 @NgModule({
@@ -65,7 +66,7 @@ import {SettingsService} from "./settings/settings.service";
       apiKey: 'AIzaSyAAsIKJcL_6F6V0FzZif5pRSwu17vY_UAU'
     })
   ],
-  providers: [GarageService, LoginService, GarageLayoutService, ConvertersService,
+  providers: [GarageService, LoginService, GarageLayoutService, ConvertersService, DashboardService,
     PendingDriversService, AssignedDriversService, SignupService, SettingsService, AuthGuard],
   bootstrap: [AppComponent]
 })
