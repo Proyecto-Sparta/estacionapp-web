@@ -38,7 +38,7 @@ export class PendingDriversService {
       }
     )
       .then(() => parkingSpace.assign(this.garageService.findReservationFor(parkingSpace, currentFloor.floorLevel - 1)))
-    //  .then(() => this.removePendingDriver(driver.id))
+      .then(() => this.removePendingDriver(driver.id))
       .catch((response) => console.error("Error!"));
   }
 
@@ -56,7 +56,7 @@ export class PendingDriversService {
         isAccepted: false,
       }
     )
-     // .then(() => this.removePendingDriver(driver.id))
+      .then(() => this.removePendingDriver(driver.id))
       .catch(response => console.error(response));
   }
 }
