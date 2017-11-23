@@ -46,8 +46,8 @@ export class SignUpComponent implements mapListener, OnInit {
     this.errors = validation.errors;
     if(validation.result){
       this.signupService.signup(this.model)
-        .then(() => this.router.navigate(['/myAccount/dashboard']))
-        .catch(this.alertComponent.newError("Couldn't sign up"));
+        .then(() => this.router.navigate(['/myAccount/occupancy']))
+        .catch(this.alertComponent.newError("No se pudo iniciar sesión"));
     }
   }
 

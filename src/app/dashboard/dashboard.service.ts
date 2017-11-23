@@ -16,7 +16,8 @@ export class DashboardService {
 
 
   public getOccupancies(){
-    return this.garageService.getGarage()['layouts'].map(layout => layout['reservations'].length)
+    return this.garageService.getGarage()['layouts'].map(layout =>
+      layout.parking_spaces.filter(parkingSpace => parkingSpace.occupied).length)
       .reduce((a, b) => a + b);
   }
 
@@ -27,7 +28,7 @@ export class DashboardService {
   }
 
   public getPercentage(){
-    return (this.getOccupancies() / this.getTotalParkingSpaces()) * 100 || 0;
+    return parseFloat(((this.getOccupancies() / this.getTotalParkingSpaces())* 100).toFixed(2))  || 0;
   }
 
 }

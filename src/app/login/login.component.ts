@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/myAccount']);
   }
 
-  model = new Garage('Garage', 'password');
+  model = new Garage();
   validUser = true;
 
   constructor(private loginService: LoginService,
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     return this.loginService.login(new Garage(
         loginForm.value.username,
         loginForm.value.password))
-      .then(() => this.router.navigate(['/myAccount/dashboard']))
+      .then(() => this.router.navigate(['/myAccount/occupancy']))
       .catch(() => this.makeInvalid());
   }
 

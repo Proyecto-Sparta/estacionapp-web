@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, ViewChild} from '@angular/core';
 import {Headers, Http, RequestOptions} from '@angular/http';
 import {Router} from '@angular/router';
 import {Floor} from '../floors/floor';
@@ -7,11 +7,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import {ConvertersService} from "./converters.service";
 import { environment } from 'environments/environment';
+import {AlertComponent} from "../alert/alert.component";
 
 @Injectable()
 export class GarageLayoutService {
   private apiUrl = `${environment.backendURL}/api/layouts/`;
   private garageApiUrl = `${environment.backendURL}/api/garages/`;
+
+  @ViewChild(AlertComponent) alertComponent;
 
   constructor(private http: Http,
               private router: Router, private converters : ConvertersService) {
@@ -140,12 +143,12 @@ export class GarageLayoutService {
 
   removeFloor(floor: Floor) {
     if (this.upperFloorExists(floor)) {
-      alert(`Delete upper floor first!!`);
+     this.alertComponent.newError(`Delete upper floor first!!`);
       return;
     }
 
     if (this.floorAlreadyExists(floor)) {
-      alert(`Floor ${floor.floorLevel} deleted!`);
+      this.alertComponent.newAlert(`Floor ${floor.floorLevel} deleted!`);
       this.deleteFloor(floor);
     }
 

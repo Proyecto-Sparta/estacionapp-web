@@ -5,12 +5,12 @@
   <div class="panel panel-default border-dark">
     <div class="panel-heading component-dark component-title-dark">
       <h3 class="panel-title mode">
-        <span [class.active]="modeLayout" (click)="setModeLayout(true)">Layout</span> |
-        <span [class.active]="!modeLayout" (click)="setModeLayout(false)">Parking Spaces</span>
+        <span [class.active]="modeLayout" (click)="setModeLayout(true)">Plano</span> |
+        <span [class.active]="!modeLayout" (click)="setModeLayout(false)">Lugares</span>
       </h3>
       <span *ngIf="!modeLayout" class="floor">
-        <a class="text-danger clickable deleteModeBtn" (click)="toggleDeleteMode()" [class.active]="deleteMode"> Delete parking space </a>
-        <span class="text-bold padding-right-sm">Floor:</span>
+        <a class="text-danger clickable deleteModeBtn" (click)="toggleDeleteMode()" [class.active]="deleteMode"> Borrar lugar </a>
+        <span class="text-bold padding-right-sm">Piso:</span>
         <a class="clickable component-title-dark-orange"
            [style.visibility]="currentFloor > 0? 'visible' : 'hidden'" (click)="lowerFloor()">
           <i class="glyphicon glyphicon-chevron-left"></i>
@@ -21,9 +21,9 @@
         </a>
       </span>
       <span *ngIf="modeLayout" class="drawFloor">
-         <button type="button" class="btn btn-link deleteModeBtn padding-bottom-sm" role="link" (click)="clearLayout()"> Clear </button>
+         <button type="button" class="btn btn-link deleteModeBtn padding-bottom-sm" role="link" (click)="clearLayout()"> Borrar </button>
         <button type="button" class="btn btn-link component-title-dark-orange padding-bottom-sm"
-                role="link" (click)="drawLayout()" [disabled]="points.length < 3"> Draw </button>
+                role="link" (click)="drawLayout()" [disabled]="points.length < 3"> Dibujar </button>
       </span>
     </div>
     <div id="garage" #garage class="panel-body dropzone layout-container" [class.editLayout]="modeLayout"
@@ -42,7 +42,7 @@
   <div class="col-lg-3 col-sm-12">
   <div class="panel panel-default">
     <div class="panel-heading component-title-dark component-dark">
-      <h3 class="panel-title">Choose a parking space</h3>
+      <h3 class="panel-title">Elegí un lugar</h3>
     </div>
     <div class="panel-body layout-container">
     <parking-item class="xsmall" (click)="renderSmallParkingSpace()"></parking-item>
@@ -55,10 +55,10 @@
   <div class="row">
     <div class="col-sm-12 col-lg-9">
     <div class="buttons-container">
-      <button (click)="cancelLayout(currentFloor)" class="btn btn-danger cancel-button pull-left">Cancel</button>
-      <button (click)="saveShape()" class="btn btn-warning" [disabled]="!modeLayout">Save Shape</button>
-      <button (click)="deleteFloor(currentFloor)" class="btn btn-danger cancel-button" [disabled]="modeLayout || !canDeleteFloor(currentFloor)">Delete Floor</button>
-      <button (click)="saveLayout(currentFloor)" class="btn btn-warning" [disabled]="modeLayout || !floors[currentFloor]?.parkingSpaces.length > 0">Save Floor</button>
+      <button (click)="cancelLayout(currentFloor)" class="btn btn-danger cancel-button pull-left">Cancelar</button>
+      <button (click)="saveShape()" class="btn btn-warning" [disabled]="!modeLayout">Guardar contorno</button>
+      <button (click)="deleteFloor(currentFloor)" class="btn btn-danger cancel-button" [disabled]="modeLayout || !canDeleteFloor(currentFloor)">Borrar piso</button>
+      <button (click)="saveLayout(currentFloor)" class="btn btn-warning" [disabled]="modeLayout || !floors[currentFloor]?.parkingSpaces.length > 0">Guardar piso</button>
     </div>
     </div>
   </div>

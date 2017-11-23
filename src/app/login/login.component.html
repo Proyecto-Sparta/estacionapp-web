@@ -1,29 +1,29 @@
 <div [hidden]="validUser"
      class="alert alert-danger centered">
-  Email or password are incorrect.
+  Email o contraseña inválidos
 </div>
 
 <div class="login panel panel-default centered">
-  <div class="panel-heading component-dark component-title-dark">Log In</div>
+  <div class="panel-heading component-dark component-title-dark">Iniciar sesión</div>
   <div class="panel-body login-form">
     <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
       <div class="form-group">
-        <label for="username">Username</label>
+        <label for="username">Usuario</label>
         <input type="string" class="form-control" id="username" required
                [(ngModel)]="model.username" name="username" #username="ngModel">
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password">Contraseña</label>
         <input type="password" class="form-control" id="password" required
                [(ngModel)]="model.password" name="password" #password="ngModel">
       </div>
-      <button class="btn btn-warning" [disabled]="!loginForm.form.valid">Log in</button>
+      <button class="btn btn-warning" [disabled]="!loginForm.form.valid">Iniciar sesión</button>
     </form>
   </div>
 </div>
 
 <div class="login panel panel-default centered">
   <div class="panel-body">
-    Don't have an account? <a href="/signup">Sign Up</a>
+    ¿No tenés cuenta? <a href="/signup">Registrarse</a>
   </div>
 </div>

@@ -9,26 +9,22 @@ export class MenuComponent {
   links = [
     {
       name: 'Dashboard',
-      path: '/myAccount/dashboard'
-    },
-    {
-      name: 'View Occupancy',
       path: '/myAccount/occupancy'
     },
     {
-      name: 'Edit Garage\'s Map',
+      name: 'Editar el plano',
       path: '/myAccount/layout'
     },
     {
-      name: 'Settings',
+      name: 'Ajustes del perfil',
       path: 'myAccount/settings'
     },
     {
-      name: 'Help',
+      name: 'Ayuda',
       path: 'myAccount/help'
     },
     {
-      name: 'Logout',
+      name: 'Cerrar sesión',
       path: '/logout'
     },
   ];

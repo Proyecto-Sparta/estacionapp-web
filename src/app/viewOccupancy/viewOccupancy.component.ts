@@ -115,21 +115,32 @@ export class ViewOccupancyComponent implements AfterViewInit {
       isOccupied = parkingSpace.occupied,
       isDriverSelected = !isNull(this.selectedDriver);
 
-    if (!isOccupied && !isDriverSelected) {
-      this.showAlert = true;
+    parkingSpace.toggleOccupancy();
+
+
+    if (parkingSpace.occupied && !isDriverSelected) {
+      this.garageLayoutService.updateFloor(this.floors[this.currentFloor]);
+      this.alertComponent.newAlert("Lugar asignado correctamente");
       return;
     }
-
-    parkingSpace.toggleOccupancy();
 
     if (parkingSpace.occupied && isDriverSelected) {
       return this.pendingDriversService.assign(parkingSpace, this.selectedDriver, this.floors[this.currentFloor])
         .then(() => this.selectedDriver = null)
-        .then(() => this.alertComponent.newAlert("Assigned parking space!"));
+        .then(() => this.alertComponent
+          .newAlert(`Lugar asignado a ${parkingSpace.reservation.driver.fullName}`));
 
     }
     if(!parkingSpace.occupied){
-      this.deoccupy(parkingSpace, this.floors[this.currentFloor]);
+      if(parkingSpace.reservation) {
+        this.deoccupy(parkingSpace, this.floors[this.currentFloor]);
+      }
+      else {
+        this.garageLayoutService.updateFloor(this.floors[this.currentFloor]);
+      }
+
+      this.alertComponent.newAlert("Reserva cerrada");
+
     }
   }
 

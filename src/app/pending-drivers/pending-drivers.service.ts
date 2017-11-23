@@ -25,7 +25,6 @@ export class PendingDriversService {
   }
 
   public assign(parkingSpace: ParkingSpace, driver: PendingDriver, currentFloor: Floor) {
-    console.log("Is occupied: " + parkingSpace.occupied);
     this.assignedDriversService.makeReservation(driver, parkingSpace, currentFloor);
     return this.db.database.ref(`drivers/${driver.id}`).update(
       {

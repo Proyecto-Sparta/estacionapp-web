@@ -50,10 +50,13 @@ export class ParkingSpace {
   }
 
   getTooltip(){
-    if(!this.reservation)
-      return "Free";
+    if(!this.reservation){
+      if(this.occupied)
+        return "Ocupado";
+      return "Libre";
+    }
     else
-      return `Name: ${this.reservation.driver.fullName} \nPlate: ${this.reservation.driver.vehicle.plate}`;
+      return `Nombre: ${this.reservation.driver.fullName} \nMatricula: ${this.reservation.driver.vehicle.plate}`;
   }
 
 }
