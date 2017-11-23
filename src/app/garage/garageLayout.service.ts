@@ -14,8 +14,6 @@ export class GarageLayoutService {
   private apiUrl = `${environment.backendURL}/api/layouts/`;
   private garageApiUrl = `${environment.backendURL}/api/garages/`;
 
-  @ViewChild(AlertComponent) alertComponent;
-
   constructor(private http: Http,
               private router: Router, private converters : ConvertersService) {
   }
@@ -143,12 +141,10 @@ export class GarageLayoutService {
 
   removeFloor(floor: Floor) {
     if (this.upperFloorExists(floor)) {
-     this.alertComponent.newError(`Delete upper floor first!!`);
       return;
     }
 
     if (this.floorAlreadyExists(floor)) {
-      this.alertComponent.newAlert(`Floor ${floor.floorLevel} deleted!`);
       this.deleteFloor(floor);
     }
 
