@@ -22,7 +22,7 @@ export class PendingDriversService {
   }
 
   public assign(parkingSpace: ParkingSpace, driver: PendingDriver, currentFloor: Floor) {
-    this.db.database.ref(`drivers/${driver.id}`).update(
+    return this.db.database.ref(`drivers/${driver.id}`).update(
       {
         floor: currentFloor.floorLevel,
         garage: this.currentId,
@@ -34,7 +34,7 @@ export class PendingDriversService {
     )
       .then(_ => {
      //   this.removePendingDriver(driver.id);
-        this.assignedDriversService.makeReservation(driver, parkingSpace, currentFloor)})
+        return this.assignedDriversService.makeReservation(driver, parkingSpace, currentFloor)})
       .catch(response => console.error(response));
   }
 

@@ -1,4 +1,5 @@
-import {PendingDriver} from 'app/pending-drivers/pending-driver';
+import {Reservation} from "../floors/reservation";
+import {isNull} from "util";
 
 export class ParkingSpace {
 
@@ -9,7 +10,10 @@ export class ParkingSpace {
               public height: number,
               public angle: number,
               public id: number = null,
-              public occupied: boolean = false) {
+              public occupied: boolean = false,
+              public reservation : Reservation = null,
+              public tooltipAssignedDriver = 'Free'
+              ) {
     this.shape = shape;
     this.x = x;
     this.y = y;
@@ -41,22 +45,22 @@ export class ParkingSpace {
     return this;
   }
 
-  assign(selectedDriver: PendingDriver) {
-  //  this.driver = selectedDriver;
- //   this.changeTooltip();
+  assign(reservation : Reservation) {
+    this.reservation = reservation;
+    this.changeTooltip();
   }
 
   deoccupy() {
- //   this.driver = null;
-  //  this.changeTooltip();
+    this.reservation = null;
+    this.changeTooltip();
   }
-/*
+
   changeTooltip(){
-    if(!isNull(this.driver))
-      this.tooltipAssignedDriver = `Driver: ${this.driver.full_name} \nPlate: ${this.driver.vehicle.plate}`;
+    if(!isNull(this.reservation))
+      this.tooltipAssignedDriver = `Id: ${this.reservation.id} \nPlate: ${this.reservation.driver.vehicle.plate}`;
     else
       this.tooltipAssignedDriver = "Free"
-  } */
+  }
 
   public updateGarage(floor: number) {
     const garage = JSON.parse(localStorage.getItem('garage'));

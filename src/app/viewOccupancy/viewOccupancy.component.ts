@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ContentChildren, ElementRef, ViewChild, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, ContentChildren, ElementRef, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import {ParkingSpaceComponent} from '../parking-space/parking-space.component';
 import {Floor} from '../floors/floor';
 import {PendingDriversService} from "../pending-drivers/pending-drivers.service";
@@ -10,6 +10,7 @@ import {AngularFireDatabase} from "angularfire2/database";
 import {isNull} from "util";
 import {PendingDriver} from "../pending-drivers/pending-driver";
 import {ParkingSpace} from "../parking-space/parking-space";
+import {GarageService} from "../garage/garage.service";
 
 declare var jsGraphics, jsPoint, jsPen, jsColor;
 
@@ -20,7 +21,7 @@ declare var jsGraphics, jsPoint, jsPen, jsColor;
   providers: [GarageLayoutService]
 })
 
-export class ViewOccupancyComponent implements AfterViewInit {
+export class ViewOccupancyComponent implements AfterViewInit, OnInit {
   private floors: Array<any>;
   private layoutScale;
   private currentFloor = 0;
@@ -35,13 +36,19 @@ export class ViewOccupancyComponent implements AfterViewInit {
   @ViewChildren(ParkingSpaceComponent) viewChildren;
   @ContentChildren(ParkingSpaceComponent) contentChildren;
 
-  constructor(db: AngularFireDatabase, private garageLayoutService: GarageLayoutService,
+  constructor(db: AngularFireDatabase, private garageService : GarageService, private garageLayoutService: GarageLayoutService,
               private pendingDriversService: PendingDriversService) {
 
     this.pendingDriversService = pendingDriversService;
     this.garageLayoutService = garageLayoutService;
     this.floors = [{parkingSpaces: []}];
     this.points = [];
+  }
+
+  ngOnInit() : void {
+   this.floors.forEach(floor =>
+     floor.parkingSpaces.forEach( parkingSpace =>
+       parkingSpace.reservation = this.garageService.findReservationFor(parkingSpace, floor.floorLevel - 1  )));
   }
 
 
@@ -113,8 +120,8 @@ export class ViewOccupancyComponent implements AfterViewInit {
     }
 
     if (!isOccupied && isDriverSelected) {
-      this.pendingDriversService.assign(parkingSpace, this.selectedDriver, this.floors[this.currentFloor]);
-      parkingSpace.assign(this.selectedDriver);
+      this.pendingDriversService.assign(parkingSpace, this.selectedDriver, this.floors[this.currentFloor])
+        .then(() => parkingSpace.assign(this.garageService.findReservationFor(parkingSpace, this.currentFloor)));
       this.selectedDriver = null;
     }
 

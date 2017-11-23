@@ -68,17 +68,20 @@ export class ConvertersService {
       height = object['height'],
       angle = object['angle'],
       occupied = object['occupied?'];
-    
+
     return new ParkingSpace(shape, x, y, width, height, angle, id, occupied);
   }
 
   public mapObjectToReservation(object: Object) {
     const id = object['id'],
-      driver = object['driver'];
-    return new Reservation(id, this.mapObjectToDriver(driver));
+      driver = object['driver'],
+      parkingSpaceId = object['parking_space_id'];
+    return new Reservation(id,
+      this.mapObjectToDriver(driver),
+      parkingSpaceId);
   }
 
-  public mapObjectToDriver(object: Object): AssignedDriver {
+  mapObjectToDriver(object: Object): AssignedDriver {
     const fullName = object['full_name'],
       id = object['id'],
       email = object['email'],
@@ -89,7 +92,8 @@ export class ConvertersService {
   public mapReservationToStorableObject(reservation: Reservation) {
     return {
       'id': reservation.id,
-      'driver': this.mapDriverToObject(reservation.driver)
+      'driver': this.mapDriverToObject(reservation.driver),
+      'parking_space_id' : reservation.parkingSpaceId
     }
   }
 
