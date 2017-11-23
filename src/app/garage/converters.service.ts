@@ -38,7 +38,7 @@ export class ConvertersService {
     const floorLevel = object['floor_level'],
       id = object['id'],
       parkingSpaces = object['parking_spaces'],
-      reservations = object['reservations'];
+      reservations = object['reservations'] || [];
     return new Floor(floorLevel, id, parkingSpaces.map(parkingSpacesMapper), reservations.map(reservationsMapper));
   }
 
@@ -68,7 +68,7 @@ export class ConvertersService {
       height = object['height'],
       angle = object['angle'],
       occupied = object['occupied?'];
-
+    
     return new ParkingSpace(shape, x, y, width, height, angle, id, occupied);
   }
 

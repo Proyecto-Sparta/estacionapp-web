@@ -24,4 +24,11 @@ export class Floor {
     return this;
   }
 
+  public setId(id: number) {
+    this.id = id;
+  }
+
+  public setParkingSpaces(parkingSpaces: Array<ParkingSpace>) {
+    this.parkingSpaces = parkingSpaces;
+  }
 }
