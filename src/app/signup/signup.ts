@@ -20,7 +20,7 @@ export class SignupModel {
       name : this.name,
       password : this.password,
       email : this.email,
-      location : [this.location.long, this.location.lat],
+      location : [this.location.lat, this.location.long],
       outline : [],
       pricing : this.pricing.mapToRequest(),
       amenities : this.amenities
