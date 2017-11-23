@@ -11,10 +11,11 @@ export class GarageService {
 
 
   public getAmenities(): Array<Amenity> {
-    return [new Amenity(0, 'bici', 'Bicicleta'), new Amenity(1, 'auto', 'Auto'),
-      new Amenity(2, 'camioneta', 'Camioneta'), new Amenity(3, 'llaves', 'Llaves'),
-      new Amenity(4, 'lavado', 'Lavado'), new Amenity(5, 'inflador', 'Inflador'),
-      new Amenity(6, 'hours_24', '24 horas'), new Amenity(7, 'techado', 'Techado'), new Amenity(8, 'manejan', 'Manejan')];
+    return [new Amenity(1, 'bici', 'Bicicleta'), new Amenity(2, 'auto', 'Auto'),
+      new Amenity(3, 'camioneta', 'Camioneta'), new Amenity(4, 'llaves', 'Llaves'),
+      new Amenity(5, 'lavado', 'Lavado'), new Amenity(6, 'inflador', 'Inflador'),
+      new Amenity(7, 'hours_24', '24 horas'), new Amenity(8, 'techado', 'Techado'),
+      new Amenity(9, 'manejan', 'Manejan')];
   }
 
   public setGarage(response: Object) {
