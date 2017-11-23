@@ -79,7 +79,7 @@ export class ConvertersService {
       fullName = driver['full_name'],
       driver_id = driver['id'],
       email = driver['email'],
-      vehicle = new Vehicle(driver['vehicle']['type'], driver['vehicle']['plate']);
+      vehicle = new Vehicle(driver['vehicle']['plate'], driver['vehicle']['type']);
     return new Reservation(id, new AssignedDriver(driver_id, email, fullName, vehicle), parkingSpaceId);
   }
 

@@ -53,7 +53,7 @@ export class ParkingSpace {
     if(!this.reservation)
       return "Free";
     else
-      return `Id: ${this.reservation.id} \nPlate: ${this.reservation.driver.vehicle.plate}`;
+      return `Name: ${this.reservation.driver.fullName} \nPlate: ${this.reservation.driver.vehicle.plate}`;
   }
 
 }
