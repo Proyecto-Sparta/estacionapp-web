@@ -20,4 +20,11 @@ export class GarageService {
       new Amenity(6, 'hours_24', '24 horas'), new Amenity(7, 'techado', 'Techado'), new Amenity(8, 'manejan', 'Manejan')];
   }
 
+  public setGarage(response: Object) {
+    localStorage.setItem('garage', JSON.stringify(response));
+  }
+
+  public getGarage(){
+    return JSON.parse(localStorage.getItem('garage'));
+  }
 }
