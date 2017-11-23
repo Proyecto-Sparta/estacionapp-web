@@ -44,7 +44,7 @@ export class SignUpComponent implements mapListener, OnInit {
   onSubmit() {
     const validation = this.validator.validate(this.model);
     this.errors = validation.errors;
-    if(!validation.result){
+    if(validation.result){
       this.signupService.signup(this.model)
         .then(() => this.router.navigate(['/myAccount/dashboard']))
         .catch(this.alertComponent.newError("Couldn't sign up"));
