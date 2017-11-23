@@ -68,7 +68,7 @@ export class ConvertersService {
       height = object['height'],
       angle = object['angle'],
       occupied = object['occupied?'];
-
+    
     return new ParkingSpace(shape, x, y, width, height, angle, id, occupied);
   }
 

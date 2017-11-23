@@ -55,7 +55,12 @@ export class GarageLayoutService {
       .post(`${this.apiUrl}`, storableFloor, options)
       .map(response => response.json())
       .subscribe((createdFloor) => {
+        const floorObj = this.converters.mapObjectToFloor(createdFloor, 
+          this.converters.mapObjectToParkingSpace,
+          this.converters.mapObjectToReservation
+        );
         floor.setId(createdFloor['id']);
+        floor.setParkingSpaces(floorObj.parkingSpaces);
         garage['layouts'][createdFloor.floor_level - 1] = createdFloor;
         localStorage.setItem('garage', JSON.stringify(garage));
       });

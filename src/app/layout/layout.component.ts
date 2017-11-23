@@ -156,7 +156,7 @@ export class LayoutComponent implements AfterViewInit {
 
     if (hasNoUpperFloor)
       this.floors.push(new Floor(this.currentFloor + 1));
-
+      
     this.viewChildren.forEach(child => child.updatePosition(child));
   }
 
