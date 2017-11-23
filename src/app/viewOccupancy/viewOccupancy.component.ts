@@ -11,6 +11,8 @@ import {isNull} from "util";
 import {PendingDriver} from "../pending-drivers/pending-driver";
 import {ParkingSpace} from "../parking-space/parking-space";
 import {GarageService} from "../garage/garage.service";
+import {AssignedDriversService} from "../driver/assigned-drivers.service";
+import {AlertComponent} from "../alert/alert.component";
 
 declare var jsGraphics, jsPoint, jsPen, jsColor;
 
@@ -35,9 +37,10 @@ export class ViewOccupancyComponent implements AfterViewInit {
   @ViewChild('garage') garage: ElementRef;
   @ViewChildren(ParkingSpaceComponent) viewChildren;
   @ContentChildren(ParkingSpaceComponent) contentChildren;
+  @ViewChild(AlertComponent) alertComponent;
 
   constructor(db: AngularFireDatabase, private garageService : GarageService, private garageLayoutService: GarageLayoutService,
-              private pendingDriversService: PendingDriversService) {
+              private pendingDriversService: PendingDriversService, private assignedDriversService : AssignedDriversService) {
 
     this.pendingDriversService = pendingDriversService;
     this.garageLayoutService = garageLayoutService;
@@ -59,7 +62,8 @@ export class ViewOccupancyComponent implements AfterViewInit {
     })
       .then(() => this.floors.forEach(floor =>
         floor.parkingSpaces.forEach( parkingSpace =>
-          parkingSpace.reservation = this.garageService.findReservationFor(parkingSpace, floor.floorLevel - 1  ))));
+          parkingSpace.reservation = this.garageService.findReservationFor(parkingSpace, floor.floorLevel - 1  ))))
+      .then(() => console.log(this.floors));
 
     this.jsGraphics = new jsGraphics(document.getElementById("canvas"));
     this.jsGraphics.setOrigin(new jsPoint(15, 41));
@@ -116,12 +120,23 @@ export class ViewOccupancyComponent implements AfterViewInit {
       return;
     }
 
-    if (!isOccupied && isDriverSelected) {
-      this.pendingDriversService.assign(parkingSpace, this.selectedDriver, this.floors[this.currentFloor])
-        .then(() => parkingSpace.assign(this.garageService.findReservationFor(parkingSpace, this.currentFloor)));
-      this.selectedDriver = null;
-    }
-
     parkingSpace.toggleOccupancy();
+
+    if (parkingSpace.occupied && isDriverSelected) {
+      return this.pendingDriversService.assign(parkingSpace, this.selectedDriver, this.floors[this.currentFloor])
+        .then(() => this.selectedDriver = null)
+        .then(() => this.alertComponent.newAlert("Assigned parking space!"));
+
+    }
+    if(!parkingSpace.occupied){
+      this.deoccupy(parkingSpace, this.floors[this.currentFloor]);
+    }
+  }
+
+  private deoccupy(parkingSpace : ParkingSpace, floor : Floor){
+    this.assignedDriversService
+      .deleteReservation(parkingSpace.reservation, floor);
+    parkingSpace.reservation = null;
+    this.alertComponent.newAlert("Deoccupied parking space");
   }
 }

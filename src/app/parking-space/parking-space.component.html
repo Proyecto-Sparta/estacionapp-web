@@ -1,4 +1,4 @@
 <div class="parking-space square" data-toggle="tooltip" data-html="true"
-     [attr.title]="model.tooltipAssignedDriver"
+     [attr.title]="model.getTooltip()"
      [ngClass]="{'occupied': model.occupied}">
 </div>

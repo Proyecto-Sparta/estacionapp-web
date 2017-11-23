@@ -26,9 +26,10 @@ export class GarageService {
   }
 
   findReservationFor(parkingSpace: ParkingSpace, floor : number) {
-    return this.getGarage()['layouts'][floor]['reservations']
+    let reservation = this.getGarage()['layouts'][floor]['reservations']
       .map(reservation => this.converters.mapObjectToReservation(reservation))
       .find(reservation => reservation.parkingSpaceId === parkingSpace.id);
+    return reservation;
   }
 
 }

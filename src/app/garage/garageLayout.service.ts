@@ -56,7 +56,7 @@ export class GarageLayoutService {
       .post(`${this.apiUrl}`, storableFloor, options)
       .map(response => response.json())
       .subscribe((createdFloor) => {
-        const floorObj = this.converters.mapObjectToFloor(createdFloor, 
+        const floorObj = this.converters.mapObjectToFloor(createdFloor,
           this.converters.mapObjectToParkingSpace,
           this.converters.mapObjectToReservation
         );
@@ -95,8 +95,6 @@ export class GarageLayoutService {
       .map(response => response.json())
       .subscribe((updatedLayout) => {
         garage['layouts'][floor.floorLevel - 1] = updatedLayout;
-        garage['layouts'][floor.floorLevel - 1]['parking_spaces'].forEach(
-          parkingSpace => parkingSpace['occupied'] = parkingSpace['occupied?']);
         localStorage.setItem('garage', JSON.stringify(garage));
       });
   }

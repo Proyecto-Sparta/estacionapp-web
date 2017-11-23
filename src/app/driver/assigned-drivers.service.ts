@@ -3,12 +3,11 @@ import {PendingDriver} from "../pending-drivers/pending-driver";
 import {Headers, Http, RequestOptions} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import {Observable} from 'rxjs/Observable';
 import {ParkingSpace} from "../parking-space/parking-space";
-import {GarageService} from "../garage/garage.service";
 import {GarageLayoutService} from "../garage/garageLayout.service";
 import {Floor} from "../floors/floor";
 import { environment } from 'environments/environment';
+import {Reservation} from "../floors/reservation";
 
 @Injectable()
 export class AssignedDriversService {
@@ -34,8 +33,14 @@ export class AssignedDriversService {
       "parking_space_id" : parkingSpace.id
     }, options)
     .map(response => response.json())
-    .subscribe((reservation) =>  {
-      this.layoutService.updateFloor(floor);
-  });
+    .subscribe(() => this.layoutService.updateFloor(floor));
+  }
+
+  deleteReservation(reservation : Reservation, floor : Floor) {
+    const options = new RequestOptions({headers: this.generateHeaders()});
+    return this.http
+      .put(`${this.reservationsUrl}/${reservation.id}`, { valid : false }, options)
+      .map(response => response.json())
+      .subscribe(() => this.layoutService.updateFloor(floor));
   }
 }

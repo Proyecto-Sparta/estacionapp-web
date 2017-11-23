@@ -5,6 +5,7 @@ import {Observable} from "rxjs/Observable";
 import {AssignedDriversService} from "../driver/assigned-drivers.service";
 import {ParkingSpace} from "../parking-space/parking-space";
 import {Floor} from "../floors/floor";
+import {GarageService} from "../garage/garage.service";
 
 @Injectable()
 export class PendingDriversService {
@@ -13,7 +14,9 @@ export class PendingDriversService {
   private currentId = JSON.parse(localStorage.getItem('garage')).id;
   private garagePath = `garages/${this.currentId}`;
 
-  constructor(private db: AngularFireDatabase, private assignedDriversService : AssignedDriversService) {
+  constructor(private db: AngularFireDatabase,
+              private assignedDriversService : AssignedDriversService,
+              private garageService : GarageService) {
     this.pendingDrivers = db.list(this.garagePath).valueChanges();
   }
 
@@ -22,6 +25,8 @@ export class PendingDriversService {
   }
 
   public assign(parkingSpace: ParkingSpace, driver: PendingDriver, currentFloor: Floor) {
+    console.log("Is occupied: " + parkingSpace.occupied);
+    this.assignedDriversService.makeReservation(driver, parkingSpace, currentFloor);
     return this.db.database.ref(`drivers/${driver.id}`).update(
       {
         floor: currentFloor.floorLevel,
@@ -32,10 +37,9 @@ export class PendingDriversService {
         vehicle: driver.vehicle
       }
     )
-      .then(_ => {
-     //   this.removePendingDriver(driver.id);
-        return this.assignedDriversService.makeReservation(driver, parkingSpace, currentFloor)})
-      .catch(response => console.error(response));
+      .then(() => parkingSpace.assign(this.garageService.findReservationFor(parkingSpace, currentFloor.floorLevel - 1)))
+    //  .then(() => this.removePendingDriver(driver.id))
+      .catch((response) => console.error("Error!"));
   }
 
 
@@ -52,9 +56,7 @@ export class PendingDriversService {
         isAccepted: false,
       }
     )
-      .then(_ => {
-      //  this.removePendingDriver(driver.id);
-      })
+     // .then(() => this.removePendingDriver(driver.id))
       .catch(response => console.error(response));
   }
 }

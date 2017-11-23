@@ -1,5 +1,4 @@
 import {Reservation} from "../floors/reservation";
-import {isNull} from "util";
 
 export class ParkingSpace {
 
@@ -11,9 +10,7 @@ export class ParkingSpace {
               public angle: number,
               public id: number = null,
               public occupied: boolean = false,
-              public reservation : Reservation = null,
-              public tooltipAssignedDriver = 'Free'
-              ) {
+              public reservation : Reservation = null) {
     this.shape = shape;
     this.x = x;
     this.y = y;
@@ -32,8 +29,7 @@ export class ParkingSpace {
 
   toggleOccupancy() {
     this.occupied = !this.occupied;
-    if (!this.occupied)
-      this.deoccupy();
+    return this.occupied;
   }
 
   applyScale(scale) {
@@ -47,34 +43,17 @@ export class ParkingSpace {
 
   assign(reservation : Reservation) {
     this.reservation = reservation;
-    this.changeTooltip();
   }
 
   deoccupy() {
     this.reservation = null;
-    this.changeTooltip();
   }
 
-  changeTooltip(){
-    if(!isNull(this.reservation))
-      this.tooltipAssignedDriver = `Id: ${this.reservation.id} \nPlate: ${this.reservation.driver.vehicle.plate}`;
+  getTooltip(){
+    if(!this.reservation)
+      return "Free";
     else
-      this.tooltipAssignedDriver = "Free"
+      return `Id: ${this.reservation.id} \nPlate: ${this.reservation.driver.vehicle.plate}`;
   }
 
-  public updateGarage(floor: number) {
-    const garage = JSON.parse(localStorage.getItem('garage'));
-    garage['layouts'][floor]['parking_spaces'] = this.updateOccupancy(garage, floor);
-    localStorage.setItem('garage', JSON.stringify(garage));
-    return garage;
-  }
-
-  private updateOccupancy(garage, floor){
-    let parkingSpaces = garage['layouts'][floor].parking_spaces;
-    parkingSpaces.forEach(parkingSpace =>
-    { delete parkingSpace['occupied?'];
-      if(parkingSpace.id === this.id) parkingSpace['occupied'] = true;
-    });
-    return parkingSpaces;
-  }
 }
