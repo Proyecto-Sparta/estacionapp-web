@@ -99,7 +99,9 @@ export class ViewOccupancyComponent implements AfterViewInit {
     console.log(`Selected ${driver}`);
   }
 
-  private denyDriver(driver : PendingDriver) {
+  private denyDriver(driver : PendingDriver, event) {
+    event.stopPropagation();
+    event.preventDefault();
     this.selectedDriver = null;
     this.pendingDriversService.deny(driver);
   }
