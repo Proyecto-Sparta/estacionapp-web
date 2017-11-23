@@ -75,10 +75,12 @@ export class ConvertersService {
   public mapObjectToReservation(object: Object) {
     const id = object['id'],
       driver = object['driver'],
-      parkingSpaceId = object['parking_space_id'];
-    return new Reservation(id,
-      this.mapObjectToDriver(driver),
-      parkingSpaceId);
+      parkingSpaceId = object['parking_space_id'],
+      fullName = driver['full_name'],
+      driver_id = driver['id'],
+      email = driver['email'],
+      vehicle = new Vehicle(driver['vehicle']['type'], driver['vehicle']['plate']);
+    return new Reservation(id, new AssignedDriver(driver_id, email, fullName, vehicle), parkingSpaceId);
   }
 
   mapObjectToDriver(object: Object): AssignedDriver {
@@ -90,10 +92,19 @@ export class ConvertersService {
   }
 
   public mapReservationToStorableObject(reservation: Reservation) {
+    const driver = reservation.driver;
     return {
       'id': reservation.id,
-      'driver': this.mapDriverToObject(reservation.driver),
-      'parking_space_id' : reservation.parkingSpaceId
+      'driver': {
+        'id': driver.id,
+        'email': driver.email,
+        'full_name': driver.fullName,
+        'vehicle': {
+          'type': driver.vehicle.type,
+          'plate': driver.vehicle.plate
+        },
+        'parking_space_id': reservation.parkingSpaceId
+      }
     }
   }
 

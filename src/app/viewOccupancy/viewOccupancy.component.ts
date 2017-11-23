@@ -21,7 +21,7 @@ declare var jsGraphics, jsPoint, jsPen, jsColor;
   providers: [GarageLayoutService]
 })
 
-export class ViewOccupancyComponent implements AfterViewInit, OnInit {
+export class ViewOccupancyComponent implements AfterViewInit {
   private floors: Array<any>;
   private layoutScale;
   private currentFloor = 0;
@@ -45,12 +45,6 @@ export class ViewOccupancyComponent implements AfterViewInit, OnInit {
     this.points = [];
   }
 
-  ngOnInit() : void {
-   this.floors.forEach(floor =>
-     floor.parkingSpaces.forEach( parkingSpace =>
-       parkingSpace.reservation = this.garageService.findReservationFor(parkingSpace, floor.floorLevel - 1  )));
-  }
-
 
   ngAfterViewInit(): void {
     this.garageLayoutService
@@ -62,7 +56,10 @@ export class ViewOccupancyComponent implements AfterViewInit, OnInit {
         if (this.points.length > 2) {
           this.drawLayout();
         }
-    });
+    })
+      .then(() => this.floors.forEach(floor =>
+        floor.parkingSpaces.forEach( parkingSpace =>
+          parkingSpace.reservation = this.garageService.findReservationFor(parkingSpace, floor.floorLevel - 1  ))));
 
     this.jsGraphics = new jsGraphics(document.getElementById("canvas"));
     this.jsGraphics.setOrigin(new jsPoint(15, 41));
