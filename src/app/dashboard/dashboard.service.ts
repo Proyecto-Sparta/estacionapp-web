@@ -10,7 +10,7 @@ export class DashboardService {
     return this.garageService.getGarage()['layouts']
       .map(layout => layout['reservations']
         .filter(reservation => reservation.driver.vehicle.type === type).length)
-      .reduce((a, b) => a + b);
+      .reduce((a, b) => a + b, 0);
 
   }
 
@@ -18,13 +18,13 @@ export class DashboardService {
   public getOccupancies(){
     return this.garageService.getGarage()['layouts'].map(layout =>
       layout.parking_spaces.filter(parkingSpace => parkingSpace.occupied).length)
-      .reduce((a, b) => a + b);
+      .reduce((a, b) => a + b, 0);
   }
 
 
   public getTotalParkingSpaces(){
     return this.garageService.getGarage()['layouts'].map(layout => layout['parking_spaces'].length)
-      .reduce((a, b) => a + b)
+      .reduce((a, b) => a + b, 0)
   }
 
   public getPercentage(){
