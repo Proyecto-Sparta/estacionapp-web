@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {SettingsValidator} from "./settings-validator";
 import {SettingsModel} from "./settings";
 import {GarageService} from "../garage/garage.service";
 import {SettingsService} from "./settings.service";
+import {AlertComponent} from "../alert/alert.component";
 
 @Component({
   selector: 'settings',
@@ -10,6 +11,8 @@ import {SettingsService} from "./settings.service";
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
+
+  @ViewChild(AlertComponent) alertComponent;
 
   constructor(private settingsService : SettingsService, private garageService : GarageService){}
 
@@ -29,7 +32,12 @@ export class SettingsComponent implements OnInit {
   onSubmit() {
     const validation = this.validator.validate(this.model);
     this.errors = validation.errors;
-    return !validation.result;
+    if(validation.result){
+      this.settingsService.save(this.model)
+        .then((response) => this.garageService.setGarage(response))
+        .then(() => this.alertComponent.newAlert("Settings changed"))
+        .catch(() => this.alertComponent.newError("Couldn't sign up"));
+    }
   }
 
 }

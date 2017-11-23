@@ -1,3 +1,4 @@
+<alert-component></alert-component>
 <div class="row">
   <div class="col-sm-9">
   <div class="signup panel panel-default">
@@ -5,12 +6,7 @@
     <div class="panel-body">
       <form (ngSubmit)="onSubmit(settingsForm)" #settingsForm="ngForm">
         <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" class="form-control" id="username" required
-                 [(ngModel)]="model.username" name="username">
-        </div>
-        <div class="form-group">
-          <label for="username">Name</label>
+          <label for="name">Name</label>
           <input type="text" class="form-control" id="name" required
                  [(ngModel)]="model.name" name="name">
         </div>
@@ -51,6 +47,7 @@
           <div *ngFor="let amenityCheckbox of model.amenities;" class="checkbox">
             <label>
               <input name="amenities-{{amenityCheckbox.amenity.id}}" type="checkbox"
+                     [checked]="amenityCheckbox.checked"
                      [(ngModel)]="amenityCheckbox.checked"> {{ amenityCheckbox.amenity.name }}
             </label>
           </div>
