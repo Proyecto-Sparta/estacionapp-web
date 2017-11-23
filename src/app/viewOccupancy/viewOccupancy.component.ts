@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ContentChildren, ElementRef, ViewChild, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, ContentChildren, ElementRef, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import {ParkingSpaceComponent} from '../parking-space/parking-space.component';
 import {Floor} from '../floors/floor';
 import {PendingDriversService} from "../pending-drivers/pending-drivers.service";
@@ -10,6 +10,7 @@ import {AngularFireDatabase} from "angularfire2/database";
 import {isNull} from "util";
 import {PendingDriver} from "../pending-drivers/pending-driver";
 import {ParkingSpace} from "../parking-space/parking-space";
+import {GarageService} from "../garage/garage.service";
 
 declare var jsGraphics, jsPoint, jsPen, jsColor;
 
@@ -35,7 +36,7 @@ export class ViewOccupancyComponent implements AfterViewInit {
   @ViewChildren(ParkingSpaceComponent) viewChildren;
   @ContentChildren(ParkingSpaceComponent) contentChildren;
 
-  constructor(db: AngularFireDatabase, private garageLayoutService: GarageLayoutService,
+  constructor(db: AngularFireDatabase, private garageService : GarageService, private garageLayoutService: GarageLayoutService,
               private pendingDriversService: PendingDriversService) {
 
     this.pendingDriversService = pendingDriversService;
@@ -55,7 +56,10 @@ export class ViewOccupancyComponent implements AfterViewInit {
         if (this.points.length > 2) {
           this.drawLayout();
         }
-    });
+    })
+      .then(() => this.floors.forEach(floor =>
+        floor.parkingSpaces.forEach( parkingSpace =>
+          parkingSpace.reservation = this.garageService.findReservationFor(parkingSpace, floor.floorLevel - 1  ))));
 
     this.jsGraphics = new jsGraphics(document.getElementById("canvas"));
     this.jsGraphics.setOrigin(new jsPoint(15, 41));
@@ -113,8 +117,8 @@ export class ViewOccupancyComponent implements AfterViewInit {
     }
 
     if (!isOccupied && isDriverSelected) {
-      this.pendingDriversService.assign(parkingSpace, this.selectedDriver, this.floors[this.currentFloor]);
-      parkingSpace.assign(this.selectedDriver);
+      this.pendingDriversService.assign(parkingSpace, this.selectedDriver, this.floors[this.currentFloor])
+        .then(() => parkingSpace.assign(this.garageService.findReservationFor(parkingSpace, this.currentFloor)));
       this.selectedDriver = null;
     }
 

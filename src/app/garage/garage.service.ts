@@ -1,15 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
-import {Router} from '@angular/router';
 import {Amenity} from "./amenity";
-import { environment } from 'environments/environment';
+import {ParkingSpace} from "../parking-space/parking-space";
+import {ConvertersService} from "./converters.service";
 
 @Injectable()
 export class GarageService {
-  private garageUrl = `${environment.backendURL}/api/garage`;
-
-  constructor(private http: Http,
-              private router: Router) {
+  constructor(private converters : ConvertersService) {
 
   }
 
@@ -28,4 +24,11 @@ export class GarageService {
   public getGarage(){
     return JSON.parse(localStorage.getItem('garage'));
   }
+
+  findReservationFor(parkingSpace: ParkingSpace, floor : number) {
+    return this.getGarage()['layouts'][floor]['reservations']
+      .map(reservation => this.converters.mapObjectToReservation(reservation))
+      .find(reservation => reservation.parkingSpaceId === parkingSpace.id);
+  }
+
 }

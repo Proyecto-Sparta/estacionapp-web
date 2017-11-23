@@ -1,18 +1,22 @@
-import {AfterViewInit, Component, ElementRef, Input, Attribute} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, Attribute, OnInit} from '@angular/core';
 import {ParkingSpace} from './parking-space';
+import {GarageService} from "../garage/garage.service";
 
 @Component({
   selector: 'parking-space',
   templateUrl: './parking-space.component.html',
   styleUrls: ['./parking-space.component.css']
 })
-export class ParkingSpaceComponent implements AfterViewInit {
+export class ParkingSpaceComponent implements AfterViewInit, OnInit {
+  ngOnInit(): void {
+
+  }
 
   private elementHTML: HTMLElement;
 
   @Input() model: ParkingSpace;
 
-  constructor(private elemRef: ElementRef) {
+  constructor(private elemRef: ElementRef, private garageService : GarageService) {
   }
 
   ngAfterViewInit(): void {

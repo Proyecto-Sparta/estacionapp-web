@@ -21,8 +21,9 @@
         </a>
       </span>
       <span *ngIf="modeLayout" class="drawFloor">
-        <button class="btn-danger" (click)="clearLayout()"> Clear </button>
-          <button class="btn-primary" (click)="drawLayout()" [disabled]="points.length < 3"> Draw </button>
+         <button type="button" class="btn btn-link deleteModeBtn padding-bottom-sm" role="link" (click)="clearLayout()"> Clear </button>
+        <button type="button" class="btn btn-link component-title-dark-orange padding-bottom-sm"
+                role="link" (click)="drawLayout()" [disabled]="points.length < 3"> Draw </button>
       </span>
     </div>
     <div id="garage" #garage class="panel-body dropzone layout-container" [class.editLayout]="modeLayout"

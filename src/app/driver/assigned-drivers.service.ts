@@ -33,7 +33,7 @@ export class AssignedDriversService {
       "garage_layout_id" : floor.id,
       "parking_space_id" : parkingSpace.id
     }, options)
-    .map(response => response.json().id)
+    .map(response => response.json())
     .subscribe((reservation) =>  {
       this.layoutService.updateFloor(floor);
   });
