@@ -55,6 +55,7 @@ export class GarageLayoutService {
       .post(`${this.apiUrl}`, storableFloor, options)
       .map(response => response.json())
       .subscribe((createdFloor) => {
+        floor.setId(createdFloor['id']);
         garage['layouts'][createdFloor.floor_level - 1] = createdFloor;
         localStorage.setItem('garage', JSON.stringify(garage));
       });
