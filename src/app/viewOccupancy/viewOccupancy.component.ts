@@ -100,6 +100,7 @@ export class ViewOccupancyComponent implements AfterViewInit {
   }
 
   private denyDriver(driver : PendingDriver) {
+    this.selectedDriver = null;
     this.pendingDriversService.deny(driver);
   }
 
